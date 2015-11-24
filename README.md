@@ -1,10 +1,10 @@
 PhpInputValidation validates user input of any origin (HTML forms, REST, RPC)
 =============================================================================
 
-[![Build Status](https://travis-ci.org/lastzero/input-validation.png?branch=master)](https://travis-ci.org/lastzero/test-tools)
-[![Latest Stable Version](https://poser.pugx.org/lastzero/input-validation/v/stable.svg)](https://packagist.org/packages/lastzero/test-tools)
-[![Total Downloads](https://poser.pugx.org/lastzero/input-validation/downloads.svg)](https://packagist.org/packages/lastzero/test-tools)
-[![License](https://poser.pugx.org/lastzero/input-validation/license.svg)](https://packagist.org/packages/lastzero/test-tools)
+[![Build Status](https://travis-ci.org/lastzero/php-input-validation.png?branch=master)](https://travis-ci.org/lastzero/test-tools)
+[![Latest Stable Version](https://poser.pugx.org/lastzero/php-input-validation/v/stable.svg)](https://packagist.org/packages/lastzero/test-tools)
+[![Total Downloads](https://poser.pugx.org/lastzero/php-input-validation/downloads.svg)](https://packagist.org/packages/lastzero/test-tools)
+[![License](https://poser.pugx.org/lastzero/php-input-validation/license.svg)](https://packagist.org/packages/lastzero/test-tools)
 
 PhpInputValidation provides a value container with built-in whitelist validation ("accept known good"). It uses language independent validation rules (plain array) that can be reused for client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). The PhpInputValidation library can be used with any framework (controller and model independent).
 
