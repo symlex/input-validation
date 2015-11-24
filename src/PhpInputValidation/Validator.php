@@ -1,13 +1,13 @@
 <?php
 
-namespace InputValidation;
+namespace PhpInputValidation;
 
 use DateTime;
 use DateInterval;
-use InputValidation\Exception\ValidatorException as Exception;
+use PhpInputValidation\Exception\ValidatorException as Exception;
 
 /**
- * Default Validator for InputValidation Forms
+ * Default Validator for PhpInputValidation Forms
  *
  * @author Michael Mayer <michael@lastzero.net>
  * @license MIT

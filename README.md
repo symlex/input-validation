@@ -1,12 +1,12 @@
-InputValidation validates user input of any origin (HTML forms, REST, RPC)
-==========================================================================
+PhpInputValidation validates user input of any origin (HTML forms, REST, RPC)
+=============================================================================
 
 [![Build Status](https://travis-ci.org/lastzero/input-validation.png?branch=master)](https://travis-ci.org/lastzero/test-tools)
 [![Latest Stable Version](https://poser.pugx.org/lastzero/input-validation/v/stable.svg)](https://packagist.org/packages/lastzero/test-tools)
 [![Total Downloads](https://poser.pugx.org/lastzero/input-validation/downloads.svg)](https://packagist.org/packages/lastzero/test-tools)
 [![License](https://poser.pugx.org/lastzero/input-validation/license.svg)](https://packagist.org/packages/lastzero/test-tools)
 
-InputValidation provides a value container with built-in whitelist validation ("accept known good"). It uses language independent validation rules (plain array) that can be reused for client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). The InputValidation library can be used with any framework (controller and model independent).
+PhpInputValidation provides a value container with built-in whitelist validation ("accept known good"). It uses language independent validation rules (plain array) that can be reused for client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). The PhpInputValidation library can be used with any framework (controller and model independent).
 
 A major advantage of this modular approach is that developers can use unit testing to instantly find bugs and tune validation rules without an existing HTML frontend or storage backend. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").
 
@@ -104,7 +104,7 @@ Public methods
 
 **__construct(Translator $translator, Validator $validator, array $params = array())**
 
-The constructor requires instances of Symfony\Component\Translation\TranslatorInterface, InputValidation\Validator and an optional set of arbitrary parameters, which are passed to **init(array $params = array())** (protected class method).
+The constructor requires instances of Symfony\Component\Translation\TranslatorInterface, PhpInputValidation\Validator and an optional set of arbitrary parameters, which are passed to **init(array $params = array())** (protected class method).
 
 **factory($className, array $params = array())**
 

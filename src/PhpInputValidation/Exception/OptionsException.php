@@ -1,6 +1,6 @@
 <?php
 
-namespace InputValidation\Exception;
+namespace PhpInputValidation\Exception;
 
 class OptionsException extends Exception
 {

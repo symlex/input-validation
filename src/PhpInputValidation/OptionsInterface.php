@@ -1,6 +1,6 @@
 <?php
 
-namespace InputValidation;
+namespace PhpInputValidation;
 
 interface OptionsInterface {
     public function get($listName);

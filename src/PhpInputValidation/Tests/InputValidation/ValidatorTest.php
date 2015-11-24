@@ -1,9 +1,9 @@
 <?php
 
-namespace InputValidation\Tests;
+namespace PhpInputValidation\Tests;
 
 use TestTools\TestCase\UnitTestCase;
-use InputValidation\Validator;
+use PhpInputValidation\Validator;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>
@@ -20,7 +20,7 @@ class ValidatorTest extends UnitTestCase {
     }
 
     /**
-     * @expectedException \InputValidation\Exception\ValidatorException
+     * @expectedException \PhpInputValidation\Exception\ValidatorException
      */
     public function testGetFormException () {
         $this->validator->getForm();

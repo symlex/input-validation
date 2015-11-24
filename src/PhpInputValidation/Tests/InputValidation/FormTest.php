@@ -1,10 +1,10 @@
 <?php
 
-namespace InputValidation\Tests;
+namespace PhpInputValidation\Tests;
 
-use InputValidation\Options;
+use PhpInputValidation\Options;
 use TestTools\TestCase\UnitTestCase;
-use InputValidation\Form;
+use PhpInputValidation\Form;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>
@@ -39,7 +39,7 @@ class FormTest extends UnitTestCase
 
     public function testSetAllValues()
     {
-        $this->setExpectedException('\InputValidation\Exception\FormException');
+        $this->setExpectedException('\PhpInputValidation\Exception\FormException');
         $values = array('foo' => 'bar', 'x' => 'y');
         $this->form->setAllValues($values);
         $result = $this->form->getValues();
@@ -210,7 +210,7 @@ class FormTest extends UnitTestCase
 
     public function testSetWritableValuesOnPageError()
     {
-        $this->setExpectedException('\InputValidation\Exception\FormException');
+        $this->setExpectedException('\PhpInputValidation\Exception\FormException');
 
         $this->form->setDefinition(
             array(
@@ -589,7 +589,7 @@ class FormTest extends UnitTestCase
 
     public function testChangeDefinitionException()
     {
-        $this->setExpectedException('\InputValidation\Exception\FormException');
+        $this->setExpectedException('\PhpInputValidation\Exception\FormException');
         $this->form->changeDefinition('foo', array('min' => 3));
     }
 

@@ -1,9 +1,9 @@
 {
-    "name": "lastzero/input-validation",
+    "name": "lastzero/php-input-validation",
     "type": "library",
-    "description": "value container with built-in whitelist validation ('accept known good')",
+    "description": "Value container with built-in whitelist validation ('accept known good')",
     "keywords": ["form","validation","input","symfony","silex"],
-    "homepage": "https://github.com/lastzero/input-validation",
+    "homepage": "https://github.com/lastzero/php-input-validation",
     "license": "MIT",
     "authors": [
         {
@@ -24,7 +24,7 @@
         "sstalle/php7cc": "*"
     },
     "autoload": {
-        "psr-0": { "InputValidation\\": "src/" }
+        "psr-0": { "PhpInputValidation\\": "src/" }
     },
     "config": {
         "bin-dir": "bin/"

@@ -1,13 +1,13 @@
 <?php
 
-namespace InputValidation;
+namespace PhpInputValidation;
 
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use DateTime;
-use InputValidation\Exception\FormException as Exception;
+use PhpInputValidation\Exception\FormException as Exception;
 
 /**
- * \InputValidation\Form can be used to validate user input of any origin (POST data, CLI or SOAP/REST)
+ * \PhpInputValidation\Form can be used to validate user input of any origin (POST data, CLI or SOAP/REST)
  *
  * The form classes return localized validation messages and pass on the form definition
  * to controllers that render the forms to HTML using view templates and interact with
