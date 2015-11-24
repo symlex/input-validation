@@ -1,0 +1,25 @@
+services:
+    message_selector:
+        class: \Symfony\Component\Translation\MessageSelector
+
+    yaml_loader:
+        class: \Symfony\Component\Translation\Loader\YamlFileLoader
+
+    array_loader:
+        class: \Symfony\Component\Translation\Loader\ArrayLoader
+
+    translator:
+        class: \Symfony\Component\Translation\Translator
+        arguments: ['de', @message_selector]
+        calls:
+          - [addLoader, ['yaml', @yaml_loader]]
+          - [addLoader, ['array', @array_loader]]
+          - [addResource, ['yaml', '%base.path%/Localization/de.yml', 'de']]
+          - [addResource, ['yaml', '%base.path%/Localization/en.yml', 'en']]
+
+    validator:
+        class: \InputValidation\Validator
+
+    form:
+        class: \InputValidation\Form
+        arguments: [@translator, @validator]
