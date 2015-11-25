@@ -16,10 +16,10 @@
     "require": {
         "php": ">=5.4",
         "symfony/translation": "~2.3",
-        "symfony/validator": "~2.3",
-        "lastzero/test-tools": "*"
+        "symfony/validator": "~2.3"
     },
     "require-dev": {
+        "lastzero/test-tools": "*",
         "phpunit/phpunit": "@stable",
         "sstalle/php7cc": "*"
     },
