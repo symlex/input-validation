@@ -9,7 +9,7 @@ This library provides an **abstract form class** with built-in whitelist validat
 
 A major advantage of this modular approach is that developers can use **unit testing** to instantly find bugs and **tune validation rules** without an existing HTML frontend or storage backend. It's perfectly suited to build **REST services**. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").
 
-Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies.
+It's architecture is simple by design: Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works. The code is mature and activly used in several commercial projects.
 
 Example
 -------
