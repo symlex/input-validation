@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpInputValidation\Exception;
+namespace InputValidation\Exception;
 
 class ValidatorException extends Exception
 {

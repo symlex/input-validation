@@ -1,13 +1,13 @@
 <?php
 
-namespace PhpInputValidation;
+namespace InputValidation;
 
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
-use PhpInputValidation\Exception\OptionsException as Exception;
+use InputValidation\Exception\OptionsException as Exception;
 
 /**
- * Default options list for PhpInputValidation Forms
+ * Default options list for InputValidation Forms
  *
  * @author Michael Mayer <michael@lastzero.net>
  * @license MIT

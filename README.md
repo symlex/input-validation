@@ -16,7 +16,7 @@ It's architecture is simple by design: Form classes can inherit their definition
 Example
 -------
 
-    class UserForm extends \PhpInputValidation\Form {
+    class UserForm extends \InputValidation\Form {
         protected function init(array $params = array())
         {
             $definition = array(
@@ -86,7 +86,7 @@ Example
 ```
 <?php
 
-class UserForm extends \PhpInputValidation\Form {
+class UserForm extends \InputValidation\Form {
     protected function init(array $params = array())
     {
         $definition = array(
@@ -145,7 +145,7 @@ Public methods
 
 **__construct(Translator $translator, Validator $validator, array $params = array())**
 
-The constructor requires instances of Symfony\Component\Translation\TranslatorInterface, PhpInputValidation\Validator and an optional set of arbitrary parameters, which are passed to **init(array $params = array())** (protected class method).
+The constructor requires instances of Symfony\Component\Translation\TranslatorInterface, InputValidation\Validator and an optional set of arbitrary parameters, which are passed to **init(array $params = array())** (protected class method).
 
 **factory($className, array $params = array())**
 

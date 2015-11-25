@@ -1,9 +1,9 @@
 <?php
 
-namespace PhpInputValidation\Tests;
+namespace InputValidation\Tests;
 
 use TestTools\TestCase\UnitTestCase;
-use PhpInputValidation\Options;
+use InputValidation\Options;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>

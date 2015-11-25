@@ -24,7 +24,7 @@
         "sstalle/php7cc": "*"
     },
     "autoload": {
-        "psr-0": { "PhpInputValidation\\": "src/" }
+        "psr-0": { "InputValidation\\": "src/" }
     },
     "config": {
         "bin-dir": "bin/"

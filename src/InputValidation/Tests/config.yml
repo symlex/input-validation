@@ -18,8 +18,8 @@ services:
           - [addResource, ['yaml', '%base.path%/Localization/en.yml', 'en']]
 
     validator:
-        class: \PhpInputValidation\Validator
+        class: \InputValidation\Validator
 
     form:
-        class: \PhpInputValidation\Form
+        class: \InputValidation\Form
         arguments: [@translator, @validator]
