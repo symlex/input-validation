@@ -11,7 +11,7 @@ A major advantage of this modular approach is that developers can use **unit tes
 
 Besides basic validation rules such as type or length, more advanced rules are supported as well - for example **dependent fields** and **multi-page forms**. Validated values can be fetched individually, as flat array, by tag or by page.
 
-It's architecture is **simple by design**: Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works. The code is **mature** and **actively used** in several commercial and Open Source projects.
+The architecture is **simple by design**: Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works. The code is **mature** and **actively used** in several commercial and Open Source projects.
 
 Example
 -------
