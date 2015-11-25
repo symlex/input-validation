@@ -5,11 +5,11 @@ Secure whitelist validation for PHP
 [![Latest Stable Version](https://poser.pugx.org/lastzero/php-input-validation/v/stable.svg)](https://packagist.org/packages/lastzero/php-input-validation)
 [![License](https://poser.pugx.org/lastzero/php-input-validation/license.svg)](https://packagist.org/packages/lastzero/php-input-validation)
 
-This library provides an **abstract form class** with built-in whitelist validation ("accept known good"). It uses **language independent** validation rules (plain array) that can be reused for client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). The library can be used with **any framework and input source** (HTML, REST, RPC, ...).
+This library provides an **abstract form class** with built-in whitelist validation ("accept known good"). It uses **language independent** validation rules (plain array) that can be reused for client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). The library can be used with **any framework** and **input source** (HTML, REST, RPC, ...).
 
-A major advantage of this modular approach is that developers can use **unit testing** to instantly find bugs and **tune validation rules** without an existing HTML frontend or storage backend. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").
+A major advantage of this modular approach is that developers can use **unit testing** to instantly find bugs and **tune validation rules** without an existing HTML frontend or storage backend. It's perfectly suited to build **REST services**. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").
 
-Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard **object-oriented** methodologies (e.g. overwriting or extending the parent methods).
+Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies.
 
 Example
 -------
@@ -84,7 +84,7 @@ Example
 ```
 <?php
 
-class UserForm extends Form {
+class UserForm extends \PhpInputValidation\Form {
     protected function init(array $params = array())
     {
         $definition = array(
