@@ -1,18 +1,15 @@
-Whitelist validation for user input of any origin
-=================================================
+Secure whitelist validation for PHP
+===================================
 
 [![Build Status](https://travis-ci.org/lastzero/php-input-validation.png?branch=master)](https://travis-ci.org/lastzero/php-input-validation)
 [![Latest Stable Version](https://poser.pugx.org/lastzero/php-input-validation/v/stable.svg)](https://packagist.org/packages/lastzero/php-input-validation)
-[![Total Downloads](https://poser.pugx.org/lastzero/php-input-validation/downloads.svg)](https://packagist.org/packages/lastzero/php-input-validation)
 [![License](https://poser.pugx.org/lastzero/php-input-validation/license.svg)](https://packagist.org/packages/lastzero/php-input-validation)
 
-This library provides a value container (\PhpInputValidation\Form) with built-in whitelist validation ("accept known good"). It uses language independent validation rules (plain array) that can be reused for client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). The PhpInputValidation library can be used with any framework (controller and model independent).
+This library provides an **abstract form class** with built-in whitelist validation ("accept known good"). It uses **language independent** validation rules (plain array) that can be reused for client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). The library can be used with **any framework and input source** (HTML, REST, RPC, ...).
 
-A major advantage of this modular approach is that developers can use unit testing to instantly find bugs and tune validation rules without an existing HTML frontend or storage backend. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").
+A major advantage of this modular approach is that developers can use **unit testing** to instantly find bugs and **tune validation rules** without an existing HTML frontend or storage backend. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").
 
-Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies (e.g. overwriting or extending the parent methods).
-
-See also: [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https://github.com/lastzero/doctrine-active-record)
+Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard **object-oriented** methodologies (e.g. overwriting or extending the parent methods).
 
 Example
 -------
@@ -344,3 +341,7 @@ class UserController
     }
 }
 ```
+
+See also
+--------
+* [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https://github.com/lastzero/doctrine-active-record)
