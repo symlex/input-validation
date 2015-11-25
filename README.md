@@ -43,7 +43,7 @@ Example
 
 Form Validation vs Model Validation
 -----------------------------------
-The following visualization highlights the differences between client-side, input value (form) and model validation. Model validation generally operates on **trusted** data (internal system state) and should be **repeatable** at any point in time while input validation explicitly operates **once** on data that comes from **untrusted** sources (depending on the use case and user privileges). This separation makes it possible to build reusable models, controllers and forms that can be coupled through dependency injection as shown in the example above.
+The following visualization highlights the differences between client-side, input value (form) and model validation. Model validation generally operates on **trusted** data (internal system state) and should be **repeatable** at any point in time while input validation explicitly operates **once** on data that comes from **untrusted** sources (depending on the use case and user privileges). This separation makes it possible to build reusable models, controllers and forms that can be coupled through dependency injection (see REST controller example at the bottom).
 
 Think of input validation as **whitelist** validation ("accept known good") and model validation as **blacklist** validation ("reject known bad"). Whitelist validation is more secure while blacklist validation prevents your model layer from being overly constraint to very specific use cases.
 
