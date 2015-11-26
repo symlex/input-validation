@@ -143,7 +143,7 @@ Alternativly, you can create new form instances manually (equivalent to the serv
     
     $translator = new Translator('en', new MessageSelector);
     $translator->addLoader('yaml', new YamlFileLoader);
-    $translator->addLoader('array', new YamlFileLoader);
+    $translator->addLoader('array', new ArrayLoader);
 
     $form = new Form($translator, new Validator());
 
