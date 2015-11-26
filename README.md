@@ -13,10 +13,11 @@ Besides basic validation rules such as type or length, more advanced rules are s
 
 The architecture is **simple by design**: Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works. The code is **mature** and **actively used** in several commercial and Open Source projects.
 
-Example
--------
+Validation
+----------
+Note how easy it is, to avoid the deeply nested structures you often find in validation code:
 
-    $userForm = $container->get('form')->factory('User');
+    $userForm = $container->get('form')->factory('UserForm');
 
     $userForm->setDefinedWritableValues($_POST)->validate();
     
@@ -26,6 +27,103 @@ Example
     
     $userValues = $userForm->getValues();
     // ...
+    
+Definition
+----------
+
+    class UserForm extends \InputValidation\Form {
+        protected function init(array $params = array())
+        {
+            $definition = array(
+                'username': {
+                    type: 'string',
+                    caption: 'Username',
+                    required: true,
+                    min: 3,
+                    max: 15
+                },
+                'email': {
+                    type: 'email',
+                    caption: 'E-Mail',
+                    required: true
+                },
+                'gender': {
+                    type: 'string',
+                    caption: 'Gender',
+                    required: false,
+                    options: ['male', 'female'],
+                    optional: true
+                },
+                'birthday': {
+                    type: 'date',
+                    caption: 'Birthday',
+                    required: false
+                },
+                'password': {
+                    type: 'string',
+                    caption: 'Password',
+                    required: true,
+                    min: 5,
+                    max: 30
+                },
+                'password_again': {
+                    type: 'string',
+                    caption: 'Password confirmation',
+                    required: true,
+                    matches: 'password'
+                },
+                'continent': {
+                    type: 'string',
+                    caption: 'Region',
+                    required: true,
+                    options: ['north_america', 'south_america', 'europe', 'asia', 'australia']
+                }
+            );
+    
+            $this->setDefinition($definition);
+        }
+    }
+
+Setup
+-----
+It is strongly recommendend to use a **dependency injection** container such as the one provided by Symfony Components:
+
+    services:
+        message_selector:
+            class: \Symfony\Component\Translation\MessageSelector
+    
+        yaml_loader:
+            class: \Symfony\Component\Translation\Loader\YamlFileLoader
+    
+        array_loader:
+            class: \Symfony\Component\Translation\Loader\ArrayLoader
+    
+        translator:
+            class: \Symfony\Component\Translation\Translator
+            arguments: ['de', @message_selector]
+            calls:
+              - [addLoader, ['yaml', @yaml_loader]]
+              - [addLoader, ['array', @array_loader]]
+
+        validator:
+            class: \InputValidation\Validator
+    
+        form:
+            class: \InputValidation\Form
+            arguments: [@translator, @validator]
+        
+Alternativly, you can create new form instances manually:
+
+    use InputValidation\Form;
+    use InputValidation\Validator;
+    use Symfony\Component\Translation\Translator;
+    use Symfony\Component\Translation\MessageSelector;
+    use Symfony\Component\Translation\Loader\YamlFileLoader;
+    
+    $translator = new Translator('en', new MessageSelector);
+    $translator->addLoader('yaml', new YamlFileLoader);
+
+    $form = new Form($translator, new Validator());
 
 Form Validation vs Model Validation
 -----------------------------------
@@ -68,65 +166,6 @@ depends_first_option   | Field is required, if the field defined in "depends" ha
 depends_last_option    | Field is required, if the field defined in "depends" has the last value (see "options")
 page                   | Page number for multi-page forms
 tags                   | Optional list of tags (can be used to extract values by tag, see getValuesByTag())
-
-Example
--------
-```
-<?php
-
-class UserForm extends \InputValidation\Form {
-    protected function init(array $params = array())
-    {
-        $definition = array(
-            'username': {
-                type: 'string',
-                caption: 'Username',
-                required: true,
-                min: 3,
-                max: 15
-            },
-            'email': {
-                type: 'email',
-                caption: 'E-Mail',
-                required: true
-            },
-            'gender': {
-                type: 'string',
-                caption: 'Gender',
-                required: false,
-                options: ['male', 'female'],
-                optional: true
-            },
-            'birthday': {
-                type: 'date',
-                caption: 'Birthday',
-                required: false
-            },
-            'password': {
-                type: 'string',
-                caption: 'Password',
-                required: true,
-                min: 5,
-                max: 30
-            },
-            'password_again': {
-                type: 'string',
-                caption: 'Password confirmation',
-                required: true,
-                matches: 'password'
-            },
-            'continent': {
-                type: 'string',
-                caption: 'Region',
-                required: true,
-                options: ['north_america', 'south_america', 'europe', 'asia', 'australia']
-            }
-        );
-
-        $this->setDefinition($definition);
-    }
-}
-```
 
 Public methods
 --------------
@@ -320,12 +359,12 @@ class UserController
         
         $this->form->validate(); // Validation
 
-        if($this->form->isValid()) {
-            $this->user->update($this->form->getValues()); // Update values
-        } else {
+        if($this->form->hasErrors()) {
             // Return first error, since HTTP isn't designed to return multiple errors at once
             throw new FormInvalidException($this->form->getFirstError());
         }
+        
+        $this->user->update($this->form->getValues()); // Update values
 
         return $this->user->getValues(); // Return updated entity values
     }
