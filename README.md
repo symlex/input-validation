@@ -149,6 +149,15 @@ Alternativly, you can create new form instances manually (equivalent to the serv
 
 Have a look at the unit tests in the Tests directory, so see more examples.
 
+Composer
+--------
+
+If you are using composer, simply add "lastzero/php-input-validation" to your composer.json file to use this library:
+
+    "require": {
+        "lastzero/php-input-validation": "*"
+    }
+
 Form Validation vs Model Validation
 -----------------------------------
 The following visualization highlights the differences between client-side, input value (form) and model validation. Model validation generally operates on **trusted** data (internal system state) and should be **repeatable** at any point in time while input validation explicitly operates **once** on data that comes from **untrusted** sources (depending on the use case and user privileges). This separation makes it possible to build reusable models, controllers and forms that can be coupled through dependency injection (see REST controller example at the top).
