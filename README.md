@@ -22,10 +22,10 @@ Example
     
     if($userForm->hasErrors()) {
         throw new \Exception($userForm->getFirstError());
-    } else {
-        $userValues = $userForm->getValues();
-        // ...
     }
+    
+    $userValues = $userForm->getValues();
+    // ...
 
 Form Validation vs Model Validation
 -----------------------------------
