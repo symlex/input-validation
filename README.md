@@ -16,28 +16,14 @@ The architecture is **simple by design**: Form classes can inherit their definit
 Example
 -------
 
-    class UserForm extends \InputValidation\Form {
-        protected function init(array $params = array())
-        {
-            $definition = array(
-                'firstname' => array('caption' => 'First Name', 'required' => true, 'type' => 'string'),
-                'lastname' => array('caption' => 'Last Name', 'required' => true, 'type' => 'string'),
-                'email' => array('caption' => 'E-Mail', 'required' => true, 'type' => 'email'),
-                'admin' => array('caption' => 'Admin', 'optional' => true, 'type' => 'bool')
-            );
+    $userForm = $container->get('form')->factory('User');
 
-            $this->setDefinition($definition);
-        }
-    }
-
-    $form = new UserForm();
-
-    $form->setDefinedWritableValues($_POST)->validate();
-
-    if($form->hasErrors()) {
-        throw new \Exception($form->getFirstError());
+    $userForm->setDefinedWritableValues($_POST)->validate();
+    
+    if($userForm->hasErrors()) {
+        throw new \Exception($userForm->getFirstError());
     } else {
-        $userValues = $form->getValues();
+        $userValues = $userForm->getValues();
         // ...
     }
 
