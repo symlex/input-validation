@@ -15,19 +15,39 @@ The architecture is **simple by design**: Form classes can inherit their definit
 
 Validation
 ----------
-Note how easy it is, to avoid the deeply nested structures you often find in validation code:
 
-    $userForm = $container->get('form')->factory('UserForm');
+This example shows how to validate user input in a REST controller action. Note how easy it is, to avoid the deeply nested structures you often find in validation code.
 
-    $userForm->setDefinedWritableValues($_POST)->validate();
+    class UserController
+    {
+        protected $user;
+        protected $form;
     
-    if($userForm->hasErrors()) {
-        throw new \Exception($userForm->getFirstError());
+        public function __construct(User $user, UserForm $form)
+        {
+            $this->user = $user;
+            $this->form = $form;
+        }
+        
+        public function putAction($id, Request $request) // Update
+        {
+            $this->user->find($id); // Find entity (throws exception, if not found)
+            
+            $this->form->setDefinedValues($this->user->getValues()); // Initialization
+            $this->form->setDefinedWritableValues($request->request->all()); // Input values
+            $this->form->validate(); // Validation
+    
+            if($this->form->hasErrors()) {
+                // Return first error, since HTTP isn't designed to return multiple errors at once
+                throw new FormInvalidException($this->form->getFirstError());
+            }
+            
+            $this->user->update($this->form->getValues()); // Update values
+    
+            return $this->user->getValues(); // Return updated entity values
+        }
     }
-    
-    $userValues = $userForm->getValues();
-    // ...
-    
+
 Definition
 ----------
 
@@ -335,43 +355,6 @@ Resets the validation and clears all errors
 **getHash()**
 
 Returns hash that uniquely identifies the form (for caching comprehensive forms)
-
-Validation in REST controller action context
---------------------------------------------
-
-This example shows how to validate user input in a REST controller action:
-
-```
-class UserController
-{
-    protected $user;
-    protected $form;
-
-    public function __construct(User $user, UserForm $form)
-    {
-        $this->user = $user;
-        $this->form = $form;
-    }
-    
-    public function putAction($id, Request $request) // Update
-    {
-        $this->user->find($id); // Find entity (throws exception, if not found)
-        
-        $this->form->setDefinedValues($this->user->getValues()); // Initialization
-        $this->form->setDefinedWritableValues($request->request->all()); // Input values
-        $this->form->validate(); // Validation
-
-        if($this->form->hasErrors()) {
-            // Return first error, since HTTP isn't designed to return multiple errors at once
-            throw new FormInvalidException($this->form->getFirstError());
-        }
-        
-        $this->user->update($this->form->getValues()); // Update values
-
-        return $this->user->getValues(); // Return updated entity values
-    }
-}
-```
 
 See also
 --------
