@@ -152,7 +152,7 @@ Have a look at the unit tests in the Tests directory, so see more examples.
 Composer
 --------
 
-If you are using composer, simply add "lastzero/php-input-validation" to your composer.json file to use this library:
+If you are using composer, simply add "lastzero/php-input-validation" to your composer.json file and run `composer update`:
 
     "require": {
         "lastzero/php-input-validation": "*"
