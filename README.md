@@ -1,5 +1,5 @@
-Secure whitelist validation for PHP
-===================================
+Easy & secure whitelist validation for PHP
+==========================================
 
 [![Build Status](https://travis-ci.org/lastzero/php-input-validation.png?branch=master)](https://travis-ci.org/lastzero/php-input-validation)
 [![Latest Stable Version](https://poser.pugx.org/lastzero/php-input-validation/v/stable.svg)](https://packagist.org/packages/lastzero/php-input-validation)
