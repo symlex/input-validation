@@ -86,7 +86,7 @@ Definition
 
 Setup
 -----
-It is strongly recommendend to use a **dependency injection** container such as the one provided by Symfony Components:
+It is strongly recommendend to use a **dependency injection container** such as the one provided by Symfony Components:
 
     services:
         message_selector:
@@ -112,18 +112,22 @@ It is strongly recommendend to use a **dependency injection** container such as 
             class: \InputValidation\Form
             arguments: [@translator, @validator]
         
-Alternativly, you can create new form instances manually:
+Alternativly, you can create new form instances manually (equivalent to the service definition above):
 
     use InputValidation\Form;
     use InputValidation\Validator;
     use Symfony\Component\Translation\Translator;
     use Symfony\Component\Translation\MessageSelector;
     use Symfony\Component\Translation\Loader\YamlFileLoader;
+    use Symfony\Component\Translation\Loader\ArrayLoader;
     
     $translator = new Translator('en', new MessageSelector);
     $translator->addLoader('yaml', new YamlFileLoader);
+    $translator->addLoader('array', new YamlFileLoader);
 
     $form = new Form($translator, new Validator());
+
+Have a look at the unit tests in the Tests directory, so see more examples.
 
 Form Validation vs Model Validation
 -----------------------------------
