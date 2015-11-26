@@ -60,12 +60,13 @@ class Form
 
     protected $_factoryPrefix = '';
     protected $_factoryPostfix = '';
-    protected $_validationDone = false; // Set to true, if the validation was executed
 
     protected $_translator = null;
     protected $_validator = null;
 
     protected $_params = array(); // Optional params for init()
+
+    protected $_validationDone = false; // True, after the validation was executed
 
     public function __construct(Translator $translator, Validator $validator, array $params = array())
     {
