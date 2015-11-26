@@ -339,7 +339,7 @@ Returns hash that uniquely identifies the form (for caching comprehensive forms)
 Validation in REST controller action context
 --------------------------------------------
 
-This example shows how to validate user input in a REST controller action (note that HTTP doesn't support multiple error messages by default and that form initialization using existing model values is optional):
+This example shows how to validate user input in a REST controller action:
 
 ```
 class UserController
@@ -358,9 +358,7 @@ class UserController
         $this->user->find($id); // Find entity (throws exception, if not found)
         
         $this->form->setDefinedValues($this->user->getValues()); // Initialization
-        
         $this->form->setDefinedWritableValues($request->request->all()); // Input values
-        
         $this->form->validate(); // Validation
 
         if($this->form->hasErrors()) {
