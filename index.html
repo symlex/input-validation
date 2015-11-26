@@ -30,28 +30,14 @@
 <h2>
 <a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
 
-<pre><code>class UserForm extends \InputValidation\Form {
-    protected function init(array $params = array())
-    {
-        $definition = array(
-            'firstname' =&gt; array('caption' =&gt; 'First Name', 'required' =&gt; true, 'type' =&gt; 'string'),
-            'lastname' =&gt; array('caption' =&gt; 'Last Name', 'required' =&gt; true, 'type' =&gt; 'string'),
-            'email' =&gt; array('caption' =&gt; 'E-Mail', 'required' =&gt; true, 'type' =&gt; 'email'),
-            'admin' =&gt; array('caption' =&gt; 'Admin', 'optional' =&gt; true, 'type' =&gt; 'bool')
-        );
+<pre><code>$userForm = $container->get('form')->factory('User');
 
-        $this-&gt;setDefinition($definition);
-    }
-}
+$userForm-&gt;setDefinedWritableValues($_POST)-&gt;validate();
 
-$form = new UserForm();
-
-$form-&gt;setDefinedWritableValues($_POST)-&gt;validate();
-
-if($form-&gt;hasErrors()) {
-    throw new \Exception($form-&gt;getFirstError());
+if($userForm-&gt;hasErrors()) {
+    throw new \Exception($userForm-&gt;getFirstError());
 } else {
-    $userValues = $form-&gt;getValues();
+    $userValues = $userForm-&gt;getValues();
     // ...
 }
 </code></pre>
