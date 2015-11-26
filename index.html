@@ -36,10 +36,10 @@ $userForm-&gt;setDefinedWritableValues($_POST)-&gt;validate();
 
 if($userForm-&gt;hasErrors()) {
     throw new \Exception($userForm-&gt;getFirstError());
-} else {
-    $userValues = $userForm-&gt;getValues();
-    // ...
 }
+
+$userValues = $userForm-&gt;getValues();
+// ...
 </code></pre>
 
 <h2>
