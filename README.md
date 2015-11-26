@@ -106,7 +106,7 @@ Definition
 
 Setup
 -----
-It is strongly recommendend to use a **dependency injection container** such as the one provided by Symfony Components:
+It is strongly recommended to use a **dependency injection container** such as the one provided by Symfony Components:
 
     services:
         message_selector:
