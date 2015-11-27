@@ -52,7 +52,6 @@
         $this-&gt;form-&gt;validate(); // Validation
 
         if($this-&gt;form-&gt;hasErrors()) {
-            // Return first error, since HTTP isn't designed to return multiple errors at once
             throw new FormInvalidException($this-&gt;form-&gt;getFirstError());
         }
 
