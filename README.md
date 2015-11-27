@@ -38,7 +38,6 @@ This example shows how to validate user input in a REST controller action. Note 
             $this->form->validate(); // Validation
     
             if($this->form->hasErrors()) {
-                // Return first error, since HTTP isn't designed to return multiple errors at once
                 throw new FormInvalidException($this->form->getFirstError());
             }
             
