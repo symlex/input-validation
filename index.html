@@ -23,14 +23,14 @@
 
 <p>A major advantage of this modular approach is that developers can use <strong>unit testing</strong> to instantly find bugs and <strong>tune validation rules</strong> without an existing HTML frontend or storage backend. It's perfectly suited to build <strong>REST services</strong>. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").</p>
 
-<p>Besides basic validation rules such as type or length, more advanced rules are supported as well - for example <strong>dependent fields</strong> and <strong>multi-page forms</strong>. Validated values can be fetched individually, as flat array, by tag or by page.</p>
+<p>Besides basic validation rules such as type or length, more advanced features are supported as well - for example <strong>dependent fields</strong>, <strong>internationalization</strong> and <strong>multi-page forms</strong>. Validated values can be fetched individually, as flat array, by tag or by page.</p>
 
-<p>The architecture is <strong>simple by design</strong>: Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works. The code is <strong>mature</strong> and <strong>actively used</strong> in several commercial and Open Source projects.</p>
+<p>The architecture is <strong>simple by design</strong>: Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works.</p>
 
 <h2>
 <a id="validation" class="anchor" href="#validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Validation</h2>
 
-<p>This example shows how to validate user input in a REST controller action. Note how easy it is, to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. </p>
+<p>This example shows how to validate user input in a REST controller action. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. </p>
 
 <pre><code>class UserController
 {
@@ -62,57 +62,62 @@
 }
 </code></pre>
 
+<p>See also <a href="https://github.com/lastzero/doctrine-active-record">Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL</a></p>
+
 <h2>
 <a id="definition" class="anchor" href="#definition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Definition</h2>
 
-<pre><code>class UserForm extends \InputValidation\Form {
+<pre><code>use InputValidation\Form;
+
+class UserForm extends Form
+{
     protected function init(array $params = array())
     {
-        $definition = array(
-            'username': {
-                type: 'string',
-                caption: 'Username',
-                required: true,
-                min: 3,
-                max: 15
-            },
-            'email': {
-                type: 'email',
-                caption: 'E-Mail',
-                required: true
-            },
-            'gender': {
-                type: 'string',
-                caption: 'Gender',
-                required: false,
-                options: ['male', 'female'],
-                optional: true
-            },
-            'birthday': {
-                type: 'date',
-                caption: 'Birthday',
-                required: false
-            },
-            'password': {
-                type: 'string',
-                caption: 'Password',
-                required: true,
-                min: 5,
-                max: 30
-            },
-            'password_again': {
-                type: 'string',
-                caption: 'Password confirmation',
-                required: true,
-                matches: 'password'
-            },
-            'continent': {
-                type: 'string',
-                caption: 'Region',
-                required: true,
-                options: ['north_america', 'south_america', 'europe', 'asia', 'australia']
-            }
-        );
+        $definition = [
+            'username' =&gt; [
+                'type' =&gt; 'string',
+                'caption' =&gt; 'Username',
+                'required' =&gt; true,
+                'min' =&gt; 3,
+                'max' =&gt; 15
+            ],
+            'email' =&gt; [
+                'type' =&gt; 'email',
+                'caption' =&gt; 'E - Mail',
+                'required' =&gt; true
+            ],
+            'gender' =&gt; [
+                'type' =&gt; 'string',
+                'caption' =&gt; 'Gender',
+                'required' =&gt; false,
+                'options' =&gt; ['male', 'female'],
+                'optional' =&gt; true
+            ],
+            'birthday' =&gt; [
+                'type' =&gt; 'date',
+                'caption' =&gt; 'Birthday',
+                'required' =&gt; false
+            ],
+            'password' =&gt; [
+                'type' =&gt; 'string',
+                'caption' =&gt; 'Password',
+                'required' =&gt; true,
+                'min' =&gt; 5,
+                'max' =&gt; 30
+            ],
+            'password_again' =&gt; [
+                'type' =&gt; 'string',
+                'caption' =&gt; 'Password confirmation',
+                'required' =&gt; true,
+                'matches' =&gt; 'password'
+            ],
+            'continent' =&gt; [
+                'type' =&gt; 'string',
+                'caption' =&gt; 'Region',
+                'required' =&gt; true,
+                'options' =&gt; ['north_america', 'south_america', 'europe', 'asia', 'australia']
+            ]
+        ];
 
         $this-&gt;setDefinition($definition);
     }
@@ -149,7 +154,7 @@
         arguments: [@translator, @validator]
 </code></pre>
 
-<p>Alternativly, you can create new form instances manually (equivalent to the service definition above):</p>
+<p>Alternatively, you can create new form instances manually (equivalent to the service definition above):</p>
 
 <pre><code>use InputValidation\Form;
 use InputValidation\Validator;
@@ -162,15 +167,28 @@ $translator = new Translator('en', new MessageSelector);
 $translator-&gt;addLoader('yaml', new YamlFileLoader);
 $translator-&gt;addLoader('array', new ArrayLoader);
 
-$form = new Form($translator, new Validator());
+$validator = new Validator();
+
+$form = new Form($translator, $validator);
 </code></pre>
 
 <p>Have a look at the unit tests in the Tests directory, so see more examples.</p>
 
 <h2>
+<a id="factory" class="anchor" href="#factory" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factory</h2>
+
+<p>To create new form instances, you can also use <code>InputValidation\FormFactory</code>:</p>
+
+<pre><code>$formFactory = new InputValidation\FormFactory($translator, $validator);
+$formFactory-&gt;setFactoryNamespace('App\Form');
+$formFactory-&gt;setFactoryPostfix('Form');
+$formFactory-&gt;getForm('User'); // Returns instance of App\Form\UserForm
+</code></pre>
+
+<h2>
 <a id="composer" class="anchor" href="#composer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Composer</h2>
 
-<p>If you are using composer, simply add "lastzero/php-input-validation" to your composer.json file and run <code>composer update</code>:</code></p>
+<p>If you are using composer, simply add "lastzero/php-input-validation" to your composer.json file and run <code>composer update</code>:</p>
 
 <pre><code>"require": {
     "lastzero/php-input-validation": "*"
