@@ -16,7 +16,7 @@ The architecture is **simple by design**: Form classes can inherit their definit
 Validation
 ----------
 
-This example shows how to validate user input in a REST controller action. Note how easy it is, to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
+This example shows how to validate user input in a REST controller action. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
 
     class UserController
     {
