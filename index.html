@@ -28,7 +28,7 @@
 <p>The architecture is <strong>simple by design</strong>: Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works.</p>
 
 <h2>
-<a id="validation" class="anchor" href="#validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Validation</h2>
+<a id="basic-example" class="anchor" href="#basic-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic example</h2>
 
 <p>This example shows how to validate user input in a REST controller action. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. </p>
 
@@ -37,7 +37,7 @@
     protected $user;
     protected $form;
 
-    public function __construct(User $user, UserForm $form)
+    public function __construct(UserModel $user, UserForm $form)
     {
         $this-&gt;user = $user;
         $this-&gt;form = $form;
@@ -65,7 +65,9 @@
 <p>See also <a href="https://github.com/lastzero/doctrine-active-record">Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL</a></p>
 
 <h2>
-<a id="definition" class="anchor" href="#definition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Definition</h2>
+<a id="form-field-definition" class="anchor" href="#form-field-definition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Form field definition</h2>
+
+<p>A detailed overview of field properties can be found in the documentation. <code>$_('label')</code> is used to translate field captions with <code>Symfony\Component\Translation\Translator</code> which supports a number of different translation file formats.</p>
 
 <pre><code>use InputValidation\Form;
 
@@ -76,46 +78,48 @@ class UserForm extends Form
         $definition = [
             'username' =&gt; [
                 'type' =&gt; 'string',
-                'caption' =&gt; 'Username',
+                'caption' =&gt; $this-&gt;_('username'),
                 'required' =&gt; true,
                 'min' =&gt; 3,
                 'max' =&gt; 15
             ],
             'email' =&gt; [
                 'type' =&gt; 'email',
-                'caption' =&gt; 'E - Mail',
+                'caption' =&gt; $this-&gt;_('email_address'),
                 'required' =&gt; true
             ],
             'gender' =&gt; [
                 'type' =&gt; 'string',
-                'caption' =&gt; 'Gender',
+                'caption' =&gt; $this-&gt;_('gender'),
                 'required' =&gt; false,
                 'options' =&gt; ['male', 'female'],
                 'optional' =&gt; true
             ],
             'birthday' =&gt; [
                 'type' =&gt; 'date',
-                'caption' =&gt; 'Birthday',
+                'caption' =&gt; $this-&gt;_('birthday'),
                 'required' =&gt; false
             ],
             'password' =&gt; [
                 'type' =&gt; 'string',
-                'caption' =&gt; 'Password',
+                'caption' =&gt; $this-&gt;_('password'),
                 'required' =&gt; true,
                 'min' =&gt; 5,
                 'max' =&gt; 30
             ],
             'password_again' =&gt; [
                 'type' =&gt; 'string',
-                'caption' =&gt; 'Password confirmation',
+                'caption' =&gt; $this-&gt;_('password_again'),
                 'required' =&gt; true,
                 'matches' =&gt; 'password'
             ],
             'continent' =&gt; [
                 'type' =&gt; 'string',
-                'caption' =&gt; 'Region',
+                'caption' =&gt; $this-&gt;_('region'),
                 'required' =&gt; true,
-                'options' =&gt; ['north_america', 'south_america', 'europe', 'asia', 'australia']
+                'options' =&gt; [
+                    'north_america', 'south_america', 'europe', 'asia', 'australia'
+                ]
             ]
         ];
 
@@ -125,36 +129,9 @@ class UserForm extends Form
 </code></pre>
 
 <h2>
-<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup</h2>
+<a id="creating-new-instances" class="anchor" href="#creating-new-instances" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating new instances</h2>
 
-<p>It is strongly recommended to use a <strong>dependency injection container</strong> such as the one provided by Symfony Components:</p>
-
-<pre><code>services:
-    message_selector:
-        class: \Symfony\Component\Translation\MessageSelector
-
-    yaml_loader:
-        class: \Symfony\Component\Translation\Loader\YamlFileLoader
-
-    array_loader:
-        class: \Symfony\Component\Translation\Loader\ArrayLoader
-
-    translator:
-        class: \Symfony\Component\Translation\Translator
-        arguments: ['de', @message_selector]
-        calls:
-          - [addLoader, ['yaml', @yaml_loader]]
-          - [addLoader, ['array', @array_loader]]
-
-    validator:
-        class: \InputValidation\Validator
-
-    form:
-        class: \InputValidation\Form
-        arguments: [@translator, @validator]
-</code></pre>
-
-<p>Alternatively, you can create new form instances manually (equivalent to the service definition above):</p>
+<p>You can create new form instances manually...</p>
 
 <pre><code>use InputValidation\Form;
 use InputValidation\Validator;
@@ -172,12 +149,7 @@ $validator = new Validator();
 $form = new Form($translator, $validator);
 </code></pre>
 
-<p>Have a look at the unit tests in the Tests directory, so see more examples.</p>
-
-<h2>
-<a id="factory" class="anchor" href="#factory" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factory</h2>
-
-<p>To create new form instances, you can also use <code>InputValidation\FormFactory</code>:</p>
+<p>... or using the convenient <code>InputValidation\FormFactory</code>:</p>
 
 <pre><code>$formFactory = new InputValidation\FormFactory($translator, $validator);
 $formFactory-&gt;setFactoryNamespace('App\Form');
@@ -200,7 +172,7 @@ $formFactory-&gt;getForm('User'); // Returns instance of App\Form\UserForm
 
 <p>Model validation generally operates on <strong>trusted</strong> data (internal system state) and should be <strong>repeatable</strong> at any point in time while input validation explicitly operates <strong>once</strong> on data that comes from <strong>untrusted</strong> sources (depending on the use case and user privileges). This separation makes it possible to build reusable models, controllers and forms that can be coupled through dependency injection (see REST controller example at the top).</p>
 
-<p>Think of input validation as <strong>whitelist</strong> validation ("accept known good") and model validation as <strong>blacklist</strong> validation ("reject known bad"). Whitelist validation is more secure while blacklist validation prevents your model layer from being overly constraint to very specific use cases.</p>
+<p>Think of input validation as <strong>whitelist</strong> validation ("accept known good") and model validation as <strong>blacklist</strong> validation ("reject known bad"). Whitelist validation is more secure while blacklist validation prevents your model layer from being overly constrained to very specific use cases.</p>
 
 <p>Invalid model data should always cause an <strong>exception</strong> to be thrown (otherwise the application can continue running without noticing the mistake) while invalid input values coming from external sources are <strong>not unexpected</strong>, but rather common (unless you got users that never make mistakes). Validation within a specific model may not be possible at all, if a set of input values must be validated together (because they depend on each other) but individual values are then stored in different models - at least it can create <strong>additional dependencies</strong> between models that would not be there otherwise up to the point that all models depend on each other. In short: The application may still work as expected, but the code is a mess.</p>
 
