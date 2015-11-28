@@ -61,46 +61,48 @@ Definition
             $definition = [
                 'username' => [
                     'type' => 'string',
-                    'caption' => 'Username',
+                    'caption' => $this->_('username'),
                     'required' => true,
                     'min' => 3,
                     'max' => 15
                 ],
                 'email' => [
                     'type' => 'email',
-                    'caption' => 'E - Mail',
+                    'caption' => $this->_('email_address'),
                     'required' => true
                 ],
                 'gender' => [
                     'type' => 'string',
-                    'caption' => 'Gender',
+                    'caption' => $this->_('gender'),
                     'required' => false,
                     'options' => ['male', 'female'],
                     'optional' => true
                 ],
                 'birthday' => [
                     'type' => 'date',
-                    'caption' => 'Birthday',
+                    'caption' => $this->_('birthday'),
                     'required' => false
                 ],
                 'password' => [
                     'type' => 'string',
-                    'caption' => 'Password',
+                    'caption' => $this->_('password'),
                     'required' => true,
                     'min' => 5,
                     'max' => 30
                 ],
                 'password_again' => [
                     'type' => 'string',
-                    'caption' => 'Password confirmation',
+                    'caption' => $this->_('password_again'),
                     'required' => true,
                     'matches' => 'password'
                 ],
                 'continent' => [
                     'type' => 'string',
-                    'caption' => 'Region',
+                    'caption' => $this->_('region'),
                     'required' => true,
-                    'options' => ['north_america', 'south_america', 'europe', 'asia', 'australia']
+                    'options' => [
+                        'north_america', 'south_america', 'europe', 'asia', 'australia'
+                    ]
                 ]
             ];
 
