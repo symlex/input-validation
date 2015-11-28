@@ -13,8 +13,8 @@ Besides basic validation rules such as type or length, more advanced features ar
 
 The architecture is **simple by design**: Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works.
 
-Validation
-----------
+Basic example
+-------------
 
 This example shows how to validate user input in a REST controller action. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
 
@@ -23,7 +23,7 @@ This example shows how to validate user input in a REST controller action. Note,
         protected $user;
         protected $form;
     
-        public function __construct(User $user, UserForm $form)
+        public function __construct(UserModel $user, UserForm $form)
         {
             $this->user = $user;
             $this->form = $form;
@@ -49,8 +49,9 @@ This example shows how to validate user input in a REST controller action. Note,
 
 See also [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https://github.com/lastzero/doctrine-active-record)
 
-Definition
-----------
+Form field definition
+---------------------
+A detailed overview of field properties can be found in the documentation. `$_('label')` is used to translate field captions with `Symfony\Component\Translation\Translator` which supports a number of different translation file formats.
 
     use InputValidation\Form;
 
@@ -110,35 +111,9 @@ Definition
         }
     }
 
-Setup
------
-It is strongly recommended to use a **dependency injection container** such as the one provided by Symfony Components:
-
-    services:
-        message_selector:
-            class: \Symfony\Component\Translation\MessageSelector
-    
-        yaml_loader:
-            class: \Symfony\Component\Translation\Loader\YamlFileLoader
-    
-        array_loader:
-            class: \Symfony\Component\Translation\Loader\ArrayLoader
-    
-        translator:
-            class: \Symfony\Component\Translation\Translator
-            arguments: ['de', @message_selector]
-            calls:
-              - [addLoader, ['yaml', @yaml_loader]]
-              - [addLoader, ['array', @array_loader]]
-
-        validator:
-            class: \InputValidation\Validator
-    
-        form:
-            class: \InputValidation\Form
-            arguments: [@translator, @validator]
-        
-Alternatively, you can create new form instances manually (equivalent to the service definition above):
+Dependencies
+------------
+You can create new form instances manually...
 
     use InputValidation\Form;
     use InputValidation\Validator;
@@ -155,12 +130,7 @@ Alternatively, you can create new form instances manually (equivalent to the ser
 
     $form = new Form($translator, $validator);
 
-Have a look at the unit tests in the Tests directory, so see more examples.
-
-Factory
--------
-
-To create new form instances, you can also use `InputValidation\FormFactory`:
+... or using the `InputValidation\FormFactory`:
 
     $formFactory = new InputValidation\FormFactory($translator, $validator);
     $formFactory->setFactoryNamespace('App\Form');
