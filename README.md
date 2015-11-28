@@ -111,8 +111,8 @@ A detailed overview of field properties can be found in the documentation. `$_('
         }
     }
 
-Dependencies
-------------
+Creating new instances
+----------------------
 You can create new form instances manually...
 
     use InputValidation\Form;
@@ -130,7 +130,7 @@ You can create new form instances manually...
 
     $form = new Form($translator, $validator);
 
-... or using the `InputValidation\FormFactory`:
+... or using the convenient `InputValidation\FormFactory`:
 
     $formFactory = new InputValidation\FormFactory($translator, $validator);
     $formFactory->setFactoryNamespace('App\Form');
