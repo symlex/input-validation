@@ -47,6 +47,8 @@ This example shows how to validate user input in a REST controller action. Note 
         }
     }
 
+See also [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https://github.com/lastzero/doctrine-active-record)
+
 Definition
 ----------
 
@@ -134,7 +136,7 @@ It is strongly recommended to use a **dependency injection container** such as t
             class: \InputValidation\Form
             arguments: [@translator, @validator]
         
-Alternativly, you can create new form instances manually (equivalent to the service definition above):
+Alternatively, you can create new form instances manually (equivalent to the service definition above):
 
     use InputValidation\Form;
     use InputValidation\Validator;
@@ -147,9 +149,21 @@ Alternativly, you can create new form instances manually (equivalent to the serv
     $translator->addLoader('yaml', new YamlFileLoader);
     $translator->addLoader('array', new ArrayLoader);
 
-    $form = new Form($translator, new Validator());
+    $validator = new Validator();
+
+    $form = new Form($translator, $validator);
 
 Have a look at the unit tests in the Tests directory, so see more examples.
+
+Factory
+-------
+
+To create new form instances, you can also use `InputValidation\FormFactory`:
+
+    $formFactory = new InputValidation\FormFactory($translator, $validator);
+    $formFactory->setFactoryNamespace('App\Form');
+    $formFactory->setFactoryPostfix('Form');
+    $formFactory->getForm('User'); // Returns instance of App\Form\UserForm
 
 Composer
 --------
@@ -208,10 +222,6 @@ Public methods
 **__construct(Translator $translator, Validator $validator, array $params = array())**
 
 The constructor requires instances of Symfony\Component\Translation\TranslatorInterface, InputValidation\Validator and an optional set of arbitrary parameters, which are passed to **init(array $params = array())** (protected class method).
-
-**factory($className, array $params = array())**
-
-Creates a new form instance (with an optional set of arbitrary parameters for init() - see __construct()). $className must not include a prefix (e.g. namespace) and postfix (e.g. 'Form'), if $_factoryPrefix and $_factoryPostfix are set (protected class properties).
 
 **setOptions(OptionsInterface $options)**
 
@@ -366,7 +376,3 @@ Resets the validation and clears all errors
 **getHash()**
 
 Returns hash that uniquely identifies the form (for caching comprehensive forms)
-
-See also
---------
-* [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https://github.com/lastzero/doctrine-active-record)
