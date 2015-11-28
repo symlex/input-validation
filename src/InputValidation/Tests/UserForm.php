@@ -2,7 +2,7 @@
 
 namespace InputValidation\Tests;
 
-use \InputValidation\Form;
+use InputValidation\Form;
 
 class UserForm extends Form
 {

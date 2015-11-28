@@ -50,7 +50,7 @@ This example shows how to validate user input in a REST controller action. Note 
 Definition
 ----------
 
-    use \InputValidation\Form;
+    use InputValidation\Form;
 
     class UserForm extends Form
     {
