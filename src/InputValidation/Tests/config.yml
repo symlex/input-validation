@@ -20,6 +20,9 @@ services:
     validator:
         class: \InputValidation\Validator
 
-    form:
-        class: \InputValidation\Form
+    form.factory:
+        class: \InputValidation\FormFactory
         arguments: [@translator, @validator]
+        calls:
+          - [ setFactoryNamespace, [ 'InputValidation' ] ]
+          - [ setFactoryPostfix, [ '' ] ]

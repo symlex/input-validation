@@ -88,20 +88,6 @@ class Form
     private $_options = null;
 
     /**
-     * Namespace used by the form factory method
-     *
-     * @var string
-     */
-    protected $_factoryNamespace = '';
-
-    /**
-     * Class name postfix used by the form factory method
-     *
-     * @var string
-     */
-    protected $_factoryPostfix = '';
-
-    /**
      * @var Translator
      */
     protected $_translator = null;
@@ -153,42 +139,6 @@ class Form
         }
 
         return $this->_params[$name];
-    }
-
-    /**
-     * Creates a new form instance
-     *
-     * @param $className string Form class name
-     * @param $params array Optional config parameters for init()
-     * @return Form
-     */
-    public function factory($className, array $params = array())
-    {
-        $className = $this->_factoryNamespace . '\\' . $className . $this->_factoryPostfix;
-
-        $result = new $className ($this->getTranslator(), $this->getValidator(), $params);
-
-        return $result;
-    }
-
-    /**
-     * Sets namespace used by the form factory method
-     *
-     * @param string $namespace
-     */
-    public function setFactoryNamespace($namespace)
-    {
-        $this->_factoryNamespace = (string)$namespace;
-    }
-
-    /**
-     * Sets class name postfix used by the form factory method
-     *
-     * @param string $postfix
-     */
-    public function setFactoryPostfix($postfix)
-    {
-        $this->_factoryPostfix = (string)$postfix;
     }
 
     /**

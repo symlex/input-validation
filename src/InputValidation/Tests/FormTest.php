@@ -19,7 +19,12 @@ class FormTest extends UnitTestCase
 
     public function setUp()
     {
-        $this->form = $this->get('form');
+        /**
+         * @var \InputValidation\FormFactory
+         */
+        $formFactory = $this->get('form.factory');
+
+        $this->form = $formFactory->getForm('Form');
     }
 
     public function testSetLocale()
