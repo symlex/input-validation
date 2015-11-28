@@ -14,9 +14,20 @@ use InputValidation\Exception\OptionsException as Exception;
  */
 class Options implements OptionsInterface
 {
+    /**
+     * @var Translator
+     */
     protected $translator;
+
+    /**
+     * @var YamlParser
+     */
     protected $yamlParser;
 
+    /**
+     * Options constructor.
+     * @param Translator $translator
+     */
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;

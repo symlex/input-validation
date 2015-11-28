@@ -52,22 +52,86 @@ use InputValidation\Exception\FormException as Exception;
  */
 class Form
 {
-    private $_definition = array(); // The form definition array (see documentation above)
-    private $_values = array(); // The form values
-    private $_errors = array(); // The form errors (after calling validate())
-    private $_groups = array(); // Optional form element groups
+    /**
+     * The form definition array (see documentation above)
+     *
+     * @var array
+     */
+    private $_definition = array();
+
+    /**
+     * Form field values
+     *
+     * @var array
+     */
+    private $_values = array();
+
+    /**
+     * Contains form field errors after calling validate()
+     *
+     * @var array
+     */
+    private $_errors = array();
+
+    /**
+     * Used to group form fields (optional feature)
+     *
+     * @var array
+     */
+    private $_groups = array();
+
+    /**
+     * Reference to object that implements OptionsInterface (for form elements that contain lists)
+     *
+     * @var OptionsInterface
+     */
     private $_options = null;
 
-    protected $_factoryPrefix = '';
+    /**
+     * Namespace used by the form factory method
+     *
+     * @var string
+     */
+    protected $_factoryNamespace = '';
+
+    /**
+     * Class name postfix used by the form factory method
+     *
+     * @var string
+     */
     protected $_factoryPostfix = '';
 
+    /**
+     * @var Translator
+     */
     protected $_translator = null;
+
+    /**
+     * @var Validator
+     */
     protected $_validator = null;
 
-    protected $_params = array(); // Optional params for init()
+    /**
+     * Optional form initialization parameters passed to init()
+     *
+     * @var array
+     */
+    protected $_params = array();
 
-    protected $_validationDone = false; // True, after the validation was executed
+    /**
+     * True, after the validation was executed
+     *
+     * @var bool
+     */
+    protected $_validationDone = false;
 
+    /**
+     * Form constructor.
+     *
+     * @param Translator $translator
+     * @param Validator $validator
+     * @param array $params
+     */
     public function __construct(Translator $translator, Validator $validator, array $params = array())
     {
         $this->setTranslator($translator);
@@ -100,25 +164,35 @@ class Form
      */
     public function factory($className, array $params = array())
     {
-        $className = $this->_factoryPrefix . '\\' . $className . $this->_factoryPostfix;
+        $className = $this->_factoryNamespace . '\\' . $className . $this->_factoryPostfix;
 
         $result = new $className ($this->getTranslator(), $this->getValidator(), $params);
 
         return $result;
     }
 
-    public function setFactoryPrefix($prefix)
+    /**
+     * Sets namespace used by the form factory method
+     *
+     * @param string $namespace
+     */
+    public function setFactoryNamespace($namespace)
     {
-        $this->_factoryPrefix = $prefix;
-    }
-
-    public function setFactoryPostfix($postfix)
-    {
-        $this->_factoryPostfix = $postfix;
+        $this->_factoryNamespace = (string)$namespace;
     }
 
     /**
-     * Init function (don't overwrite the constructor)
+     * Sets class name postfix used by the form factory method
+     *
+     * @param string $postfix
+     */
+    public function setFactoryPostfix($postfix)
+    {
+        $this->_factoryPostfix = (string)$postfix;
+    }
+
+    /**
+     * Form initialization method - must be implemented by inherited form classes
      *
      * @param array $params Optional parameters
      */
