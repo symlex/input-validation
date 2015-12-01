@@ -10,10 +10,10 @@ services:
 
     translator:
         class: \Symfony\Component\Translation\Translator
-        arguments: ['de', @message_selector]
+        arguments: ['de', "@message_selector"]
         calls:
-            - [addLoader, ['yaml', @yaml_loader]]
-            - [addLoader, ['array', @array_loader]]
+            - [addLoader, ['yaml', "@yaml_loader"]]
+            - [addLoader, ['array', "@array_loader"]]
             - [addResource, ['yaml', '%base.path%/Localization/de.yml', 'de']]
             - [addResource, ['yaml', '%base.path%/Localization/en.yml', 'en']]
 
@@ -22,7 +22,7 @@ services:
 
     form.factory:
         class: \InputValidation\FormFactory
-        arguments: [@translator, @validator]
+        arguments: ["@translator", "@validator"]
         calls:
             - [ setFactoryNamespace, [ 'InputValidation' ] ]
             - [ setFactoryPostfix, [ '' ] ]

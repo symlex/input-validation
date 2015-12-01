@@ -1,32 +1,39 @@
 {
-    "name": "lastzero/php-input-validation",
-    "type": "library",
-    "description": "Value container with built-in whitelist validation ('accept known good')",
-    "keywords": ["form","validation","input","symfony","silex"],
-    "homepage": "https://github.com/lastzero/php-input-validation",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Michael Mayer",
-            "email": "michael@lastzero.net",
-            "homepage": "http://lastzero.net/",
-            "role": "Developer"
-        }
-    ],
-    "require": {
-        "php": ">=5.4",
-        "symfony/translation": "~2.3",
-        "symfony/validator": "~2.3"
-    },
-    "require-dev": {
-        "lastzero/test-tools": "*",
-        "phpunit/phpunit": "@stable",
-        "sstalle/php7cc": "*"
-    },
-    "autoload": {
-        "psr-0": { "InputValidation\\": "src/" }
-    },
-    "config": {
-        "bin-dir": "bin/"
+  "name": "lastzero/php-input-validation",
+  "type": "library",
+  "description": "Value container with built-in whitelist validation ('accept known good')",
+  "keywords": [
+    "form",
+    "validation",
+    "input",
+    "symfony",
+    "silex"
+  ],
+  "homepage": "https://github.com/lastzero/php-input-validation",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Michael Mayer",
+      "email": "michael@lastzero.net",
+      "homepage": "https://lastzero.net/",
+      "role": "Developer"
     }
+  ],
+  "require": {
+    "php": ">=5.4",
+    "symfony/translation": "2.3 - 3.0",
+    "symfony/validator": "2.3 - 3.0"
+  },
+  "require-dev": {
+    "lastzero/test-tools": "*",
+    "phpunit/phpunit": "@stable"
+  },
+  "autoload": {
+    "psr-0": {
+      "InputValidation\\": "src/"
+    }
+  },
+  "config": {
+    "bin-dir": "bin/"
+  }
 }
