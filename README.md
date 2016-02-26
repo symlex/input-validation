@@ -76,7 +76,11 @@ A detailed overview of field properties can be found in the documentation. `$_('
                     'type' => 'string',
                     'caption' => $this->_('gender'),
                     'required' => false,
-                    'options' => ['male', 'female'],
+                    'options' => [
+                        'm' => 'Male',
+                        'f' => 'Female',
+                        'o' => 'Other'
+                    ],
                     'optional' => true
                 ],
                 'birthday' => [
@@ -102,7 +106,11 @@ A detailed overview of field properties can be found in the documentation. `$_('
                     'caption' => $this->_('region'),
                     'required' => true,
                     'options' => [
-                        'north_america', 'south_america', 'europe', 'asia', 'australia'
+                        'north_america' => 'North America',
+                        'south_america' => 'South Amertica',
+                        'europe' => 'Europe,
+                        'asia' => 'Asia',
+                        'australia' => 'Australia'
                     ]
                 ]
             ];
