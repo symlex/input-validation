@@ -45,6 +45,7 @@ use InputValidation\Exception\FormException as Exception;
  * depends_first_option Field is required, if the field defined in "depends" has the first value (see "options")
  * depends_last_option  Field is required, if the field defined in "depends" has the last value (see "options")
  * page                 Page number for multi-page forms
+ * tags                 List of tags, e.g. ['user', 'profile'] - can be used to get values by tag (optional)
  * =====================================================================================================================
  *
  * @author Michael Mayer <michael@lastzero.net>
