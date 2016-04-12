@@ -343,7 +343,7 @@ class Form
     public function addDefinition($key, array $definition)
     {
         if (isset($this->_definition[$key])) {
-            throw new Exception('Definition for ' . $key . ' already exists');
+            throw new Exception('Definition for "' . $key . '" already exists');
         }
 
         $this->_definition[$key] = $definition;
@@ -362,7 +362,7 @@ class Form
     public function changeDefinition($key, array $changes)
     {
         if (!isset($this->_definition[$key])) {
-            throw new Exception('Definition for ' . $key . ' does not exist');
+            throw new Exception('Definition for "' . $key . '" does not exist');
         }
 
         foreach ($changes as $prop => $val) {
@@ -508,7 +508,7 @@ class Form
             $this->setOptionalValueInArray($key, $values);
 
             if (!array_key_exists($key, $values)) {
-                throw new Exception ('Required value is missing: ' . $key);
+                throw new Exception ('Value is missing for "' . $key . '"');
             }
 
             $this->$key = $values[$key];
@@ -549,7 +549,7 @@ class Form
                 $this->setOptionalValueInArray($key, $values);
 
                 if (!array_key_exists($key, $values)) {
-                    throw new Exception ('Required value is missing: ' . $key);
+                    throw new Exception ('Value is missing for "' . $key . '"');
                 }
 
 
@@ -576,12 +576,11 @@ class Form
                 $this->setOptionalValueInArray($key, $values);
 
                 if (!array_key_exists($key, $values)) {
-                    throw new Exception ('Required value is missing: ' . $key);
+                    throw new Exception ('Value is missing for "' . $key . '"');
                 }
 
                 $this->$key = $values[$key];
             }
-
         }
 
         return $this;
@@ -720,7 +719,7 @@ class Form
 
             $this->_values[$key] = $val;
         } else {
-            throw new Exception ('Form field not defined: ' . $key);
+            throw new Exception ('No form field defined for "' . $key . '"');
         }
     }
 
@@ -738,7 +737,7 @@ class Form
 
             return $default;
         } catch (Exception $e) {
-            throw new Exception ('Form field not defined: ' . $key);
+            throw new Exception ('No form field defined for "' . $key . '"');
         }
     }
 
@@ -787,7 +786,7 @@ class Form
 
     /**
      * Adds a validation error
-     * Note: Accepts unlimited parameters for sprintf replacements in the translated error message
+     * Note: Accepts unlimited parameters for sprintf() replacements in the translated error message
      *
      * @param string $key The field name
      * @param string $token Error message token
@@ -811,7 +810,7 @@ class Form
     public function validate()
     {
         if ($this->_validationDone) {
-            throw new Exception('Validation was already done. Call clearErrors() to reset');
+            throw new Exception('Validation was already done - call clearErrors() to reset');
         }
 
         foreach ($this->_definition as $key => $def) {
