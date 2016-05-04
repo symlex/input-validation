@@ -565,7 +565,7 @@ class Form
      * and that are writable by the user (recommended method for most use cases)
      *
      * @param $values array The values (key must be the field name)
-     * @param $page scalar
+     * @param $page string
      * @throws Exception
      * @return $this
      */

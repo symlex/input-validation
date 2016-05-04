@@ -59,6 +59,19 @@ class Validator
     }
 
     /**
+     * Returns the form field definition(s)
+     *
+     * @param $key string Optional field name (only the single field definition is returned)
+     * @param $propertyName string Optional field property name (only the property value is returned)
+     * @throws Exception
+     * @return mixed
+     */
+    public function getDefinition($key = null, $propertyName = null)
+    {
+        return $this->getForm()->getDefinition($key, $propertyName);
+    }
+
+    /**
      * @param string $key Field key
      * @param string $token Text token
      * @param array $params Text replacements
@@ -185,23 +198,29 @@ class Validator
     {
         if (isset($def['depends'])) {
             if ($this->getForm()->{$def['depends']} != '' && $value == '' && !isset($def['depends_value_empty'])) {
-                if (isset($def['depends_first_option']) && isset($this->_definition[$def['depends']]['options'])) {
-                    reset($this->_definition[$def['depends']]['options']);
-                    if ($this->getForm()->{$def['depends']} == key($this->_definition[$def['depends']]['options'])) {
+                if (isset($def['depends_first_option']) && $this->getDefinition($def['depends'], 'options')) {
+                    $options = $this->getDefinition($def['depends'], 'options');
+
+                    reset($options);
+
+                    if ($this->getForm()->{$def['depends']} == key($options)) {
                         $this->addError($key, 'form.value_empty_depends',
                             array(
                                 '%other_field' => $this->getFieldCaption($def['depends']),
-                                '%value%' => current($this->_definition[$def['depends']]['options'])
+                                '%value%' => current($options)
                             )
                         );
                     }
-                } elseif (isset($def['depends_last_option']) && isset($this->_definition[$def['depends']]['options'])) {
-                    end($this->_definition[$def['depends']]['options']);
-                    if ($this->getForm()->{$def['depends']} == key($this->_definition[$def['depends']]['options'])) {
+                } elseif (isset($def['depends_last_option']) && $this->getDefinition($def['depends'], 'options')) {
+                    $options = $this->getDefinition($def['depends'], 'options');
+
+                    end($options);
+
+                    if ($this->getForm()->{$def['depends']} == key($options)) {
                         $this->addError($key, 'form.value_empty_depends',
                             array(
                                 '%other_field' => $this->getFieldCaption($def['depends']),
-                                '%value%' => current($this->_definition[$def['depends']]['options'])
+                                '%value%' => current($options)
                             )
                         );
                     }
