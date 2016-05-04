@@ -208,7 +208,7 @@ class Form
      *      )
      *  );
      *
-     * @param $groups array The group definition array
+     * @param array $groups The group definition array
      * @return $this
      */
     public function setGroups(array $groups)
@@ -291,7 +291,7 @@ class Form
     /**
      * Sets the form field definition array (see documentation)
      *
-     * @param $definition array The form field definition array
+     * @param array $definition The form field definition array
      * @return $this
      */
     public function setDefinition(array $definition)
@@ -304,8 +304,8 @@ class Form
     /**
      * Returns the form field definition(s)
      *
-     * @param $key string Optional field name (only the single field definition is returned)
-     * @param $propertyName string Optional field property name (only the property value is returned)
+     * @param string $key Optional field name (only the single field definition is returned)
+     * @param string $propertyName Optional field property name (only the property value is returned)
      * @throws Exception
      * @return mixed
      */
@@ -335,8 +335,8 @@ class Form
     /**
      * Adds a single form field definition
      *
-     * @param $key string Field name
-     * @param $definition array Field definition array
+     * @param string $key Field name
+     * @param array $definition Field definition array
      * @throws Exception
      * @return $this
      */
@@ -354,8 +354,8 @@ class Form
     /**
      * Changes a single form field definition
      *
-     * @param $key string Field name
-     * @param $changes array Field definition array
+     * @param string $key Field name
+     * @param array $changes Field definition array
      * @throws Exception
      * @return $this
      */
@@ -430,7 +430,7 @@ class Form
     /**
      * Returns true, if the field is writable by the user (readonly property)
      *
-     * @param $key string
+     * @param string $key
      * @return bool
      */
     protected function isWritable($key)
@@ -445,7 +445,7 @@ class Form
      * In general, this applies to non-checked checkboxes or to empty form elements
      * submitted by certain JavaScript frameworks (e.g. AngularJS).
      *
-     * @param $key string
+     * @param string $key
      * @return bool
      */
     protected function isOptional($key)
@@ -456,8 +456,8 @@ class Form
     /**
      * Sets the default types for values of form fields marked as optional
      *
-     * @param $key string The field name
-     * @param $values array Reference to the array containing all form values
+     * @param string $key The field name
+     * @param array $values Reference to the array containing all form values
      * @return $this
      */
     protected function setOptionalValueInArray($key, &$values)
@@ -483,7 +483,7 @@ class Form
      * Sets all form values (does not check, if the fields exist or if the fields are writable by the user)
      * Note: Throws an exception, if you try to set values for undefined fields
      *
-     * @param $values array The values (key must be the field name)
+     * @param array $values The values (key must be the field name)
      * @return $this
      */
     public function setAllValues(array $values)
@@ -498,7 +498,7 @@ class Form
     /**
      * Iterates through the form definition and sets the values for fields, that are present in the form definition
      *
-     * @param $values array The values (key must be the field name)
+     * @param array $values The values (key must be the field name)
      * @throws Exception
      * @return $this
      */
@@ -520,7 +520,7 @@ class Form
     /**
      * Iterates through the passed value array and sets the values for fields, that are writable by the user
      *
-     * @param $values array The values (key must be the field name)
+     * @param array $values The values (key must be the field name)
      * @return $this
      */
     public function setWritableValues(array $values)
@@ -538,7 +538,7 @@ class Form
      * Sets the values for fields, that are present in the form definition
      * and that are writable by the user (recommended method for most use cases)
      *
-     * @param $values array The values (key must be the field name)
+     * @param array $values The values (key must be the field name)
      * @throws Exception
      * @return $this
      */
@@ -564,8 +564,8 @@ class Form
      * Sets the values for fields on the given page, that are present in the form definition
      * and that are writable by the user (recommended method for most use cases)
      *
-     * @param $values array The values (key must be the field name)
-     * @param $page string
+     * @param array $values The values (key must be the field name)
+     * @param string $page
      * @throws Exception
      * @return $this
      */
@@ -770,7 +770,7 @@ class Form
     /**
      * Returns a translated field caption
      *
-     * @param $key string The field name
+     * @param string $key The field name
      * @return string
      */
     public function getFieldCaption($key)

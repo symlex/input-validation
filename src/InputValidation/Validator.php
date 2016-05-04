@@ -50,7 +50,7 @@ class Validator
     /**
      * Returns a translated field caption
      *
-     * @param $key string The field name
+     * @param string $key The field name
      * @return string
      */
     public function getFieldCaption($key)
@@ -61,8 +61,8 @@ class Validator
     /**
      * Returns the form field definition(s)
      *
-     * @param $key string Optional field name (only the single field definition is returned)
-     * @param $propertyName string Optional field property name (only the property value is returned)
+     * @param string $key Optional field name (only the single field definition is returned)
+     * @param string $propertyName Optional field property name (only the property value is returned)
      * @throws Exception
      * @return mixed
      */
@@ -374,9 +374,9 @@ class Validator
     /**
      * Applies the validators to a form field. Can be extended by inherited classes.
      *
-     * @param $key string The field name
-     * @param $def array The field definition
-     * @param $value mixed The field value
+     * @param string $key The field name
+     * @param array $def The field definition
+     * @param mixed $value The field value
      */
     public function validateField($key, $def, $value)
     {
