@@ -48,6 +48,17 @@ class Validator
     }
 
     /**
+     * Returns a translated field caption
+     *
+     * @param $key string The field name
+     * @return string
+     */
+    public function getFieldCaption($key)
+    {
+        return $this->getForm()->getFieldCaption($key);
+    }
+
+    /**
      * @param string $key Field key
      * @param string $token Text token
      * @param array $params Text replacements

@@ -773,7 +773,7 @@ class Form
      * @param $key string The field name
      * @return string
      */
-    protected function getFieldCaption($key)
+    public function getFieldCaption($key)
     {
         $caption = $this->getDefinition($key, 'caption');
 
