@@ -206,7 +206,7 @@ class Validator
                     if ($this->getForm()->{$def['depends']} == key($options)) {
                         $this->addError($key, 'form.value_empty_depends',
                             array(
-                                '%other_field' => $this->getFieldCaption($def['depends']),
+                                '%other_field%' => $this->getFieldCaption($def['depends']),
                                 '%value%' => current($options)
                             )
                         );
