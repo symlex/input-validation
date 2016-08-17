@@ -123,7 +123,18 @@ class Form
     {
         $this->setTranslator($translator);
         $this->setValidator($validator);
+        $this->setParams($params);
         $this->init($params);
+    }
+
+    /**
+     * Sets form config parameters
+     *
+     * @param array $params
+     */
+    protected function setParams(array $params)
+    {
+        $this->_params = $params;
     }
 
     /**
@@ -131,11 +142,11 @@ class Form
      *
      * @param string $name
      * @throws Exception
-     * @return string
+     * @return mixed
      */
     protected function getParam($name)
     {
-        if (isset($this->_params[$name])) {
+        if (!array_key_exists($name, $this->_params)) {
             throw new Exception ('Required parameter "' . $name . '" was not set');
         }
 
