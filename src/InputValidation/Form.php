@@ -736,6 +736,10 @@ class Form
 
     /**
      * Magic getter
+     *
+     * @param string $key
+     * @throws Exception
+     * @return mixed
      */
     public function __get($key)
     {
@@ -750,6 +754,25 @@ class Form
         } catch (Exception $e) {
             throw new Exception ('No form field defined for "' . $key . '"');
         }
+    }
+
+    /**
+     * Magic isset()
+     *
+     * @param $key
+     * @return bool
+     */
+    public function __isset($key)
+    {
+        try {
+            $value = $this->__get($key);
+
+            $result = ($value !== null);
+        } catch (Exception $e) {
+            $result = false;
+        }
+
+        return $result;
     }
 
     /**

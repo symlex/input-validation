@@ -83,6 +83,28 @@ class FormTest extends UnitTestCase
         $this->assertEquals('foo', $result['foo.bar']);
     }
 
+    public function testMagicIsset()
+    {
+        $this->form->setDefinition(
+            array(
+                'firstname' => array(
+                    'type' => 'string'
+                ),
+                'bar' => array(
+                    'type' => 'string'
+                )
+            )
+        );
+
+        $values = array('firstname' => 'foo', 'bar' => null);
+
+        $this->form->setWritableValues($values);
+
+        $this->assertTrue(isset($this->form->firstname));
+        $this->assertFalse(isset($this->form->lastname));
+        $this->assertFalse(isset($this->form->bar));
+    }
+
     public function testSetWritableValuesOnPageSuccess()
     {
         $this->form->setDefinition(
