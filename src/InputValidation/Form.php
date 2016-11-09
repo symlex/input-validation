@@ -474,17 +474,22 @@ class Form
     protected function setOptionalValueInArray($key, &$values)
     {
         if ($this->isOptional($key) && !array_key_exists($key, $values)) {
-            $type = $this->getDefinition($key, 'type');
-            switch ($type) {
-                case 'list':
-                    $values[$key] = array();
-                    break;
-                case 'bool':
-                    $values[$key] = false;
-                    break;
-                default:
-                    $values[$key] = null;
+            $default = $this->getDefinition($key, 'default');
+
+            if (is_null($default)) {
+                $type = $this->getDefinition($key, 'type');
+
+                switch ($type) {
+                    case 'list':
+                        $default = array();
+                        break;
+                    case 'bool':
+                        $default = false;
+                        break;
+                }
             }
+
+            $values[$key] = $default;
         }
 
         return $this;

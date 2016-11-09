@@ -83,6 +83,54 @@ class FormTest extends UnitTestCase
         $this->assertEquals('foo', $result['foo.bar']);
     }
 
+    public function testSetDefinedWritableValues()
+    {
+        $this->form->setDefinition(
+            array(
+                'deleted' => array(
+                    'readonly' => true,
+                    'default' => true
+                ),
+                'approved' => array(
+                    'type' => 'bool',
+                    'optional' => true
+                ),
+                'children' => array(
+                    'type' => 'list',
+                    'optional' => true
+                ),
+                'lastname' => array(
+                    'readonly' => false,
+                    'optional' => true,
+                    'default' => 'Trump'
+                ),
+                'company' => array(
+                    'default' => 'foo',
+                    'optional' => false,
+                    'type' => 'string'
+                ),
+                'address' => array(
+                    'default' => 'foo',
+                    'optional' => true,
+                    'type' => 'string'
+                )
+            )
+        );
+
+        $values = array('company' => 'xyz');
+
+        $this->form->setDefinedWritableValues($values);
+
+        $result = $this->form->getValues();
+
+        $this->assertEquals(true, $result['deleted']);
+        $this->assertEquals(false, $result['approved']);
+        $this->assertEquals(array(), $result['children']);
+        $this->assertEquals('Trump', $result['lastname']);
+        $this->assertEquals($values['company'], $result['company']);
+        $this->assertEquals('foo', $result['address']);
+    }
+
     public function testMagicIsset()
     {
         $this->form->setDefinition(
