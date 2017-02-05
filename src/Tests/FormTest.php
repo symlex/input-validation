@@ -42,9 +42,11 @@ class FormTest extends UnitTestCase
         $this->assertEquals(array(), $result);
     }
 
+    /**
+     * @expectedException \InputValidation\Exception\FormException
+     */
     public function testSetAllValues()
     {
-        $this->setExpectedException('\InputValidation\Exception\FormException');
         $values = array('foo' => 'bar', 'x' => 'y');
         $this->form->setAllValues($values);
         $result = $this->form->getValues();
@@ -283,10 +285,11 @@ class FormTest extends UnitTestCase
 
     }
 
+    /**
+     * @expectedException \InputValidation\Exception\FormException
+     */
     public function testSetWritableValuesOnPageError()
     {
-        $this->setExpectedException('\InputValidation\Exception\FormException');
-
         $this->form->setDefinition(
             array(
                 'firstname' => array(
@@ -662,9 +665,11 @@ class FormTest extends UnitTestCase
         $this->assertEquals(0, count($errors));
     }
 
+    /**
+     * @expectedException \InputValidation\Exception\FormException
+     */
     public function testChangeDefinitionException()
     {
-        $this->setExpectedException('\InputValidation\Exception\FormException');
         $this->form->changeDefinition('foo', array('min' => 3));
     }
 

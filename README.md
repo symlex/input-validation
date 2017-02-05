@@ -18,34 +18,36 @@ Basic example
 
 This example shows how to validate user input in a REST controller action. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
 
-    class UserController
+```php
+class UserController
+{
+    protected $user;
+    protected $form;
+
+    public function __construct(UserModel $user, UserForm $form)
     {
-        protected $user;
-        protected $form;
+        $this->user = $user;
+        $this->form = $form;
+    }
     
-        public function __construct(UserModel $user, UserForm $form)
-        {
-            $this->user = $user;
-            $this->form = $form;
+    public function putAction($id, Request $request) // Update
+    {
+        $this->user->find($id); // Find entity (throws exception, if not found)
+        
+        $this->form->setDefinedValues($this->user->getValues()); // Initialization
+        $this->form->setDefinedWritableValues($request->request->all()); // Input values
+        $this->form->validate(); // Validation
+
+        if($this->form->hasErrors()) {
+            throw new FormInvalidException($this->form->getFirstError());
         }
         
-        public function putAction($id, Request $request) // Update
-        {
-            $this->user->find($id); // Find entity (throws exception, if not found)
-            
-            $this->form->setDefinedValues($this->user->getValues()); // Initialization
-            $this->form->setDefinedWritableValues($request->request->all()); // Input values
-            $this->form->validate(); // Validation
-    
-            if($this->form->hasErrors()) {
-                throw new FormInvalidException($this->form->getFirstError());
-            }
-            
-            $this->user->update($this->form->getValues()); // Update values
-    
-            return $this->user->getValues(); // Return updated entity values
-        }
+        $this->user->update($this->form->getValues()); // Update values
+
+        return $this->user->getValues(); // Return updated entity values
     }
+}
+```
 
 See also [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https://github.com/lastzero/doctrine-active-record)
 
@@ -53,106 +55,114 @@ Form field definition
 ---------------------
 A detailed overview of field properties can be found in the documentation. `$_('label')` is used to translate field captions with `Symfony\Component\Translation\Translator` which supports a number of different translation file formats.
 
-    use InputValidation\Form;
+```php
+use InputValidation\Form;
 
-    class UserForm extends Form
+class UserForm extends Form
+{
+    protected function init(array $params = array())
     {
-        protected function init(array $params = array())
-        {
-            $definition = [
-                'username' => [
-                    'type' => 'string',
-                    'caption' => $this->_('username'),
-                    'required' => true,
-                    'min' => 3,
-                    'max' => 15
+        $definition = [
+            'username' => [
+                'type' => 'string',
+                'caption' => $this->_('username'),
+                'required' => true,
+                'min' => 3,
+                'max' => 15
+            ],
+            'email' => [
+                'type' => 'email',
+                'caption' => $this->_('email_address'),
+                'required' => true
+            ],
+            'gender' => [
+                'type' => 'string',
+                'caption' => $this->_('gender'),
+                'required' => false,
+                'options' => [
+                    'm' => 'Male',
+                    'f' => 'Female',
+                    'o' => 'Other'
                 ],
-                'email' => [
-                    'type' => 'email',
-                    'caption' => $this->_('email_address'),
-                    'required' => true
-                ],
-                'gender' => [
-                    'type' => 'string',
-                    'caption' => $this->_('gender'),
-                    'required' => false,
-                    'options' => [
-                        'm' => 'Male',
-                        'f' => 'Female',
-                        'o' => 'Other'
-                    ],
-                    'optional' => true
-                ],
-                'birthday' => [
-                    'type' => 'date',
-                    'caption' => $this->_('birthday'),
-                    'required' => false
-                ],
-                'password' => [
-                    'type' => 'string',
-                    'caption' => $this->_('password'),
-                    'required' => true,
-                    'min' => 5,
-                    'max' => 30
-                ],
-                'password_again' => [
-                    'type' => 'string',
-                    'caption' => $this->_('password_again'),
-                    'required' => true,
-                    'matches' => 'password'
-                ],
-                'continent' => [
-                    'type' => 'string',
-                    'caption' => $this->_('region'),
-                    'required' => true,
-                    'options' => [
-                        'north_america' => 'North America',
-                        'south_america' => 'South Amertica',
-                        'europe' => 'Europe,
-                        'asia' => 'Asia',
-                        'australia' => 'Australia'
-                    ]
+                'optional' => true
+            ],
+            'birthday' => [
+                'type' => 'date',
+                'caption' => $this->_('birthday'),
+                'required' => false
+            ],
+            'password' => [
+                'type' => 'string',
+                'caption' => $this->_('password'),
+                'required' => true,
+                'min' => 5,
+                'max' => 30
+            ],
+            'password_again' => [
+                'type' => 'string',
+                'caption' => $this->_('password_again'),
+                'required' => true,
+                'matches' => 'password'
+            ],
+            'continent' => [
+                'type' => 'string',
+                'caption' => $this->_('region'),
+                'required' => true,
+                'options' => [
+                    'north_america' => 'North America',
+                    'south_america' => 'South Amertica',
+                    'europe' => 'Europe,
+                    'asia' => 'Asia',
+                    'australia' => 'Australia'
                 ]
-            ];
+            ]
+        ];
 
-            $this->setDefinition($definition);
-        }
+        $this->setDefinition($definition);
     }
+}
+```
 
 Creating new instances
 ----------------------
 You can create new form instances manually...
 
-    use InputValidation\Form;
-    use InputValidation\Validator;
-    use Symfony\Component\Translation\Translator;
-    use Symfony\Component\Translation\MessageSelector;
-    use Symfony\Component\Translation\Loader\YamlFileLoader;
-    use Symfony\Component\Translation\Loader\ArrayLoader;
-    
-    $translator = new Translator('en', new MessageSelector);
-    $translator->addLoader('yaml', new YamlFileLoader);
-    $translator->addLoader('array', new ArrayLoader);
+```php
+use InputValidation\Form;
+use InputValidation\Validator;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Translation\MessageSelector;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Symfony\Component\Translation\Loader\ArrayLoader;
 
-    $validator = new Validator();
+$translator = new Translator('en', new MessageSelector);
+$translator->addLoader('yaml', new YamlFileLoader);
+$translator->addLoader('array', new ArrayLoader);
 
-    $form = new Form($translator, $validator);
+$validator = new Validator();
+
+$form = new Form($translator, $validator);
+```
 
 ... or using the convenient `InputValidation\FormFactory`:
 
-    $formFactory = new InputValidation\FormFactory($translator, $validator);
-    $formFactory->setFactoryNamespace('App\Form');
-    $formFactory->setFactoryPostfix('Form');
-    $formFactory->getForm('User'); // Returns instance of App\Form\UserForm
+```php
+$formFactory = new InputValidation\FormFactory($translator, $validator);
+$formFactory->setFactoryNamespace('App\Form');
+$formFactory->setFactoryPostfix('Form');
+$formFactory->getForm('User'); // Returns instance of App\Form\UserForm
+```
 
 Composer
 --------
 
 If you are using composer, simply add "lastzero/php-input-validation" to your composer.json file and run `composer update`:
 
-    "require": {
-        "lastzero/php-input-validation": "*"
-    }
+```
+"require": {
+    "lastzero/php-input-validation": "*"
+}
+```
 
 Form Validation vs Model Validation
 -----------------------------------
