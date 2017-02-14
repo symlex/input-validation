@@ -117,12 +117,14 @@ class Form
      *
      * @param Translator $translator
      * @param Validator $validator
+     * @param OptionsInterface $options
      * @param array $params
      */
-    public function __construct(Translator $translator, Validator $validator, array $params = array())
+    public function __construct(Translator $translator, Validator $validator, OptionsInterface $options, array $params = array())
     {
         $this->setTranslator($translator);
         $this->setValidator($validator);
+        $this->setOptions($options);
         $this->setParams($params);
         $this->init($params);
     }
@@ -144,7 +146,7 @@ class Form
      * @throws Exception
      * @return mixed
      */
-    protected function getParam($name)
+    protected function getParam(string $name)
     {
         if (!array_key_exists($name, $this->_params)) {
             throw new Exception ('Required parameter "' . $name . '" was not set');
@@ -181,7 +183,7 @@ class Form
      * @throws Exception
      * @return OptionsInterface
      */
-    public function getOptions($listName = '')
+    public function getOptions(string $listName = '')
     {
         if (empty($this->_options)) {
             throw new Exception ('No options instance set');
@@ -202,9 +204,23 @@ class Form
      * @param string $label The field label token
      * @return array
      */
-    protected function defaultOption($label = 'please_select')
+    protected function getDefaultOption(string $label = 'please_select')
     {
         return array('' => $this->translate($label));
+    }
+
+    /**
+     * Returns a list of options with default label for no selection
+     *
+     * @param string $listName Optional name of options list (shortcut)
+     * @param string $defaultLabel The field label token
+     * @return array
+     */
+    public function getOptionsWithDefault(string $listName, string $defaultLabel = 'please_select')
+    {
+        $result = $this->getDefaultOption($defaultLabel) + $this->getOptions($listName);
+
+        return $result;
     }
 
     /**
@@ -282,7 +298,7 @@ class Form
     /**
      * Sets the current locale e.g. en, de or fr
      */
-    public function setLocale($locale)
+    public function setLocale(string $locale)
     {
         $this->getTranslator()->setLocale($locale);
 
@@ -320,7 +336,7 @@ class Form
      * @throws Exception
      * @return mixed
      */
-    public function getDefinition($key = null, $propertyName = null)
+    public function getDefinition(string $key = null, string $propertyName = null)
     {
         if (!is_array($this->_definition)) {
             throw new Exception('Form definition is not an array. Something went totally wrong.');
@@ -351,7 +367,7 @@ class Form
      * @throws Exception
      * @return $this
      */
-    public function addDefinition($key, array $definition)
+    public function addDefinition(string $key, array $definition)
     {
         if (isset($this->_definition[$key])) {
             throw new Exception('Definition for "' . $key . '" already exists');
@@ -370,7 +386,7 @@ class Form
      * @throws Exception
      * @return $this
      */
-    public function changeDefinition($key, array $changes)
+    public function changeDefinition(string $key, array $changes)
     {
         if (!isset($this->_definition[$key])) {
             throw new Exception('Definition for "' . $key . '" does not exist');
@@ -444,7 +460,7 @@ class Form
      * @param string $key
      * @return bool
      */
-    protected function isWritable($key)
+    protected function isWritable(string $key)
     {
         return $this->getDefinition($key, 'readonly') != true;
     }
@@ -459,7 +475,7 @@ class Form
      * @param string $key
      * @return bool
      */
-    protected function isOptional($key)
+    protected function isOptional(string $key)
     {
         return ($this->getDefinition($key, 'checkbox') == true) || ($this->getDefinition($key, 'optional') == true);
     }
@@ -471,7 +487,7 @@ class Form
      * @param array $values Reference to the array containing all form values
      * @return $this
      */
-    protected function setOptionalValueInArray($key, &$values)
+    protected function setOptionalValueInArray(string $key, &$values)
     {
         if ($this->isOptional($key) && !array_key_exists($key, $values)) {
             $default = $this->getDefinition($key, 'default');
@@ -585,7 +601,7 @@ class Form
      * @throws Exception
      * @return $this
      */
-    public function setWritableValuesOnPage(array $values, $page)
+    public function setWritableValuesOnPage(array $values, string $page)
     {
         foreach ($this->_definition as $key => $value) {
             if (isset($value['page']) && $value['page'] == $page && $this->isWritable($key)) {
@@ -627,7 +643,7 @@ class Form
      *
      * @return array
      */
-    public function getValuesByTag($tag)
+    public function getValuesByTag(string $tag)
     {
         $result = array();
 
@@ -709,7 +725,7 @@ class Form
     /**
      * Magic setter
      */
-    public function __set($key, $val)
+    public function __set(string $key, $val)
     {
         if (isset($this->_definition[$key])) {
             $type = $this->getDefinition($key, 'type');
@@ -746,7 +762,7 @@ class Form
      * @throws Exception
      * @return mixed
      */
-    public function __get($key)
+    public function __get(string $key)
     {
         try {
             $default = $this->getDefinition($key, 'default');
@@ -767,7 +783,7 @@ class Form
      * @param $key
      * @return bool
      */
-    public function __isset($key)
+    public function __isset(string $key)
     {
         try {
             $value = $this->__get($key);
@@ -787,7 +803,7 @@ class Form
      * @param array $params
      * @return string The translated string
      */
-    public function translate($token, array $params = array())
+    public function translate(string $token, array $params = array())
     {
         return $this->getTranslator()->trans($token, $params);
     }
@@ -800,7 +816,7 @@ class Form
      * @param array $params
      * @return string The translated string
      */
-    public function _($token, array $params = array())
+    public function _(string $token, array $params = array())
     {
         return $this->translate($token, $params);
     }
@@ -812,7 +828,7 @@ class Form
      * @param string $key The field name
      * @return string
      */
-    public function getFieldCaption($key)
+    public function getFieldCaption(string $key)
     {
         $caption = $this->getDefinition($key, 'caption');
 
@@ -832,7 +848,7 @@ class Form
      * @param array $params Error message replacements
      * @return $this
      */
-    public function addError($key, $token, array $params = array())
+    public function addError(string $key, string $token, array $params = array())
     {
         $caption = $this->getFieldCaption($key);
 

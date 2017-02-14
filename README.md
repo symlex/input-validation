@@ -141,13 +141,15 @@ $translator->addLoader('array', new ArrayLoader);
 
 $validator = new Validator();
 
-$form = new Form($translator, $validator);
+$options = new Options(); // Must implement OptionsInterface
+
+$form = new Form($translator, $validator, $options);
 ```
 
 ... or using the convenient `InputValidation\FormFactory`:
 
 ```php
-$formFactory = new InputValidation\FormFactory($translator, $validator);
+$formFactory = new InputValidation\FormFactory($translator, $validator, $options);
 $formFactory->setFactoryNamespace('App\Form');
 $formFactory->setFactoryPostfix('Form');
 $formFactory->getForm('User'); // Returns instance of App\Form\UserForm

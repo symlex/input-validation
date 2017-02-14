@@ -2,7 +2,7 @@
 
 namespace InputValidation\Tests;
 
-use InputValidation\FormFactory;
+use InputValidation\Factory;
 use TestTools\TestCase\UnitTestCase;
 
 /**
@@ -12,16 +12,13 @@ use TestTools\TestCase\UnitTestCase;
 class FormFactoryTest extends UnitTestCase
 {
     /**
-     * @var FormFactory
+     * @var Factory
      */
     protected $factory;
 
     public function setUp()
     {
-        $translator = $this->get('translator');
-        $validator = $this->get('validator');
-
-        $this->factory = new FormFactory ($translator, $validator);
+        $this->factory = $this->get('form.factory');
     }
 
     public function testGetForm()
@@ -45,16 +42,16 @@ class FormFactoryTest extends UnitTestCase
 
     public function testGetFactoryNamespace()
     {
-        $this->assertEquals('', $this->factory->getFactoryNamespace());
+        $this->assertEquals('\InputValidation', $this->factory->getFactoryNamespace());
         $this->factory->setFactoryNamespace('InputValidation\Tests');
         $this->assertEquals('\InputValidation\Tests', $this->factory->getFactoryNamespace());
     }
 
     public function testGetFactoryPostfix()
     {
-        $this->assertEquals('Form', $this->factory->getFactoryPostfix());
-        $this->factory->setFactoryPostfix('');
         $this->assertEquals('', $this->factory->getFactoryPostfix());
+        $this->factory->setFactoryPostfix('Form');
+        $this->assertEquals('Form', $this->factory->getFactoryPostfix());
     }
 
     /**

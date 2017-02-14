@@ -9,7 +9,7 @@ use InputValidation\Exception\FactoryException;
  * @author Michael Mayer <michael@lastzero.net>
  * @license MIT
  */
-class FormFactory
+class Factory
 {
     /**
      * Namespace used by the factory method (see getForm())
@@ -36,15 +36,22 @@ class FormFactory
     protected $_validator = null;
 
     /**
+     * @var OptionsInterface
+     */
+    private $options;
+
+    /**
      * Form constructor.
      *
      * @param Translator $translator
      * @param Validator $validator
+     * @param OptionsInterface $options
      */
-    public function __construct(Translator $translator, Validator $validator)
+    public function __construct(Translator $translator, Validator $validator, OptionsInterface $options)
     {
         $this->setTranslator($translator);
         $this->setValidator($validator);
+        $this->setOptions($options);
     }
 
     /**
@@ -55,7 +62,7 @@ class FormFactory
      * @throws FactoryException
      * @return Form
      */
-    public function getForm($name, array $params = array())
+    public function getForm(string $name, array $params = array())
     {
         if (empty($name)) {
             throw new FactoryException ('getForm() requires a form name as first argument');
@@ -80,9 +87,9 @@ class FormFactory
      * @return Form
      * @throws FactoryException
      */
-    protected function createFormInstance($className, array $params)
+    protected function createFormInstance(string $className, array $params)
     {
-        $result = new $className ($this->getTranslator(), $this->getValidator(), $params);
+        $result = new $className ($this->getTranslator(), $this->getValidator(), $this->getOptions(), $params);
 
         return $result;
     }
@@ -92,9 +99,9 @@ class FormFactory
      *
      * @param string $namespace
      */
-    public function setFactoryNamespace($namespace)
+    public function setFactoryNamespace(string $namespace)
     {
-        $this->_factoryNamespace = (string)$namespace;
+        $this->_factoryNamespace = $namespace;
     }
 
     /**
@@ -118,9 +125,9 @@ class FormFactory
      *
      * @param string $postfix
      */
-    public function setFactoryPostfix($postfix)
+    public function setFactoryPostfix(string $postfix)
     {
-        $this->_factoryPostfix = (string)$postfix;
+        $this->_factoryPostfix = $postfix;
     }
 
     /**
@@ -137,7 +144,7 @@ class FormFactory
      * @return Translator
      * @throws FactoryException
      */
-    public function getTranslator()
+    protected function getTranslator()
     {
         if (!$this->_translator) {
             throw new FactoryException('Translator was not set');
@@ -150,7 +157,7 @@ class FormFactory
      * @param Translator $translator
      * @return $this
      */
-    public function setTranslator(Translator $translator)
+    protected function setTranslator(Translator $translator)
     {
         $this->_translator = $translator;
 
@@ -161,7 +168,7 @@ class FormFactory
      * @return Validator
      * @throws FactoryException
      */
-    public function getValidator()
+    protected function getValidator()
     {
         if (!$this->_validator) {
             throw new FactoryException('Validator was not set');
@@ -174,10 +181,29 @@ class FormFactory
      * @param Validator $validator
      * @return $this
      */
-    public function setValidator(Validator $validator)
+    protected function setValidator(Validator $validator)
     {
         $this->_validator = $validator;
 
         return $this;
+    }
+
+    /**
+     * @param OptionsInterface $options
+     * @return $this
+     */
+    protected function setOptions(OptionsInterface $options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @return OptionsInterface
+     */
+    protected function getOptions()
+    {
+        return $this->options;
     }
 }

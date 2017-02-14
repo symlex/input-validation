@@ -2,7 +2,6 @@
 
 namespace InputValidation\Tests;
 
-use InputValidation\Options;
 use TestTools\TestCase\UnitTestCase;
 use InputValidation\Form;
 
@@ -20,7 +19,7 @@ class FormTest extends UnitTestCase
     public function setUp()
     {
         /**
-         * @var \InputValidation\FormFactory
+         * @var \InputValidation\Factory
          */
         $formFactory = $this->get('form.factory');
 

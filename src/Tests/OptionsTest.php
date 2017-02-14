@@ -3,31 +3,33 @@
 namespace InputValidation\Tests;
 
 use TestTools\TestCase\UnitTestCase;
-use InputValidation\Options;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>
  * @license MIT
  */
-class OptionsTest extends UnitTestCase {
+class OptionsTest extends UnitTestCase
+{
     /**
      * @var Options
      */
     protected $options;
 
-    public function setUp () {
-        $translator = $this->get('translator');
-        $this->options = new Options($translator);
+    public function setUp()
+    {
+        $this->options = $this->get('options');
     }
 
-    public function testGetCountries () {
+    public function testGetCountries()
+    {
         $result = $this->options->getCountries();
 
         $this->assertInternalType('array', $result);
         $this->assertCount(248, $result);
     }
 
-    public function testGetCountriesLocaleEN () {
+    public function testGetCountriesLocaleEN()
+    {
         $translator = $this->get('translator');
         $translator->setLocale('en');
 
@@ -40,7 +42,8 @@ class OptionsTest extends UnitTestCase {
         $this->assertEquals('Germany', $result['DE']);
     }
 
-    public function testGetCountriesLocaleRU () {
+    public function testGetCountriesLocaleRU()
+    {
         $translator = $this->get('translator');
         $translator->setLocale('ru');
 
@@ -53,11 +56,19 @@ class OptionsTest extends UnitTestCase {
         $this->assertEquals('Германия', $result['DE']);
     }
 
-    public function testGet () {
+    public function testGet()
+    {
         $result = $this->options->get('countries');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(248, $result);
         $this->assertEquals('Deutschland', $result['DE']);
+    }
+
+    public function testGetOptionsPath()
+    {
+        $this->options->setOptionsPath('FooBar/Baz');
+        $result = $this->options->getOptionsPath();
+        $this->assertEquals('FooBar/Baz', $result);
     }
 }

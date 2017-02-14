@@ -1,16 +1,18 @@
 services:
     message_selector:
-        class: \Symfony\Component\Translation\MessageSelector
+        class: Symfony\Component\Translation\MessageSelector
 
     yaml_loader:
-        class: \Symfony\Component\Translation\Loader\YamlFileLoader
+        class: Symfony\Component\Translation\Loader\YamlFileLoader
 
     array_loader:
-        class: \Symfony\Component\Translation\Loader\ArrayLoader
+        class: Symfony\Component\Translation\Loader\ArrayLoader
 
     translator:
-        class: \Symfony\Component\Translation\Translator
-        arguments: ['de', "@message_selector"]
+        class: Symfony\Component\Translation\Translator
+        arguments:
+            - 'de'
+            - "@message_selector"
         calls:
             - [addLoader, ['yaml', "@yaml_loader"]]
             - [addLoader, ['array', "@array_loader"]]
@@ -18,11 +20,21 @@ services:
             - [addResource, ['yaml', '%base.path%/Localization/en.yml', 'en']]
 
     validator:
-        class: \InputValidation\Validator
+        class: InputValidation\Validator
+
+    options:
+        class: InputValidation\Tests\Options
+        arguments:
+            - "@translator"
+        calls:
+            - [ setOptionsPath, [ '%base.path%/Tests/_options' ] ]
 
     form.factory:
-        class: \InputValidation\FormFactory
-        arguments: ["@translator", "@validator"]
+        class: InputValidation\Factory
+        arguments:
+            - "@translator"
+            - "@validator"
+            - "@options"
         calls:
             - [ setFactoryNamespace, [ 'InputValidation' ] ]
             - [ setFactoryPostfix, [ '' ] ]

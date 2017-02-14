@@ -53,7 +53,7 @@ class Validator
      * @param string $key The field name
      * @return string
      */
-    public function getFieldCaption($key)
+    public function getFieldCaption(string $key)
     {
         return $this->getForm()->getFieldCaption($key);
     }
@@ -66,7 +66,7 @@ class Validator
      * @throws Exception
      * @return mixed
      */
-    public function getDefinition($key = null, $propertyName = null)
+    public function getDefinition(string $key = null, string $propertyName = null)
     {
         return $this->getForm()->getDefinition($key, $propertyName);
     }
@@ -76,7 +76,7 @@ class Validator
      * @param string $token Text token
      * @param array $params Text replacements
      */
-    protected function addError($key, $token, array $params = array())
+    protected function addError(string $key, string $token, array $params = array())
     {
         $this->getForm()->addError($key, $token, $params);
     }
@@ -88,7 +88,7 @@ class Validator
      * @param array $param
      * @return string
      */
-    protected function translate($token, array $param = array())
+    protected function translate(string $token, array $param = array())
     {
         return $this->getForm()->translate($token, $param);
     }
@@ -96,7 +96,7 @@ class Validator
     /**
      * Validator for the "required" form field property
      */
-    public function validateRequired($key, $def, $value)
+    public function validateRequired(string $key, array $def, $value)
     {
         if (isset($def['required']) && ($def['required'] === true) && ($value === null || $value === '' || $value === false)) {
             $this->addError($key, 'form.value_must_not_be_empty');
@@ -106,7 +106,7 @@ class Validator
     /**
      * Validator for the "matches" form field property
      */
-    public function validateMatches($key, $def, $value)
+    public function validateMatches(string $key, array $def, $value)
     {
         if (isset($def['matches'])) {
             if ($def['matches'][0] == '!') {
@@ -125,7 +125,7 @@ class Validator
     /**
      * Validator for the "min" form field property
      */
-    public function validateMin($key, $def, $value)
+    public function validateMin(string $key, array $def, $value)
     {
         if (!isset($def['options']) && isset($def['min']) && $value != '') {
             if (isset($def['type']) && ($def['type'] == 'int' || $def['type'] == 'numeric' || $def['type'] == 'float')) {
@@ -160,7 +160,7 @@ class Validator
     /**
      * Validator for the "max" form field property
      */
-    public function validateMax($key, $def, $value)
+    public function validateMax(string $key, array $def, $value)
     {
         if (!isset($def['options']) && isset($def['max']) && $value != '') {
             if (isset($def['type']) && ($def['type'] == 'int' || $def['type'] == 'numeric' || $def['type'] == 'float')) {
@@ -194,7 +194,7 @@ class Validator
     /**
      * Validator for the "depends" form field property
      */
-    public function validateDepends($key, $def, $value)
+    public function validateDepends(string $key, array $def, $value)
     {
         if (isset($def['depends'])) {
             if ($this->getForm()->{$def['depends']} != '' && $value == '' && !isset($def['depends_value_empty'])) {
@@ -240,7 +240,7 @@ class Validator
     /**
      * Validator for the "regex" form field property
      */
-    public function validateRegex($key, $def, $value)
+    public function validateRegex(string $key, array $def, $value)
     {
         if (is_scalar($value) && isset($def['regex']) && !empty($value) && !preg_match($def['regex'], $value)) {
             $this->addError($key, 'form.value_not_valid_regex');
@@ -250,7 +250,7 @@ class Validator
     /**
      * Validator for the "options" form field property
      */
-    public function validateOptions($key, $def, $value)
+    public function validateOptions(string $key, array $def, $value)
     {
         if (isset($def['options']) && $value != '') {
             if (isset($def['min']) || isset($def['max'])) {
@@ -290,7 +290,7 @@ class Validator
     /**
      * Validator for the "type" form field property
      */
-    public function validateType($key, $def, $value)
+    public function validateType(string $key, array $def, $value)
     {
         if (isset($def['type']) && $value != '') {
             switch ($def['type']) {
@@ -378,7 +378,7 @@ class Validator
      * @param array $def The field definition
      * @param mixed $value The field value
      */
-    public function validateField($key, $def, $value)
+    public function validateField(string $key, array $def, $value)
     {
         $this->validateRequired($key, $def, $value);
         $this->validateMin($key, $def, $value);
