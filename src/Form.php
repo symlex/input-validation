@@ -780,7 +780,7 @@ class Form
     /**
      * Magic isset()
      *
-     * @param $key
+     * @param string $key
      * @return bool
      */
     public function __isset(string $key)

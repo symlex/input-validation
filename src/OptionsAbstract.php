@@ -137,7 +137,6 @@ abstract class OptionsAbstract implements OptionsInterface
      * Sets the default value
      *
      * @param string $locale
-     * @return string
      */
     public function setDefaultLocale(string $locale)
     {
