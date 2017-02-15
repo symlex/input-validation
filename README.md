@@ -30,7 +30,7 @@ class UserController
         $this->form = $form;
     }
     
-    public function putAction($id, Request $request) // Update
+    public function putAction(int $id, Request $request): array // Update
     {
         $this->user->find($id); // Find entity (throws exception, if not found)
         
@@ -47,7 +47,7 @@ class UserController
         return $this->user->getValues(); // Return updated entity values
     }
     
-    public function optionsAction($id) // Describe form fields for user resource
+    public function optionsAction(int $id): array // Describe form fields for user resource
     {
         $this->user->find($id); // Find entity (throws exception, if not found)
         
