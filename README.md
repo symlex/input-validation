@@ -11,7 +11,7 @@ A major advantage of this data source agnostic approach is that developers can d
 
 Besides basic validation rules such as type or length, more advanced features are supported as well - for example dependent fields, internationalization and multi-page forms. Validated values can be fetched individually, as flat array, by tag or by page.
 
-The usage is simple by design: Form classes can inherit their definitions from each other. If needed, validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works.
+The usage is simple: Form classes can inherit their definitions from each other. If needed, validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in object-oriented design to understand how it works.
 
 Basic example
 -------------
