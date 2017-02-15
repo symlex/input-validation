@@ -46,6 +46,15 @@ class UserController
 
         return $this->user->getValues(); // Return updated entity values
     }
+    
+    public function optionsAction($id, Request $request) // Update
+    {
+        $this->user->find($id); // Find entity (throws exception, if not found)
+        
+        $this->form->setDefinedValues($this->user->getValues()); // Initialization
+        
+        return $this->form->getAsArray(); // Returns form as JSON compatible array incl all values
+    }
 }
 ```
 
@@ -129,7 +138,8 @@ You can create new form instances manually...
 
 ```php
 use InputValidation\Form;
-use InputValidation\Validator;
+use InputValidation\Form\Validator;
+use InputValidation\Form\Options\YamlOptions;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
@@ -141,15 +151,15 @@ $translator->addLoader('array', new ArrayLoader);
 
 $validator = new Validator();
 
-$options = new Options(); // Must implement OptionsInterface
+$options = new YamlOptions($translator);
 
 $form = new Form($translator, $validator, $options);
 ```
 
-... or using the convenient `InputValidation\FormFactory`:
+... or using the convenient `InputValidation\Form\Factory`:
 
 ```php
-$formFactory = new InputValidation\FormFactory($translator, $validator, $options);
+$formFactory = new InputValidation\Form\Factory($translator, $validator, $options);
 $formFactory->setFactoryNamespace('App\Form');
 $formFactory->setFactoryPostfix('Form');
 $formFactory->getForm('User'); // Returns instance of App\Form\UserForm
@@ -283,7 +293,7 @@ $form->setGroups(
 
 **getAsArray()**
 
-Returns the complete form (definition + values) as array, which can be used in the view templates to render the form or be converted to JSON/XML for Web services (REST/RPC).
+Returns the complete form (definition + values) as JSON/JavaScript compatible array, which can be used to render the form in templates
 
 **setAllValues(array $values)**
 
