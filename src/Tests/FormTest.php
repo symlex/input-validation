@@ -5,7 +5,6 @@ namespace InputValidation\Tests;
 use TestTools\TestCase\UnitTestCase;
 use InputValidation\Form;
 use InputValidation\Form\Factory;
-use InputValidation\Tests\Form\Options;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>

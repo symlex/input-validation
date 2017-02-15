@@ -2,9 +2,8 @@
 
 namespace InputValidation;
 
-use InputValidation\Form\OptionsInterface;
-use Symfony\Component\Translation\TranslatorInterface as Translator;
 use DateTime;
+use Symfony\Component\Translation\TranslatorInterface as Translator;
 use InputValidation\Exception\FormException as Exception;
 
 /**
