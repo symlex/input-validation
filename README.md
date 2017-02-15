@@ -16,7 +16,7 @@ The usage is simple by design: Form classes can inherit their definitions from e
 Basic example
 -------------
 
-This example shows how to validate user input in a REST controller action. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
+This example shows how to validate user input in a REST controller action context. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
 
 ```php
 class UserController
