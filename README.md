@@ -253,6 +253,7 @@ Returns a list of options with default label for no selection
 ```php
 'country' => array(
     'type' => 'string',
+    'caption' => 'Country',
     'required' => true,
     'options' => $this->form->optionsWithDefault('countries')
 )
@@ -298,10 +299,6 @@ Adds a single form field definition (see form field properties)
 
 Changes a single form field definition (see form field properties)
 
-**getAsGroupedArray()**
-
-Returns grouped form field definitions and values (you must use setGroups() first)
-
 **setGroups(array $groups)**
 
 Sets form field groups (optional feature, if you want to reuse your form definition to reder the form as HTML).
@@ -322,7 +319,107 @@ Returns field definition as JSON/JavaScript compatible array
 
 **getAsArray()**
 
-Returns the complete form (definition + values) as JSON/JavaScript compatible array, which can be used to render the form in templates
+Returns the complete form (definition + values) as JSON/JavaScript compatible array, which can be used to render the form in templates:
+
+```php
+array (
+  array (
+    'name' => 'company',
+    'caption' => 'Company',
+    'type' => 'string',
+    'value' => 'IBM',
+    'uid' => 'id58a401f5a54d6',
+  ),
+  array (
+    'name' => 'country',
+    'caption' => 'Country',
+    'default' => 'DE',
+    'type' => 'string',
+    'options' => array (
+      array (
+        'option' => 'US',
+        'label' => 'United States',
+      ),
+      array (
+        'option' => 'GB',
+        'label' => 'United Kingdom',
+      ),
+      array (
+        'option' => 'DE',
+        'label' => 'Germany',
+      ),
+    ),
+    'value' => 'DE',
+    'uid' => 'id58a401f5a54e6',
+  ),
+),
+```
+
+**getAsGroupedArray()**
+
+Returns grouped form field definitions and values (you must use setGroups() first):
+
+```php
+array(
+  array (
+    'group_name' => 'person',
+    'group_caption' => 'Person',
+    'fields' => array(
+      array (
+        'name' => 'firstname',
+        'caption' => 'First Name',
+        'type' => 'string',
+        'readonly' => true,
+        'value' => NULL,
+        'uid' => 'id58a401f5a5267',
+      ),
+      array (
+        'name' => 'lastname',
+        'caption' => 'Last Name',
+        'type' => 'string',
+        'readonly' => false,
+        'value' => 'Mander',
+        'uid' => 'id58a401f5a5279',
+      ),
+    ),
+  ),
+  array (
+    'group_name' => 'location',
+    'group_caption' => 'Location',
+    'fields' => array (
+      array (
+        'name' => 'company',
+        'caption' => 'Company',
+        'type' => 'string',
+        'value' => 'IBM',
+        'uid' => 'id58a401f5a54d6',
+      ),
+      array (
+        'name' => 'country',
+        'caption' => 'Country',
+        'type' => 'string',
+        'default' => 'DE',
+        'options' => array (
+          array (
+            'option' => 'US',
+            'label' => 'United States',
+          ),
+          array (
+            'option' => 'GB',
+            'label' => 'United Kingdom',
+          ),
+          array (
+            'option' => 'DE',
+            'label' => 'Germany',
+          ),
+        ),
+        'value' => 'DE',
+        'uid' => 'id58a401f5a54e6',
+      ),
+    ),
+  ),
+)
+```
 
 **setAllValues(array $values)**
 

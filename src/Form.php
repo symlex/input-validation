@@ -466,6 +466,11 @@ class Form
         $result = $this->getDefinition($key);
 
         $result['name'] = $key;
+
+        if(empty($result['caption'])) {
+            $result['caption'] = $this->_($result['name']);
+        }
+
         $value = $this->$key;
         $type = @$result['type'];
 

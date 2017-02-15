@@ -82,39 +82,42 @@ class FormTest extends UnitTestCase
         $this->form->setDefinition(
             array(
                 'firstname' => array(
+                    'caption' => 'First Name',
                     'readonly' => true
                 ),
                 'lastname' => array(
+                    'caption' => 'Last Name',
                     'readonly' => false
                 ),
                 'company' => array(
-                    'type' => 'string'
-                ),
-                'foo.bar' => array(
-                    'default' => 'foo',
+                    'caption' => 'Company',
                     'type' => 'string'
                 ),
                 'country' => array(
                     'default' => 'DE',
                     'type' => 'string',
-                    'options' => $this->form->optionsWithDefault('countries')
+                    'options' => array(
+                        'US' => 'United States',
+                        'GB' => 'United Kingdom',
+                        'DE' => 'Germany'
+                    )
                 )
             )
         );
 
         $this->form->setGroups(array(
-            'name' => array('firstname', 'lastname'),
-            'extras' => array('company', 'foo.bar', 'country')
+            'person' => array('firstname', 'lastname'),
+            'location' => array('company', 'country')
         ));
 
-        $values = array('firstname' => 'foo', 'lastname' => 'bar', 'company' => 'xyz');
+        $values = array('firstname' => 'Jens', 'lastname' => 'Mander', 'company' => 'IBM');
 
         $this->form->setWritableValues($values);
 
         $result = $this->form->getAsGroupedArray();
 
         $this->assertInternalType('array', $result);
-
+var_export($result);
         foreach ($result as $group) {
             $this->assertArrayHasKey('group_name', $group);
             $this->assertArrayHasKey('group_caption', $group);
