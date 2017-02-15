@@ -2,6 +2,7 @@
 
 namespace InputValidation;
 
+use InputValidation\Form\OptionsInterface;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use DateTime;
 use InputValidation\Exception\FormException as Exception;
@@ -182,23 +183,53 @@ class Form
     }
 
     /**
-     * Returns the options list or instance (if parameter is empty)
-     *
-     * @param string $listName Optional name of options list (shortcut)
      * @throws Exception
      * @return Form\OptionsInterface
      */
-    public function getOptions(string $listName = '')
+    public function getOptions(): Form\OptionsInterface
     {
         if (empty($this->_options)) {
             throw new Exception ('No options instance set');
         }
 
-        if ($listName == '') {
-            $result = $this->_options;
-        } else {
-            $result = $this->_options->get($listName);
-        }
+        return $this->_options;
+    }
+
+    /**
+     * Returns a list of options e.g. countries
+     *
+     * 'country' => array(
+     *     'type' => 'string',
+     *     'default' => 'DE',
+     *     'options' => $this->form->options('countries')
+     * )
+     *
+     * @param string $listName Name of options list
+     * @return array
+     */
+    public function options(string $listName): array
+    {
+        $result = $this->getOptions()->get($listName);
+
+        return $result;
+    }
+
+    /**
+     * Returns a list of options with default label for no selection
+     *
+     * 'country' => array(
+     *     'type' => 'string',
+     *     'required' => true,
+     *     'options' => $this->form->optionsWithDefault('countries')
+     * )
+     *
+     * @param string $listName Optional name of options list (shortcut)
+     * @param string $defaultLabel The field label translation token
+     * @return array
+     */
+    public function optionsWithDefault(string $listName, string $defaultLabel = ''): array
+    {
+        $result = $this->getDefaultOption($defaultLabel) + $this->options($listName);
 
         return $result;
     }
@@ -207,10 +238,13 @@ class Form
      * Sets the default option label - see getDefaultOption()
      *
      * @param string $defaultLabel The field label translation token
+     * @return $this
      */
     public function setDefaultOptionLabel(string $defaultLabel)
     {
         $this->_defaultOptionLabel = $defaultLabel;
+
+        return $this;
     }
 
     /**
@@ -218,7 +252,7 @@ class Form
      *
      * @return string
      */
-    public function getDefaultOptionLabel()
+    public function getDefaultOptionLabel(): string
     {
         return $this->_defaultOptionLabel;
     }
@@ -229,27 +263,13 @@ class Form
      * @param string $label The field label token
      * @return array
      */
-    protected function getDefaultOption(string $label = '')
+    protected function getDefaultOption(string $label = ''): array
     {
-        if($label == '') {
+        if ($label == '') {
             $label = $this->getDefaultOptionLabel();
         }
 
         return array('' => $this->translate($label));
-    }
-
-    /**
-     * Returns a list of options with default label for no selection
-     *
-     * @param string $listName Optional name of options list (shortcut)
-     * @param string $defaultLabel The field label translation token
-     * @return array
-     */
-    public function getOptionsWithDefault(string $listName, string $defaultLabel = '')
-    {
-        $result = $this->getDefaultOption($defaultLabel) + $this->getOptions($listName);
-
-        return $result;
     }
 
     /**
@@ -278,7 +298,7 @@ class Form
      * @return Translator
      * @throws Exception
      */
-    public function getTranslator()
+    public function getTranslator(): Translator
     {
         if (!$this->_translator) {
             throw new Exception('Translator was not set');
@@ -302,7 +322,7 @@ class Form
      * @return Form\Validator
      * @throws Exception
      */
-    public function getValidator()
+    public function getValidator(): Form\Validator
     {
         if (!$this->_validator) {
             throw new Exception('Validator was not set');
@@ -326,6 +346,9 @@ class Form
 
     /**
      * Sets the current locale e.g. en, de or fr
+     *
+     * @param string $locale
+     * @return $this
      */
     public function setLocale(string $locale)
     {
@@ -339,7 +362,7 @@ class Form
      *
      * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->getTranslator()->getLocale();
     }
@@ -438,7 +461,8 @@ class Form
      * @param string $key
      * @return array
      */
-    public function getFieldAsArray(string $key) {
+    public function getFieldAsArray(string $key): array
+    {
         $result = $this->getDefinition($key);
 
         $result['name'] = $key;
@@ -471,7 +495,7 @@ class Form
      *
      * @return array
      */
-    public function getAsArray()
+    public function getAsArray(): array
     {
         $result = array();
 
@@ -487,7 +511,7 @@ class Form
      *
      * @return array
      */
-    public function getAsGroupedArray()
+    public function getAsGroupedArray(): array
     {
         $result = array();
 
@@ -514,7 +538,7 @@ class Form
      * @param string $key
      * @return bool
      */
-    protected function isWritable(string $key)
+    protected function isWritable(string $key): bool
     {
         return $this->getDefinition($key, 'readonly') != true;
     }
@@ -529,7 +553,7 @@ class Form
      * @param string $key
      * @return bool
      */
-    protected function isOptional(string $key)
+    protected function isOptional(string $key): bool
     {
         return ($this->getDefinition($key, 'checkbox') == true) || ($this->getDefinition($key, 'optional') == true);
     }
@@ -677,7 +701,7 @@ class Form
      *
      * @return array
      */
-    public function getValuesByPage()
+    public function getValuesByPage(): array
     {
         $result = array();
 
@@ -697,7 +721,7 @@ class Form
      *
      * @return array
      */
-    public function getValuesByTag(string $tag)
+    public function getValuesByTag(string $tag): array
     {
         $result = array();
 
@@ -717,7 +741,7 @@ class Form
      *
      * @return array
      */
-    public function getValues()
+    public function getValues(): array
     {
         $result = array();
 
@@ -733,7 +757,7 @@ class Form
      *
      * @return array
      */
-    public function getWritableValues()
+    public function getWritableValues(): array
     {
         $result = array();
 
@@ -750,7 +774,7 @@ class Form
      * @param mixed $value
      * @return bool
      */
-    protected function convertValueToBool($value)
+    protected function convertValueToBool($value): bool
     {
         if (is_bool($value)) {
             return $value;
@@ -837,7 +861,7 @@ class Form
      * @param string $key
      * @return bool
      */
-    public function __isset(string $key)
+    public function __isset(string $key): bool
     {
         try {
             $value = $this->__get($key);
@@ -857,7 +881,7 @@ class Form
      * @param array $params
      * @return string The translated string
      */
-    public function translate(string $token, array $params = array())
+    public function translate(string $token, array $params = array()): string
     {
         return $this->getTranslator()->trans($token, $params);
     }
@@ -881,7 +905,7 @@ class Form
      * @param string $key The field name
      * @return string
      */
-    public function getFieldCaption(string $key)
+    public function getFieldCaption(string $key): string
     {
         $caption = $this->getDefinition($key, 'caption');
 
@@ -941,7 +965,7 @@ class Form
      *
      * @return bool
      */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         return (count($this->getErrors()) > 0);
     }
@@ -951,7 +975,7 @@ class Form
      *
      * @return bool
      */
-    public function isValid()
+    public function isValid(): bool
     {
         return !$this->hasErrors();
     }
@@ -963,7 +987,7 @@ class Form
      * @throws Exception
      * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         if (!$this->_validationDone) {
             throw new Exception('You must run validate() before calling getErrors()');
@@ -977,7 +1001,7 @@ class Form
      *
      * @return string
      */
-    public function getFirstError()
+    public function getFirstError(): string
     {
         $result = '';
         $errors = $this->getErrors();
@@ -995,7 +1019,7 @@ class Form
      *
      * @return string
      */
-    public function getErrorsAsText()
+    public function getErrorsAsText(): string
     {
         $result = '';
         $fieldCounter = 0;
@@ -1019,7 +1043,7 @@ class Form
      *
      * @return array
      */
-    public function getErrorsByPage()
+    public function getErrorsByPage(): array
     {
         $result = array();
         $errors = $this->getErrors();
@@ -1054,7 +1078,7 @@ class Form
      *
      * @return string
      */
-    public function getHash()
+    public function getHash(): string
     {
         return md5(serialize($this->getDefinition()));
     }

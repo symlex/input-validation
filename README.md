@@ -229,11 +229,36 @@ The constructor requires instances of Symfony\Component\Translation\TranslatorIn
 
 Sets an optional class instance to automatically fill option lists (see "options" form field property). OptionsInterface only requires a method get($listName) that returns an array of options.
 
-**getOptions($listName = '')**
+**getOptions(): OptionsInterface**
 
-Returns the options list or instance (if parameter is empty)
+Returns the options instance 
 
-**getTranslator()**
+**options(string $listName): array**
+
+Returns a list of options e.g. countries:
+
+```php
+'country' => array(
+    'type' => 'string',
+    'caption' => 'Country',
+    'default' => 'DE',
+    'options' => $this->form->options('countries')
+)
+```
+
+**optionsWithDefault(string $listName, string $defaultLabel = ''): array**
+
+Returns a list of options with default label for no selection
+
+```php
+'country' => array(
+    'type' => 'string',
+    'required' => true,
+    'options' => $this->form->optionsWithDefault('countries')
+)
+```
+     
+**getTranslator(): Translator**
 
 Returns the Translator instance (see __construct)
 
@@ -241,7 +266,7 @@ Returns the Translator instance (see __construct)
 
 Sets the Translator instance (see __construct)
 
-**getValidator()**
+**getValidator(): Validator**
 
 Returns the Validator instance (see __construct)
 
@@ -282,12 +307,12 @@ Returns grouped form field definitions and values (you must use setGroups() firs
 Sets form field groups (optional feature, if you want to reuse your form definition to reder the form as HTML).
 
 Example:
-```
+```php
 $form->setGroups(
-  array(
-    'first_group' => array('field1', 'field2'),
-    'second_group' => array('field3')
-  )
+    array(
+        'name' => array('firstname', 'lastname'),
+        'address' => array('street', 'housenr', 'zip', 'city')
+    )
 );
 ```
 

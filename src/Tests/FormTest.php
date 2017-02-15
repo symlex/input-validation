@@ -57,7 +57,7 @@ class FormTest extends UnitTestCase
                 'country' => array(
                     'default' => 'DE',
                     'type' => 'string',
-                    'options' => $this->form->getOptionsWithDefault('countries')
+                    'options' => $this->form->optionsWithDefault('countries')
                 )
             )
         );
@@ -97,7 +97,7 @@ class FormTest extends UnitTestCase
                 'country' => array(
                     'default' => 'DE',
                     'type' => 'string',
-                    'options' => $this->form->getOptionsWithDefault('countries')
+                    'options' => $this->form->optionsWithDefault('countries')
                 )
             )
         );
@@ -871,7 +871,7 @@ class FormTest extends UnitTestCase
                 'country' => array(
                     'caption' => 'Country',
                     'type' => 'string',
-                    'options' => $this->form->getOptions('countries')
+                    'options' => $this->form->options('countries')
                 )
             )
         );
