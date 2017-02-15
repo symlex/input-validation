@@ -315,7 +315,32 @@ $form->setGroups(
 
 **getFieldAsArray(string $key): array**
 
-Returns field definition as JSON/JavaScript compatible array
+Returns field definition as JSON compatible array:
+
+```php
+array (
+  'name' => 'country',
+  'caption' => 'Country',
+  'default' => 'DE',
+  'type' => 'string',
+  'options' => array (
+    array (
+      'option' => 'US',
+      'label' => 'United States',
+    ),
+    array (
+      'option' => 'GB',
+      'label' => 'United Kingdom',
+    ),
+    array (
+      'option' => 'DE',
+      'label' => 'Germany',
+    ),
+  ),
+  'value' => 'DE',
+  'uid' => 'id58a401f5a54e6',
+),
+```
 
 **getAsArray(): array**
 
