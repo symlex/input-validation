@@ -19,7 +19,7 @@ services:
             - [addResource, ['yaml', '%base.path%/Resources/localization/de.yml', 'de']]
             - [addResource, ['yaml', '%base.path%/Resources/localization/en.yml', 'en']]
 
-    validator:
+    form.validator:
         class: InputValidation\Form\Validator
 
     form.yaml_options:
@@ -40,7 +40,7 @@ services:
         class: InputValidation\Form\Factory
         arguments:
             - "@translator"
-            - "@validator"
+            - "@form.validator"
             - "@form.yaml_options"
         calls:
             - [ setFactoryNamespace, [ 'InputValidation' ] ]

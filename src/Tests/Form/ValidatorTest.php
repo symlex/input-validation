@@ -16,7 +16,7 @@ class ValidatorTest extends UnitTestCase {
     protected $validator;
 
     public function setUp () {
-        $this->validator = $this->get('validator');
+        $this->validator = $this->get('form.validator');
     }
 
     /**
