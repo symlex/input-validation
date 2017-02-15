@@ -219,8 +219,8 @@ See also: https://www.owasp.org/index.php/Data_Validation#Where_to_include_busin
 
 ![Differences between client-side, input value (form) and model validation](https://www.lucidchart.com/publicSegments/view/5461f867-ae1c-44a4-b565-6f780a00cf27/image.png)
 
-API documentation
------------------
+API
+---
 
 **__construct(Translator $translator, Form\Validator $validator, Form\OptionsInterface $options, array $params = array())**
 
