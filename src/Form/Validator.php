@@ -1,9 +1,10 @@
 <?php
 
-namespace InputValidation;
+namespace InputValidation\Form;
 
 use DateTime;
 use DateInterval;
+use InputValidation\Form;
 use InputValidation\Exception\ValidatorException as Exception;
 
 /**

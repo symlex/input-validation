@@ -4,6 +4,8 @@ namespace InputValidation\Tests;
 
 use TestTools\TestCase\UnitTestCase;
 use InputValidation\Form;
+use InputValidation\Form\Factory;
+use InputValidation\Tests\Form\Options;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>
@@ -19,7 +21,7 @@ class FormTest extends UnitTestCase
     public function setUp()
     {
         /**
-         * @var \InputValidation\Factory
+         * @var Factory
          */
         $formFactory = $this->get('form.factory');
 
@@ -37,8 +39,94 @@ class FormTest extends UnitTestCase
 
     public function testGetAsArray()
     {
+        $this->form->setDefinition(
+            array(
+                'firstname' => array(
+                    'readonly' => true
+                ),
+                'lastname' => array(
+                    'readonly' => false
+                ),
+                'company' => array(
+                    'type' => 'string'
+                ),
+                'foo.bar' => array(
+                    'default' => 'foo',
+                    'type' => 'string'
+                ),
+                'country' => array(
+                    'default' => 'DE',
+                    'type' => 'string',
+                    'options' => $this->form->getOptionsWithDefault('countries')
+                )
+            )
+        );
+
+        $values = array('firstname' => 'foo', 'lastname' => 'bar', 'company' => 'xyz');
+
+        $this->form->setWritableValues($values);
+
         $result = $this->form->getAsArray();
-        $this->assertEquals(array(), $result);
+
+        $this->assertInternalType('array', $result);
+
+        foreach ($result as $field) {
+            $this->assertArrayHasKey('name', $field);
+            $this->assertArrayHasKey('value', $field);
+            $this->assertArrayHasKey('uid', $field);
+        }
+    }
+
+    public function testGetAsGroupedArray()
+    {
+        $this->form->setDefinition(
+            array(
+                'firstname' => array(
+                    'readonly' => true
+                ),
+                'lastname' => array(
+                    'readonly' => false
+                ),
+                'company' => array(
+                    'type' => 'string'
+                ),
+                'foo.bar' => array(
+                    'default' => 'foo',
+                    'type' => 'string'
+                ),
+                'country' => array(
+                    'default' => 'DE',
+                    'type' => 'string',
+                    'options' => $this->form->getOptionsWithDefault('countries')
+                )
+            )
+        );
+
+        $this->form->setGroups(array(
+            'name' => array('firstname', 'lastname'),
+            'extras' => array('company', 'foo.bar', 'country')
+        ));
+
+        $values = array('firstname' => 'foo', 'lastname' => 'bar', 'company' => 'xyz');
+
+        $this->form->setWritableValues($values);
+
+        $result = $this->form->getAsGroupedArray();
+
+        $this->assertInternalType('array', $result);
+
+        foreach ($result as $group) {
+            $this->assertArrayHasKey('group_name', $group);
+            $this->assertArrayHasKey('group_caption', $group);
+            $this->assertArrayHasKey('fields', $group);
+            $this->assertInternalType('array', $group['fields']);
+
+            foreach ($group['fields'] as $field) {
+                $this->assertArrayHasKey('name', $field);
+                $this->assertArrayHasKey('value', $field);
+                $this->assertArrayHasKey('uid', $field);
+            }
+        }
     }
 
     /**
@@ -774,7 +862,7 @@ class FormTest extends UnitTestCase
 
     public function testValidateOption()
     {
-        $options = new Options($this->get('translator'));
+        $options = $this->get('form.yaml_options');
 
         $this->form->setOptions($options);
 

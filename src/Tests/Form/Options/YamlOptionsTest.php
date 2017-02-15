@@ -1,28 +1,37 @@
 <?php
 
-namespace InputValidation\Tests;
+namespace InputValidation\Tests\Form\Options;
 
+use InputValidation\Form\Options\YamlOptions;
+use Symfony\Component\Translation\Translator;
 use TestTools\TestCase\UnitTestCase;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>
  * @license MIT
  */
-class OptionsTest extends UnitTestCase
+class YamlOptionsTest extends UnitTestCase
 {
     /**
-     * @var Options
+     * @var YamlOptions
      */
     protected $options;
 
+    /**
+     * @var Translator
+     */
+    protected $translator;
+
     public function setUp()
     {
-        $this->options = $this->get('options');
+        $container = $this->getContainer();
+        $this->translator = $container->get('translator');
+        $this->options = $container->get('form.yaml_options');
     }
 
     public function testGetCountries()
     {
-        $result = $this->options->getCountries();
+        $result = $this->options->get('countries');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(248, $result);
@@ -30,11 +39,9 @@ class OptionsTest extends UnitTestCase
 
     public function testGetCountriesLocaleEN()
     {
-        $translator = $this->get('translator');
-        $translator->setLocale('en');
+        $this->translator->setLocale('en');
 
-        $options = new Options($translator);
-        $result = $options->getCountries();
+        $result = $this->options->get('countries');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(264, $result);
@@ -44,11 +51,9 @@ class OptionsTest extends UnitTestCase
 
     public function testGetCountriesLocaleRU()
     {
-        $translator = $this->get('translator');
-        $translator->setLocale('ru');
+        $this->translator->setLocale('ru');
 
-        $options = new Options($translator);
-        $result = $options->getCountries();
+        $result = $this->options->get('countries');
 
         $this->assertInternalType('array', $result);
         $this->assertCount(248, $result);

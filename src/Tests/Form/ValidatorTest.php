@@ -1,9 +1,9 @@
 <?php
 
-namespace InputValidation\Tests;
+namespace InputValidation\Tests\Form;
 
 use TestTools\TestCase\UnitTestCase;
-use InputValidation\Validator;
+use InputValidation\Form\Validator;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>

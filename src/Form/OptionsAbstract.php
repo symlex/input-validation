@@ -1,6 +1,6 @@
 <?php
 
-namespace InputValidation;
+namespace InputValidation\Form;
 
 use Symfony\Component\Yaml\Parser as YamlParser;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
@@ -20,11 +20,6 @@ abstract class OptionsAbstract implements OptionsInterface
     protected $translator;
 
     /**
-     * @var YamlParser
-     */
-    protected $yamlParser;
-
-    /**
      * @var string
      */
     protected $optionsPath;
@@ -41,7 +36,6 @@ abstract class OptionsAbstract implements OptionsInterface
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
-        $this->yamlParser = new YamlParser();
     }
 
     /**
@@ -68,21 +62,6 @@ abstract class OptionsAbstract implements OptionsInterface
     }
 
     /**
-     * Returns the YAML parser instance
-     *
-     * @return YamlParser
-     * @throws Exception
-     */
-    protected function getYamlParser()
-    {
-        if (!$this->translator) {
-            throw new Exception ('Parser not set');
-        }
-
-        return $this->yamlParser;
-    }
-
-    /**
      * Get options list (yaml or json file) directory path
      *
      * @param string $name
@@ -91,44 +70,6 @@ abstract class OptionsAbstract implements OptionsInterface
     protected function getOptionsListPath(string $name = '')
     {
         $result = $this->optionsPath . DIRECTORY_SEPARATOR . $name;
-
-        return $result;
-    }
-
-    /**
-     * @param string $name
-     * @return array
-     */
-    protected function getYamlList(string $name)
-    {
-        $locale = $this->getLocale();
-        $defaultLocale = $this->getDefaultLocale();
-        $filename = $this->getOptionsListPath($name) . DIRECTORY_SEPARATOR . $locale . '.yml';
-
-        if (!file_exists($filename)) {
-            $filename = $this->getOptionsListPath($name) . DIRECTORY_SEPARATOR . $defaultLocale . '.yml';
-        }
-
-        $result = $this->getYamlParser()->parse(file_get_contents($filename));
-
-        return $result;
-    }
-
-    /**
-     * @param string $name
-     * @return array
-     */
-    protected function getJsonList(string $name)
-    {
-        $locale = $this->getLocale();
-        $defaultLocale = $this->getDefaultLocale();
-        $filename = $this->getOptionsListPath($name) . DIRECTORY_SEPARATOR . $locale . '.json';
-
-        if (!file_exists($filename)) {
-            $filename = $this->getOptionsListPath($name) . DIRECTORY_SEPARATOR . $defaultLocale . '.json';
-        }
-
-        $result = json_decode(file_get_contents($filename), true);
 
         return $result;
     }
@@ -179,15 +120,10 @@ abstract class OptionsAbstract implements OptionsInterface
     }
 
     /**
-     * Shortcut to access getters
+     * Returns the options list
      *
      * @param string $listName
      * @return array
      */
-    public function get(string $listName)
-    {
-        $method = 'get' . ucfirst($listName);
-
-        return $this->$method();
-    }
+    abstract public function get(string $listName);
 }

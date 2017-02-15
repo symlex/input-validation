@@ -82,9 +82,9 @@ class Form
     private $_groups = array();
 
     /**
-     * Reference to object that implements OptionsInterface (for form elements that contain lists)
+     * Reference to object that implements Form\OptionsInterface (for form elements that contain lists)
      *
-     * @var OptionsInterface
+     * @var Form\OptionsInterface
      */
     private $_options = null;
 
@@ -94,7 +94,7 @@ class Form
     protected $_translator = null;
 
     /**
-     * @var Validator
+     * @var Form\Validator
      */
     protected $_validator = null;
 
@@ -113,14 +113,19 @@ class Form
     protected $_validationDone = false;
 
     /**
+     * @var string
+     */
+    protected $_defaultOptionLabel = 'form.please_select';
+
+    /**
      * Form constructor.
      *
      * @param Translator $translator
-     * @param Validator $validator
-     * @param OptionsInterface $options
+     * @param Form\Validator $validator
+     * @param Form\OptionsInterface $options
      * @param array $params
      */
-    public function __construct(Translator $translator, Validator $validator, OptionsInterface $options, array $params = array())
+    public function __construct(Translator $translator, Form\Validator $validator, Form\OptionsInterface $options, array $params = array())
     {
         $this->setTranslator($translator);
         $this->setValidator($validator);
@@ -166,10 +171,10 @@ class Form
     }
 
     /**
-     * @param OptionsInterface $options
+     * @param Form\OptionsInterface $options
      * @return $this
      */
-    public function setOptions(OptionsInterface $options)
+    public function setOptions(Form\OptionsInterface $options)
     {
         $this->_options = $options;
 
@@ -181,7 +186,7 @@ class Form
      *
      * @param string $listName Optional name of options list (shortcut)
      * @throws Exception
-     * @return OptionsInterface
+     * @return Form\OptionsInterface
      */
     public function getOptions(string $listName = '')
     {
@@ -199,13 +204,37 @@ class Form
     }
 
     /**
+     * Sets the default option label - see getDefaultOption()
+     *
+     * @param string $defaultLabel The field label translation token
+     */
+    public function setDefaultOptionLabel(string $defaultLabel)
+    {
+        $this->_defaultOptionLabel = $defaultLabel;
+    }
+
+    /**
+     * Returns the default option label - see getDefaultOption()
+     *
+     * @return string
+     */
+    public function getDefaultOptionLabel()
+    {
+        return $this->_defaultOptionLabel;
+    }
+
+    /**
      * Helper function to return default option string like "Please select"
      *
      * @param string $label The field label token
      * @return array
      */
-    protected function getDefaultOption(string $label = 'please_select')
+    protected function getDefaultOption(string $label = '')
     {
+        if($label == '') {
+            $label = $this->getDefaultOptionLabel();
+        }
+
         return array('' => $this->translate($label));
     }
 
@@ -213,10 +242,10 @@ class Form
      * Returns a list of options with default label for no selection
      *
      * @param string $listName Optional name of options list (shortcut)
-     * @param string $defaultLabel The field label token
+     * @param string $defaultLabel The field label translation token
      * @return array
      */
-    public function getOptionsWithDefault(string $listName, string $defaultLabel = 'please_select')
+    public function getOptionsWithDefault(string $listName, string $defaultLabel = '')
     {
         $result = $this->getDefaultOption($defaultLabel) + $this->getOptions($listName);
 
@@ -270,7 +299,7 @@ class Form
     }
 
     /**
-     * @return Validator
+     * @return Form\Validator
      * @throws Exception
      */
     public function getValidator()
@@ -283,10 +312,10 @@ class Form
     }
 
     /**
-     * @param Validator $validator
+     * @param Form\Validator $validator
      * @return $this
      */
-    public function setValidator(Validator $validator)
+    public function setValidator(Form\Validator $validator)
     {
         $validator->setForm($this);
 
@@ -342,7 +371,7 @@ class Form
             throw new Exception('Form definition is not an array. Something went totally wrong.');
         } elseif (count($this->_definition) == 0) {
             throw new Exception('Form definition is empty.');
-        } elseif ($key == null) {
+        } elseif ($key === null) {
             return $this->_definition;
         } elseif (isset($this->_definition[$key])) {
             if ($propertyName != null) {
@@ -404,9 +433,41 @@ class Form
     }
 
     /**
-     * Returns the complete form (definition + values) as array, which can
-     * be used in the view templates to render the form or be converted to
-     * JSON/XML for Web services
+     * Returns field definition as JSON/JavaScript compatible array
+     *
+     * @param string $key
+     * @return array
+     */
+    public function getField(string $key) {
+        $result = $this->getDefinition($key);
+
+        $result['name'] = $key;
+        $value = $this->$key;
+        $type = @$result['type'];
+
+        if (($type == 'date' || $type == 'datetime' || $type == 'time') && is_object($value)) {
+            $value = $value->format($this->translate('form.' . $type));
+        }
+
+        $result['value'] = $value;
+        $result['uid'] = 'id' . uniqid();
+
+        if (isset($result['options']) && is_array($result['options'])) {
+            $options = array();
+
+            foreach ($result['options'] as $option => $label) {
+                $options[] = array('option' => $option, 'label' => $label);
+            }
+
+            $result['options'] = $options;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns the complete form (definition + values) as JSON/JavaScript compatible array,
+     * which can be used to render the form in templates
      *
      * @return array
      */
@@ -415,21 +476,11 @@ class Form
         $result = array();
 
         foreach ($this->_definition as $key => $def) {
-            $result[$key] = $def;
-            $value = $this->$key;
-            $type = $def['type'];
-
-            if (($type == 'date' || $type == 'datetime' || $type == 'time') && is_object($value)) {
-                $value = $value->format($this->translate('form.' . $type));
-            }
-
-            $result[$key]['value'] = $value;
-            $result[$key]['uid'] = 'id' . uniqid();
+            $result[] = $this->getField($key);
         }
 
         return $result;
     }
-
 
     /**
      * Returns form fields structured in groups (you must use setGroups() first)
@@ -438,17 +489,20 @@ class Form
      */
     public function getAsGroupedArray()
     {
-        $form = $this->getAsArray();
         $result = array();
 
         foreach ($this->_groups as $groupName => $memberKeys) {
             $members = array();
 
             foreach ($memberKeys as $key) {
-                $members[$key] = $form[$key];
+                $members[] = $this->getField($key);
             }
 
-            $result[$this->_('group_' . $groupName)] = $members;
+            $result[] = array(
+                'group_name' => $groupName,
+                'group_caption' => $this->_('group_' . $groupName),
+                'fields' => $members
+            );
         }
 
         return $result;
@@ -820,7 +874,6 @@ class Form
     {
         return $this->translate($token, $params);
     }
-
 
     /**
      * Returns a translated field caption

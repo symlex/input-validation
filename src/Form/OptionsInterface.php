@@ -1,6 +1,6 @@
 <?php
 
-namespace InputValidation;
+namespace InputValidation\Form;
 
 /**
  * Form options list interface

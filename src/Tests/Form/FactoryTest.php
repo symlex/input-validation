@@ -1,15 +1,15 @@
 <?php
 
-namespace InputValidation\Tests;
+namespace InputValidation\Tests\Form;
 
-use InputValidation\Factory;
+use InputValidation\Form\Factory;
 use TestTools\TestCase\UnitTestCase;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>
  * @license MIT
  */
-class FormFactoryTest extends UnitTestCase
+class FactoryTest extends UnitTestCase
 {
     /**
      * @var Factory

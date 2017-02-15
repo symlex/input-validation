@@ -1,6 +1,6 @@
 <?php
 
-namespace InputValidation;
+namespace InputValidation\Form;
 
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use InputValidation\Exception\FactoryException;

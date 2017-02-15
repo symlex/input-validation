@@ -16,25 +16,32 @@ services:
         calls:
             - [addLoader, ['yaml', "@yaml_loader"]]
             - [addLoader, ['array', "@array_loader"]]
-            - [addResource, ['yaml', '%base.path%/Localization/de.yml', 'de']]
-            - [addResource, ['yaml', '%base.path%/Localization/en.yml', 'en']]
+            - [addResource, ['yaml', '%base.path%/Resources/localization/de.yml', 'de']]
+            - [addResource, ['yaml', '%base.path%/Resources/localization/en.yml', 'en']]
 
     validator:
-        class: InputValidation\Validator
+        class: InputValidation\Form\Validator
 
-    options:
-        class: InputValidation\Tests\Options
+    form.yaml_options:
+        class: InputValidation\Form\Options\YamlOptions
         arguments:
             - "@translator"
         calls:
-            - [ setOptionsPath, [ '%base.path%/Tests/_options' ] ]
+            - [ setOptionsPath, [ '%base.path%/Resources/options/yaml' ] ]
+
+    form.json_options:
+        class: InputValidation\Form\Options\JsonOptions
+        arguments:
+            - "@translator"
+        calls:
+            - [ setOptionsPath, [ '%base.path%/Resources/options/json' ] ]
 
     form.factory:
-        class: InputValidation\Factory
+        class: InputValidation\Form\Factory
         arguments:
             - "@translator"
             - "@validator"
-            - "@options"
+            - "@form.yaml_options"
         calls:
             - [ setFactoryNamespace, [ 'InputValidation' ] ]
             - [ setFactoryPostfix, [ '' ] ]
