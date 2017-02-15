@@ -315,7 +315,7 @@ $form->setGroups(
 
 **getFieldAsArray(string $key): array**
 
-Returns field definition as JSON compatible array:
+Returns field definition and value as JSON compatible array:
 
 ```php
 array (
@@ -344,7 +344,7 @@ array (
 
 **getAsArray(): array**
 
-Returns the complete form (definition + values) as JSON compatible array, which can be used to render the form in templates:
+Returns the complete form (definition and all values) as JSON compatible array, which can be used to render the form in templates:
 
 ```php
 array (
