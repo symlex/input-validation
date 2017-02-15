@@ -133,7 +133,7 @@ class UserForm extends Form
 }
 ```
 
-Field Properties
+Field properties
 ----------------
 
 Property               | Description
