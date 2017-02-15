@@ -13,8 +13,8 @@ use InputValidation\Exception\FormException as Exception;
  * to controllers that render the forms to HTML using view templates and interact with
  * models.
  *
- * A major advantage of this modular approach is that developers can use unit testing to instantly
- * find bugs and tune the validation rules without the need for an HTML front-end and manual user
+ * A major advantage of this data source agnostic approach is that developers can use unit testing to
+ * find bugs early and work on the validation rules without the need for an HTML front-end and manual user
  * input.
  *
  * Form classes can inherit their definitions from each other. If needed, the validation behavior
