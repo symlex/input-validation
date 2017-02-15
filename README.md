@@ -172,7 +172,7 @@ If you are using composer, simply add "lastzero/php-input-validation" to your co
 
 ```
 "require": {
-    "lastzero/php-input-validation": "*"
+    "lastzero/php-input-validation": "^3.0"
 }
 ```
 
@@ -290,6 +290,10 @@ $form->setGroups(
   )
 );
 ```
+
+**getFieldAsArray(string $key)**
+
+Returns field definition as JSON/JavaScript compatible array
 
 **getAsArray()**
 

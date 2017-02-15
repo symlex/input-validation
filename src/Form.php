@@ -438,7 +438,7 @@ class Form
      * @param string $key
      * @return array
      */
-    public function getField(string $key) {
+    public function getFieldAsArray(string $key) {
         $result = $this->getDefinition($key);
 
         $result['name'] = $key;
@@ -476,7 +476,7 @@ class Form
         $result = array();
 
         foreach ($this->_definition as $key => $def) {
-            $result[] = $this->getField($key);
+            $result[] = $this->getFieldAsArray($key);
         }
 
         return $result;
@@ -495,7 +495,7 @@ class Form
             $members = array();
 
             foreach ($memberKeys as $key) {
-                $members[] = $this->getField($key);
+                $members[] = $this->getFieldAsArray($key);
             }
 
             $result[] = array(
