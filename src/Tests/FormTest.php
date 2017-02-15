@@ -117,7 +117,7 @@ class FormTest extends UnitTestCase
         $result = $this->form->getAsGroupedArray();
 
         $this->assertInternalType('array', $result);
-var_export($result);
+
         foreach ($result as $group) {
             $this->assertArrayHasKey('group_name', $group);
             $this->assertArrayHasKey('group_caption', $group);

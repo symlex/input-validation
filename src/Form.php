@@ -383,49 +383,72 @@ class Form
     /**
      * Returns the form field definition(s)
      *
-     * @param string $key Optional field name (only the single field definition is returned)
-     * @param string $propertyName Optional field property name (only the property value is returned)
+     * @param string $name Optional field name (only the single field definition is returned)
+     * @param string $property Optional field property name (only the property value is returned)
      * @throws Exception
      * @return mixed
      */
-    public function getDefinition(string $key = null, string $propertyName = null)
+    public function getDefinition(string $name = null, string $property = null)
     {
         if (!is_array($this->_definition)) {
             throw new Exception('Form definition is not an array. Something went totally wrong.');
         } elseif (count($this->_definition) == 0) {
             throw new Exception('Form definition is empty.');
-        } elseif ($key === null) {
+        } elseif ($name === null) {
             return $this->_definition;
-        } elseif (isset($this->_definition[$key])) {
-            if ($propertyName != null) {
-                if (isset($this->_definition[$key][$propertyName])) {
-                    return $this->_definition[$key][$propertyName];
+        } elseif (isset($this->_definition[$name])) {
+            if ($property != null) {
+                if (isset($this->_definition[$name][$property])) {
+                    return $this->_definition[$name][$property];
                 }
 
                 return null;
             }
 
-            return $this->_definition[$key];
+            return $this->_definition[$name];
         }
 
-        throw new Exception('No form field definition found for "' . $key . '".');
+        throw new Exception('No form field definition found for "' . $name . '".');
+    }
+
+    /**
+     * Returns form field definition as array
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getFieldDefinition(string $name): array
+    {
+        return $this->getDefinition($name);
+    }
+
+    /**
+     * Returns form field property definition
+     *
+     * @param string $name
+     * @param string $property
+     * @return mixed
+     */
+    public function getFieldPropertyDefinition(string $name, string $property)
+    {
+        return $this->getDefinition($name, $property);
     }
 
     /**
      * Adds a single form field definition
      *
-     * @param string $key Field name
+     * @param string $name Field name
      * @param array $definition Field definition array
      * @throws Exception
      * @return $this
      */
-    public function addDefinition(string $key, array $definition)
+    public function addDefinition(string $name, array $definition)
     {
-        if (isset($this->_definition[$key])) {
-            throw new Exception('Definition for "' . $key . '" already exists');
+        if (isset($this->_definition[$name])) {
+            throw new Exception('Definition for "' . $name . '" already exists');
         }
 
-        $this->_definition[$key] = $definition;
+        $this->_definition[$name] = $definition;
 
         return $this;
     }
@@ -433,22 +456,22 @@ class Form
     /**
      * Changes a single form field definition
      *
-     * @param string $key Field name
+     * @param string $name Field name
      * @param array $changes Field definition array
      * @throws Exception
      * @return $this
      */
-    public function changeDefinition(string $key, array $changes)
+    public function changeDefinition(string $name, array $changes)
     {
-        if (!isset($this->_definition[$key])) {
-            throw new Exception('Definition for "' . $key . '" does not exist');
+        if (!isset($this->_definition[$name])) {
+            throw new Exception('Definition for "' . $name . '" does not exist');
         }
 
         foreach ($changes as $prop => $val) {
             if ($val === null) {
-                unset($this->_definition[$key][$prop]);
+                unset($this->_definition[$name][$prop]);
             } else {
-                $this->_definition[$key][$prop] = $val;
+                $this->_definition[$name][$prop] = $val;
             }
         }
 
@@ -458,20 +481,20 @@ class Form
     /**
      * Returns field definition and value as JSON compatible array
      *
-     * @param string $key
+     * @param string $name
      * @return array
      */
-    public function getFieldAsArray(string $key): array
+    public function getFieldAsArray(string $name): array
     {
-        $result = $this->getDefinition($key);
+        $result = $this->getFieldDefinition($name);
 
-        $result['name'] = $key;
+        $result['name'] = $name;
 
-        if(empty($result['caption'])) {
+        if (empty($result['caption'])) {
             $result['caption'] = $this->_($result['name']);
         }
 
-        $value = $this->$key;
+        $value = $this->$name;
         $type = @$result['type'];
 
         if (($type == 'date' || $type == 'datetime' || $type == 'time') && is_object($value)) {
@@ -540,12 +563,12 @@ class Form
     /**
      * Returns true, if the field is writable by the user (readonly property)
      *
-     * @param string $key
+     * @param string $name
      * @return bool
      */
-    protected function isWritable(string $key): bool
+    protected function isWritable(string $name): bool
     {
-        return $this->getDefinition($key, 'readonly') != true;
+        return $this->getFieldPropertyDefinition($name, 'readonly') != true;
     }
 
     /**
@@ -555,28 +578,28 @@ class Form
      * In general, this applies to non-checked checkboxes or to empty form elements
      * submitted by certain JavaScript frameworks (e.g. AngularJS).
      *
-     * @param string $key
+     * @param string $name
      * @return bool
      */
-    protected function isOptional(string $key): bool
+    protected function isOptional(string $name): bool
     {
-        return ($this->getDefinition($key, 'checkbox') == true) || ($this->getDefinition($key, 'optional') == true);
+        return ($this->getFieldPropertyDefinition($name, 'checkbox') == true) || ($this->getFieldPropertyDefinition($name, 'optional') == true);
     }
 
     /**
      * Sets the default types for values of form fields marked as optional
      *
-     * @param string $key The field name
+     * @param string $name The field name
      * @param array $values Reference to the array containing all form values
      * @return $this
      */
-    protected function setOptionalValueInArray(string $key, &$values)
+    protected function setOptionalValueInArray(string $name, &$values)
     {
-        if ($this->isOptional($key) && !array_key_exists($key, $values)) {
-            $default = $this->getDefinition($key, 'default');
+        if ($this->isOptional($name) && !array_key_exists($name, $values)) {
+            $default = $this->getFieldPropertyDefinition($name, 'default');
 
             if (is_null($default)) {
-                $type = $this->getDefinition($key, 'type');
+                $type = $this->getFieldPropertyDefinition($name, 'type');
 
                 switch ($type) {
                     case 'list':
@@ -588,7 +611,7 @@ class Form
                 }
             }
 
-            $values[$key] = $default;
+            $values[$name] = $default;
         }
 
         return $this;
@@ -711,7 +734,7 @@ class Form
         $result = array();
 
         foreach ($this->_definition as $key => $value) {
-            $page = $this->getDefinition($key, 'page');
+            $page = $this->getFieldPropertyDefinition($key, 'page');
 
             if ($page) {
                 $result[$page][$key] = $this->$key;
@@ -731,7 +754,7 @@ class Form
         $result = array();
 
         foreach ($this->_definition as $key => $value) {
-            $tags = $this->getDefinition($key, 'tags');
+            $tags = $this->getFieldPropertyDefinition($key, 'tags');
 
             if (is_array($tags) && in_array($tag, $tags)) {
                 $result[$key] = $this->$key;
@@ -808,68 +831,68 @@ class Form
     /**
      * Magic setter
      */
-    public function __set(string $key, $val)
+    public function __set(string $name, $value)
     {
-        if (isset($this->_definition[$key])) {
-            $type = $this->getDefinition($key, 'type');
-            if ($type == 'list' && $val == array('')) {
-                $val = array();
+        if (isset($this->_definition[$name])) {
+            $type = $this->getFieldPropertyDefinition($name, 'type');
+            if ($type == 'list' && $value == array('')) {
+                $value = array();
             }
 
             if ($type == 'bool') {
-                $val = $this->convertValueToBool($val);
+                $value = $this->convertValueToBool($value);
             }
 
-            if (($type == 'date' || $type == 'datetime' || $type == 'time') && !empty($val) && !is_object($val)) {
-                if ($date = DateTime::createFromFormat($this->translate('form.' . $type), $val)) {
-                    $val = $date;
+            if (($type == 'date' || $type == 'datetime' || $type == 'time') && !empty($value) && !is_object($value)) {
+                if ($date = DateTime::createFromFormat($this->translate('form.' . $type), $value)) {
+                    $value = $date;
                 }
             }
 
-            if ($type != 'string' && $val === '') {
-                $val = null;
+            if ($type != 'string' && $value === '') {
+                $value = null;
             }
 
             $this->clearErrors();
 
-            $this->_values[$key] = $val;
+            $this->_values[$name] = $value;
         } else {
-            throw new Exception ('No form field defined for "' . $key . '"');
+            throw new Exception ('No form field defined for "' . $name . '"');
         }
     }
 
     /**
      * Magic getter
      *
-     * @param string $key
+     * @param string $name
      * @throws Exception
      * @return mixed
      */
-    public function __get(string $key)
+    public function __get(string $name)
     {
         try {
-            $default = $this->getDefinition($key, 'default');
+            $default = $this->getFieldPropertyDefinition($name, 'default');
 
-            if (array_key_exists($key, $this->_values)) {
-                return $this->_values[$key];
+            if (array_key_exists($name, $this->_values)) {
+                return $this->_values[$name];
             }
 
             return $default;
         } catch (Exception $e) {
-            throw new Exception ('No form field defined for "' . $key . '"');
+            throw new Exception ('No form field defined for "' . $name . '"');
         }
     }
 
     /**
      * Magic isset()
      *
-     * @param string $key
+     * @param string $name
      * @return bool
      */
-    public function __isset(string $key): bool
+    public function __isset(string $name): bool
     {
         try {
-            $value = $this->__get($key);
+            $value = $this->__get($name);
 
             $result = ($value !== null);
         } catch (Exception $e) {
@@ -907,34 +930,34 @@ class Form
     /**
      * Returns a translated field caption
      *
-     * @param string $key The field name
+     * @param string $name The field name
      * @return string
      */
-    public function getFieldCaption(string $key): string
+    public function getFieldCaption(string $name): string
     {
-        $caption = $this->getDefinition($key, 'caption');
+        $caption = $this->getFieldPropertyDefinition($name, 'caption');
 
         if ($caption) {
             return $this->translate($caption);
         }
 
-        return $key;
+        return $name;
     }
 
     /**
      * Adds a validation error
      * Note: Accepts unlimited parameters for sprintf() replacements in the translated error message
      *
-     * @param string $key The field name
+     * @param string $name The field name
      * @param string $token Error message token
      * @param array $params Error message replacements
      * @return $this
      */
-    public function addError(string $key, string $token, array $params = array())
+    public function addError(string $name, string $token, array $params = array())
     {
-        $caption = $this->getFieldCaption($key);
+        $caption = $this->getFieldCaption($name);
 
-        $this->_errors[$key][] = $this->translate($token, $params + array('%field%' => $caption));
+        $this->_errors[$name][] = $this->translate($token, $params + array('%field%' => $caption));
 
         return $this;
     }
@@ -1053,11 +1076,11 @@ class Form
         $result = array();
         $errors = $this->getErrors();
 
-        foreach ($errors as $key => $val) {
-            $page = $this->getDefinition($key, 'page');
+        foreach ($errors as $name => $val) {
+            $page = $this->getFieldPropertyDefinition($name, 'page');
 
             if ($page) {
-                $result[$page][$key] = $val;
+                $result[$page][$name] = $val;
             }
         }
 
