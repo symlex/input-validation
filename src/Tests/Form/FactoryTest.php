@@ -25,19 +25,19 @@ class FactoryTest extends UnitTestCase
     {
         $this->factory->setFactoryNamespace('');
         $this->factory->setFactoryPostfix('');
-        $this->assertInstanceOf('InputValidation\Tests\UserForm', $this->factory->getForm('InputValidation\Tests\UserForm'));
+        $this->assertInstanceOf('InputValidation\Tests\UserForm', $this->factory->get('InputValidation\Tests\UserForm'));
 
         $this->factory->setFactoryNamespace('');
         $this->factory->setFactoryPostfix('Form');
-        $this->assertInstanceOf('InputValidation\Tests\UserForm', $this->factory->getForm('InputValidation\Tests\User'));
+        $this->assertInstanceOf('InputValidation\Tests\UserForm', $this->factory->get('InputValidation\Tests\User'));
 
         $this->factory->setFactoryNamespace('InputValidation\Tests');
         $this->factory->setFactoryPostfix('Form');
-        $this->assertInstanceOf('InputValidation\Tests\UserForm', $this->factory->getForm('User'));
+        $this->assertInstanceOf('InputValidation\Tests\UserForm', $this->factory->get('User'));
 
         $this->factory->setFactoryNamespace('InputValidation\Tests');
         $this->factory->setFactoryPostfix('');
-        $this->assertInstanceOf('InputValidation\Tests\UserForm', $this->factory->getForm('UserForm'));
+        $this->assertInstanceOf('InputValidation\Tests\UserForm', $this->factory->get('UserForm'));
     }
 
     public function testGetFactoryNamespace()
@@ -59,6 +59,6 @@ class FactoryTest extends UnitTestCase
      */
     public function testGetFormException()
     {
-        $this->factory->getForm('FooBar');
+        $this->factory->get('FooBar');
     }
 }

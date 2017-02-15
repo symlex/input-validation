@@ -55,17 +55,17 @@ class Factory
     }
 
     /**
-     * Creates a new form instance
+     * Returns a new form instance of the given name
      *
-     * @param string $name Form class name
+     * @param string $name Type of form
      * @param array $params Optional config parameters for init()
      * @throws FactoryException
      * @return Form
      */
-    public function getForm(string $name, array $params = array())
+    public function get(string $name, array $params = array())
     {
         if (empty($name)) {
-            throw new FactoryException ('getForm() requires a form name as first argument');
+            throw new FactoryException ('get() requires a non-empty form name as first argument');
         }
 
         $className = $this->getFactoryNamespace() . '\\' . $name . $this->getFactoryPostfix();

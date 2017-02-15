@@ -24,7 +24,7 @@ class FormTest extends UnitTestCase
          */
         $formFactory = $this->get('form.factory');
 
-        $this->form = $formFactory->getForm('Form');
+        $this->form = $formFactory->get('Form');
     }
 
     public function testSetLocale()
