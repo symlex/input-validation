@@ -62,7 +62,7 @@ See also [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https:
 
 Form field definition
 ---------------------
-A detailed overview of field properties can be found in the documentation. `$_('label')` is used to translate field captions with `Symfony\Component\Translation\Translator` which supports a number of different translation file formats.
+A detailed overview of field properties can be found bellow. `$_('label')` is used to translate field captions with `Symfony\Component\Translation\Translator` which supports a number of different translation file formats such as YAML.
 
 ```php
 use InputValidation\Form;
