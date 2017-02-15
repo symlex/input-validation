@@ -3,6 +3,7 @@ Easy & secure whitelist validation for PHP
 
 [![Build Status](https://travis-ci.org/lastzero/php-input-validation.png?branch=master)](https://travis-ci.org/lastzero/php-input-validation)
 [![Latest Stable Version](https://poser.pugx.org/lastzero/php-input-validation/v/stable.svg)](https://packagist.org/packages/lastzero/php-input-validation)
+[![Total Downloads](https://poser.pugx.org/lastzero/php-input-validation/downloads.svg)](https://packagist.org/packages/lastzero/php-input-validation)
 [![License](https://poser.pugx.org/lastzero/php-input-validation/license.svg)](https://packagist.org/packages/lastzero/php-input-validation)
 
 **This library provides whitelist validation ("accept known good") that is perfectly suited for building secure REST services.** It uses programming language independent validation rules (plain array) that can be reused for additional client-side validation (JavaScript) or passed to template rendering engines such as Twig. By design, it is compatible with any framework and input source (HTML, REST, RPC, ...).
