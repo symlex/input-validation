@@ -16,7 +16,7 @@ The usage is simple by design: Form classes can inherit their definitions from e
 Basic example
 -------------
 
-This example shows how to validate user input in a REST controller action context. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
+This example shows how to validate user input in a REST controller context. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
 
 ```php
 class UserController
@@ -62,7 +62,7 @@ See also [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https:
 
 Form field definition
 ---------------------
-A detailed overview of field properties can be found below. `$_('label')` is used to translate field captions with `Symfony\Component\Translation\Translator` which supports a number of different translation file formats such as YAML.
+A detailed overview of field properties can be found below. `$_('label')` is used to translate field captions - a number of different translation file formats such as YAML are supported for that (see [Symfony Components](http://symfony.com/doc/current/components/translation.html) documentation)
 
 ```php
 use InputValidation\Form;
