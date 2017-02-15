@@ -219,18 +219,18 @@ See also: https://www.owasp.org/index.php/Data_Validation#Where_to_include_busin
 
 ![Differences between client-side, input value (form) and model validation](https://www.lucidchart.com/publicSegments/view/5461f867-ae1c-44a4-b565-6f780a00cf27/image.png)
 
-Public methods
---------------
+API documentation
+-----------------
 
-**__construct(Translator $translator, Validator $validator, array $params = array())**
+**__construct(Translator $translator, Form\Validator $validator, Form\OptionsInterface $options, array $params = array())**
 
-The constructor requires instances of Symfony\Component\Translation\TranslatorInterface, InputValidation\Validator and an optional set of arbitrary parameters, which are passed to **init(array $params = array())** (protected class method).
+The constructor requires instances of Symfony\Component\Translation\TranslatorInterface, InputValidation\Form\Validator, InputValidation\Form\OptionsInterface and an optional set of arbitrary parameters, which are passed to **init(array $params = array())** (protected method for initializing the form).
 
-**setOptions(OptionsInterface $options)**
+**setOptions(Form\OptionsInterface $options)**
 
 Sets an optional class instance to automatically fill option lists (see "options" form field property). OptionsInterface only requires a method get($listName) that returns an array of options.
 
-**getOptions(): OptionsInterface**
+**getOptions(): Form\OptionsInterface**
 
 Returns the options instance 
 
