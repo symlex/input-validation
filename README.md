@@ -287,7 +287,7 @@ Sets the current locale e.g. en, de or fr
 
 Sets the form field definition array (see example and form field properties)
 
-**getDefinition($key = null, $propertyName = null)**
+**getDefinition($key = null, $propertyName = null): mixed**
 
 Returns the form field definition(s). If $key is null, definitions for all fields are returned. If $propertyName is null and $key is not null, only the definition of the given field key are returned. If both arguments are not null, only the definition of the given form field property is returned (for example, getDefinition('firstname', 'type') returns 'string'). A FormException is thrown otherwise.
 
@@ -313,11 +313,11 @@ $form->setGroups(
 );
 ```
 
-**getFieldAsArray(string $key)**
+**getFieldAsArray(string $key): array**
 
 Returns field definition as JSON/JavaScript compatible array
 
-**getAsArray()**
+**getAsArray(): array**
 
 Returns the complete form (definition + values) as JSON/JavaScript compatible array, which can be used to render the form in templates:
 
@@ -355,7 +355,7 @@ array (
 ),
 ```
 
-**getAsGroupedArray()**
+**getAsGroupedArray(): array**
 
 Returns grouped form field definitions and values (you must use setGroups() first):
 
@@ -473,27 +473,27 @@ Adds a validation error (uses translate() for the error message internally)
 
 Validates all form field values. You can use getErrors(), getErrorsByPage(), isValid() and hasErrors() to get the validation results.
 
-**hasErrors()**
+**hasErrors(): bool**
 
 Returns true, if the form has errors
 
-**isValid()**
+**isValid(): bool**
 
 eturns true, if the form is valid (has no errors)
 
-**getErrors()**
+**getErrors(): array**
 
 Returns all errors and throws an exception, if the validation was not performed yet (you must call validate() before calling getErrors()).
 
-**getFirstError()**
+**getFirstError(): string**
 
 Returns the first error as string
 
-**getErrorsAsText()**
+**getErrorsAsText(): string**
 
 Returns all errors as indented text (for command line applications)
 
-**getErrorsByPage()**
+**getErrorsByPage(): array**
 
 Returns all errors grouped by page and throws an exception, if the validation was not performed yet (you must call validate() before calling getErrorsByPage()).
 
@@ -501,6 +501,6 @@ Returns all errors grouped by page and throws an exception, if the validation wa
 
 Resets the validation and clears all errors
 
-**getHash()**
+**getHash(): string**
 
 Returns hash that uniquely identifies the form (for caching comprehensive forms)
