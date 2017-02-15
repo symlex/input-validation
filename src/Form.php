@@ -456,7 +456,7 @@ class Form
     }
 
     /**
-     * Returns field definition as JSON/JavaScript compatible array
+     * Returns field definition as JSON compatible array
      *
      * @param string $key
      * @return array
@@ -495,7 +495,7 @@ class Form
     }
 
     /**
-     * Returns the complete form (definition + values) as JSON/JavaScript compatible array,
+     * Returns the complete form (definition + values) as JSON compatible array,
      * which can be used to render the form in templates
      *
      * @return array

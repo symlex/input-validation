@@ -319,7 +319,7 @@ Returns field definition as JSON/JavaScript compatible array
 
 **getAsArray(): array**
 
-Returns the complete form (definition + values) as JSON/JavaScript compatible array, which can be used to render the form in templates:
+Returns the complete form (definition + values) as JSON compatible array, which can be used to render the form in templates:
 
 ```php
 array (
@@ -418,7 +418,7 @@ array(
       ),
     ),
   ),
-)
+),
 ```
 
 **setAllValues(array $values)**
