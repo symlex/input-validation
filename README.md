@@ -147,7 +147,7 @@ max                    | Maximum value for numbers/dates, length for strings or 
 required               | Field cannot be empty (if false, setDefinedValues() and setDefinedWritableValues() still throw an exception, if it does not exist at all)
 optional               | setDefinedValues() and setDefinedWritableValues() don't throw an exception, if the field is missing in the input values (usefull for checkboxes or certain JavaScript frameworks, that do not submit any data for empty form elements e.g. AngularJS)
 readonly               | User is not allowed to change the field (not writable)
-hidden                 | User can not see the field
+hidden                 | User can not see the field (no impact on the validation)
 default                | Default value
 regex                  | Regular expression to match against
 matches                | Field value must match another form field (e.g. for password or email validation). Property can be prefixed with "!" to state that the fields must be different.
