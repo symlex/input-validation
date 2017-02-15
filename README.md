@@ -5,7 +5,7 @@ Easy & secure whitelist validation for PHP
 [![Latest Stable Version](https://poser.pugx.org/lastzero/php-input-validation/v/stable.svg)](https://packagist.org/packages/lastzero/php-input-validation)
 [![License](https://poser.pugx.org/lastzero/php-input-validation/license.svg)](https://packagist.org/packages/lastzero/php-input-validation)
 
-This library provides a mature form class with built-in whitelist validation ("accept known good") that is perfectly suited for building secure REST services. It uses language independent validation rules (plain array) that can be reused for client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). The library can be used with **any framework** and **input source** (HTML, REST, RPC, ...).
+**This library provides a form class with built-in whitelist validation ("accept known good") that is perfectly suited for building secure REST services.** It uses language independent validation rules (plain array) that can be reused for client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). The library can be used with **any framework** and **input source** (HTML, REST, RPC, ...).
 
 A major advantage of this modular approach is that developers can use unit testing to instantly find bugs and work on validation rules without an existing HTML frontend or storage backend. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").
 
