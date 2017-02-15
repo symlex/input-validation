@@ -61,9 +61,9 @@ class UserController
 
 See also [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https://github.com/lastzero/doctrine-active-record)
 
-Form field definition
----------------------
-A detailed overview of field properties can be found below. `$_('label')` is used to translate field captions - a number of different translation file formats such as YAML are supported for that (see [Symfony Components](http://symfony.com/doc/current/components/translation.html) documentation)
+Configuration
+-------------
+A detailed overview of field properties can be found below. `$_('label')` is used for optional translation of field captions or other strings - a number of different translation file formats such as YAML are supported for that (see [Symfony Components](http://symfony.com/doc/current/components/translation.html) documentation)
 
 ```php
 use InputValidation\Form;
