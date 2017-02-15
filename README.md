@@ -7,11 +7,11 @@ Easy & secure whitelist validation for PHP
 
 **This library provides whitelist validation ("accept known good") that is perfectly suited for building secure REST services.** It uses programming language independent validation rules (plain array) that can be reused for additional client-side validation (JavaScript) or passed to template rendering engines such as Twig or Smarty (HTML). By design, it is compatible with any framework and input source (HTML, REST, RPC, ...).
 
-A major advantage of this modular approach is that developers can use unit testing to instantly find bugs and work on validation rules without an existing HTML frontend or storage backend. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").
+A major advantage of this data source agnostic approach is that developers can do bottom-up development using unit tests to find bugs early and work on validation rules without an existing HTML frontend or storage backend. Use case specific input value validation is also more secure than general model validation, which often relies on a blacklist ("reject known bad").
 
 Besides basic validation rules such as type or length, more advanced features are supported as well - for example dependent fields, internationalization and multi-page forms. Validated values can be fetched individually, as flat array, by tag or by page.
 
-The architecture is simple by design: Form classes can inherit their definitions from each other. If needed, the validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works.
+The usage is simple by design: Form classes can inherit their definitions from each other. If needed, validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works.
 
 Basic example
 -------------
