@@ -1,10 +1,11 @@
 {
     "name": "lastzero/php-input-validation",
     "type": "library",
-    "description": "Value container with built-in whitelist validation ('accept known good')",
+    "description": "A secure whitelist validation layer for PHP applications and REST services ('accept known good')",
     "keywords": [
         "form",
         "validation",
+        "rest",
         "input",
         "symfony",
         "silex"

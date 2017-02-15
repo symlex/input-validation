@@ -47,7 +47,7 @@ class UserController
         return $this->user->getValues(); // Return updated entity values
     }
     
-    public function optionsAction($id, Request $request) // Update
+    public function optionsAction($id) // Describe form fields for user resource
     {
         $this->user->find($id); // Find entity (throws exception, if not found)
         
