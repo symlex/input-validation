@@ -527,7 +527,7 @@ class Form
         $result = array();
 
         foreach ($this->_definition as $key => $def) {
-            $result[] = $this->getFieldAsArray($key);
+            $result[$key] = $this->getFieldAsArray($key);
         }
 
         return $result;
@@ -546,10 +546,10 @@ class Form
             $members = array();
 
             foreach ($memberKeys as $key) {
-                $members[] = $this->getFieldAsArray($key);
+                $members[$key] = $this->getFieldAsArray($key);
             }
 
-            $result[] = array(
+            $result[$groupName] = array(
                 'group_name' => $groupName,
                 'group_caption' => $this->_('group_' . $groupName),
                 'fields' => $members

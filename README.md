@@ -349,14 +349,14 @@ Returns the complete form (definition and all values) as JSON compatible array, 
 
 ```php
 array (
-  array (
+  'company' => array (
     'name' => 'company',
     'caption' => 'Company',
     'type' => 'string',
     'value' => 'IBM',
     'uid' => 'id58a401f5a54d6',
   ),
-  array (
+  'country' => array (
     'name' => 'country',
     'caption' => 'Country',
     'default' => 'DE',
@@ -387,11 +387,11 @@ Returns grouped form field definitions and values (you must use setGroups() firs
 
 ```php
 array(
-  array (
+  'person' => array (
     'group_name' => 'person',
     'group_caption' => 'Person',
     'fields' => array(
-      array (
+      'person' => array (
         'name' => 'firstname',
         'caption' => 'First Name',
         'type' => 'string',
@@ -399,7 +399,7 @@ array(
         'value' => NULL,
         'uid' => 'id58a401f5a5267',
       ),
-      array (
+      'lastname' => array (
         'name' => 'lastname',
         'caption' => 'Last Name',
         'type' => 'string',
@@ -409,18 +409,18 @@ array(
       ),
     ),
   ),
-  array (
+  'location' => array (
     'group_name' => 'location',
     'group_caption' => 'Location',
     'fields' => array (
-      array (
+      'company' => array (
         'name' => 'company',
         'caption' => 'Company',
         'type' => 'string',
         'value' => 'IBM',
         'uid' => 'id58a401f5a54d6',
       ),
-      array (
+      'country' => array (
         'name' => 'country',
         'caption' => 'Country',
         'type' => 'string',
