@@ -1033,4 +1033,67 @@ class FormTest extends UnitTestCase
         $this->assertTrue($this->form->wahr);
         $this->assertFalse($this->form->falsch);
     }
+
+    public function testGetDefinition()
+    {
+        $definition = array(
+            'company' => array(
+                'type' => 'string'
+            ),
+            'country' => array(
+                'default' => 'DE',
+                'type' => 'string',
+                'options' => array('DE' => 'Germany')
+            )
+        );
+
+        $this->form->setDefinition($definition);
+
+        $fullDefinition = $this->form->getDefinition();
+        $this->assertEquals($definition, $fullDefinition);
+
+        $companyDefinition = $this->form->getDefinition('company');
+        $this->assertEquals($definition['company'], $companyDefinition);
+
+        $companyType = $this->form->getDefinition('company', 'type');
+        $this->assertEquals($definition['company']['type'], $companyType);
+    }
+
+    public function testGetFieldDefinition()
+    {
+        $definition = array(
+            'company' => array(
+                'type' => 'string'
+            ),
+            'country' => array(
+                'default' => 'DE',
+                'type' => 'string',
+                'options' => array('DE' => 'Germany')
+            )
+        );
+
+        $this->form->setDefinition($definition);
+
+        $countryDefinition = $this->form->getFieldDefinition('country');
+        $this->assertEquals($definition['country'], $countryDefinition);
+    }
+
+    public function testGetFieldProperty()
+    {
+        $definition = array(
+            'company' => array(
+                'type' => 'string'
+            ),
+            'country' => array(
+                'default' => 'DE',
+                'type' => 'string',
+                'options' => array('DE' => 'Germany')
+            )
+        );
+
+        $this->form->setDefinition($definition);
+
+        $countryOptions = $this->form->getFieldProperty('country', 'options');
+        $this->assertEquals($definition['country']['options'], $countryOptions);
+    }
 }

@@ -290,7 +290,15 @@ Sets the form field definition array (see example and form field properties)
 
 **getDefinition($key = null, $propertyName = null): mixed**
 
-Returns the form field definition(s). If $key is null, definitions for all fields are returned. If $propertyName is null and $key is not null, only the definition of the given field key are returned. If both arguments are not null, only the definition of the given form field property is returned (for example, getDefinition('firstname', 'type') returns 'string'). A FormException is thrown otherwise.
+Returns the form field definition(s). If $key is null, definitions for all fields are returned. If $propertyName is null and $key is not null, only the definition of the given field key are returned. If both arguments are not null, only the definition of the given form field property is returned (for example, getDefinition('firstname', 'type') might return 'string'). A FormException is thrown otherwise.
+
+**getFieldDefinition(string $name): array**
+
+Returns form field definition as array (wrapper for getDefinition)
+
+**getFieldProperty(string $name, string $property): mixed**
+
+Returns a field property from the form definition (wrapper for getDefinition)
 
 **addDefinition($key, array $definition)**
 

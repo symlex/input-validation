@@ -422,13 +422,13 @@ class Form
     }
 
     /**
-     * Returns form field property definition
+     * Returns a field property from the form definition
      *
      * @param string $name
      * @param string $property
      * @return mixed
      */
-    public function getFieldPropertyDefinition(string $name, string $property)
+    public function getFieldProperty(string $name, string $property)
     {
         return $this->getDefinition($name, $property);
     }
@@ -567,7 +567,7 @@ class Form
      */
     protected function isWritable(string $name): bool
     {
-        return $this->getFieldPropertyDefinition($name, 'readonly') != true;
+        return $this->getFieldProperty($name, 'readonly') != true;
     }
 
     /**
@@ -582,7 +582,7 @@ class Form
      */
     protected function isOptional(string $name): bool
     {
-        return ($this->getFieldPropertyDefinition($name, 'checkbox') == true) || ($this->getFieldPropertyDefinition($name, 'optional') == true);
+        return ($this->getFieldProperty($name, 'checkbox') == true) || ($this->getFieldProperty($name, 'optional') == true);
     }
 
     /**
@@ -595,10 +595,10 @@ class Form
     protected function setOptionalValueInArray(string $name, &$values)
     {
         if ($this->isOptional($name) && !array_key_exists($name, $values)) {
-            $default = $this->getFieldPropertyDefinition($name, 'default');
+            $default = $this->getFieldProperty($name, 'default');
 
             if (is_null($default)) {
-                $type = $this->getFieldPropertyDefinition($name, 'type');
+                $type = $this->getFieldProperty($name, 'type');
 
                 switch ($type) {
                     case 'list':
@@ -733,7 +733,7 @@ class Form
         $result = array();
 
         foreach ($this->_definition as $key => $value) {
-            $page = $this->getFieldPropertyDefinition($key, 'page');
+            $page = $this->getFieldProperty($key, 'page');
 
             if ($page) {
                 $result[$page][$key] = $this->$key;
@@ -753,7 +753,7 @@ class Form
         $result = array();
 
         foreach ($this->_definition as $key => $value) {
-            $tags = $this->getFieldPropertyDefinition($key, 'tags');
+            $tags = $this->getFieldProperty($key, 'tags');
 
             if (is_array($tags) && in_array($tag, $tags)) {
                 $result[$key] = $this->$key;
@@ -833,7 +833,7 @@ class Form
     public function __set(string $name, $value)
     {
         if (isset($this->_definition[$name])) {
-            $type = $this->getFieldPropertyDefinition($name, 'type');
+            $type = $this->getFieldProperty($name, 'type');
             if ($type == 'list' && $value == array('')) {
                 $value = array();
             }
@@ -870,7 +870,7 @@ class Form
     public function __get(string $name)
     {
         try {
-            $default = $this->getFieldPropertyDefinition($name, 'default');
+            $default = $this->getFieldProperty($name, 'default');
 
             if (array_key_exists($name, $this->_values)) {
                 return $this->_values[$name];
@@ -934,7 +934,7 @@ class Form
      */
     public function getFieldCaption(string $name): string
     {
-        $caption = $this->getFieldPropertyDefinition($name, 'caption');
+        $caption = $this->getFieldProperty($name, 'caption');
 
         if ($caption) {
             return $this->translate($caption);
@@ -1076,7 +1076,7 @@ class Form
         $errors = $this->getErrors();
 
         foreach ($errors as $name => $val) {
-            $page = $this->getFieldPropertyDefinition($name, 'page');
+            $page = $this->getFieldProperty($name, 'page');
 
             if ($page) {
                 $result[$page][$name] = $val;
