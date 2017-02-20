@@ -2,7 +2,6 @@
 
 namespace InputValidation\Form;
 
-use Symfony\Component\Yaml\Parser as YamlParser;
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use InputValidation\Exception\OptionsException as Exception;
 
