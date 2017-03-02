@@ -4,6 +4,7 @@ namespace InputValidation\Form;
 
 use Symfony\Component\Translation\TranslatorInterface as Translator;
 use InputValidation\Exception\FactoryException;
+use InputValidation\Form;
 
 /**
  * @author Michael Mayer <michael@lastzero.net>
@@ -62,10 +63,10 @@ class Factory
      * @throws FactoryException
      * @return Form
      */
-    public function get(string $name, array $params = array())
+    public function create(string $name, array $params = array()): Form
     {
         if (empty($name)) {
-            throw new FactoryException ('get() requires a non-empty form name as first argument');
+            throw new FactoryException ('create() requires a non-empty form name as first argument');
         }
 
         $className = $this->getFactoryNamespace() . '\\' . $name . $this->getFactoryPostfix();

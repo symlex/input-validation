@@ -189,7 +189,7 @@ $form = new Form($translator, $validator, $options);
 $formFactory = new InputValidation\Form\Factory($translator, $validator, $options);
 $formFactory->setFactoryNamespace('App\Form');
 $formFactory->setFactoryPostfix('Form');
-$formFactory->get('User'); // Returns instance of App\Form\UserForm
+$formFactory->create('User'); // Returns instance of App\Form\UserForm
 ```
 
 Composer
