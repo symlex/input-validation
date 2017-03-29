@@ -63,7 +63,7 @@ class Factory
      * @throws FactoryException
      * @return Form
      */
-    public function create(string $name, array $params = array()): Form
+    public function create(string $name, array $params = array())
     {
         if (empty($name)) {
             throw new FactoryException ('create() requires a non-empty form name as first argument');
