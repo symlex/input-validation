@@ -1,10 +1,10 @@
 Easy & secure whitelist validation for PHP
 ==========================================
 
-[![Build Status](https://travis-ci.org/lastzero/php-input-validation.png?branch=master)](https://travis-ci.org/lastzero/php-input-validation)
-[![Latest Stable Version](https://poser.pugx.org/lastzero/php-input-validation/v/stable.svg)](https://packagist.org/packages/lastzero/php-input-validation)
-[![Total Downloads](https://poser.pugx.org/lastzero/php-input-validation/downloads.svg)](https://packagist.org/packages/lastzero/php-input-validation)
-[![License](https://poser.pugx.org/lastzero/php-input-validation/license.svg)](https://packagist.org/packages/lastzero/php-input-validation)
+[![Build Status](https://travis-ci.org/symlex/input-validation.png?branch=master)](https://travis-ci.org/symlex/input-validation)
+[![Latest Stable Version](https://poser.pugx.org/symlex/input-validation/v/stable.svg)](https://packagist.org/packages/symlex/input-validation)
+[![Total Downloads](https://poser.pugx.org/symlex/input-validation/downloads.svg)](https://packagist.org/packages/symlex/input-validation)
+[![License](https://poser.pugx.org/symlex/input-validation/license.svg)](https://packagist.org/packages/symlex/input-validation)
 
 **This library provides whitelist validation ("accept known good") that is perfectly suited for building secure REST services.** It uses programming language independent validation rules (plain array) that can be reused for additional client-side validation (JavaScript) or passed to template rendering engines such as Twig. By design, it is compatible with any framework and input source (HTML, REST, RPC, ...).
 
@@ -195,11 +195,11 @@ $formFactory->create('User'); // Returns instance of App\Form\UserForm
 Composer
 --------
 
-If you are using composer, simply add "lastzero/php-input-validation" to your composer.json file and run `composer update`:
+If you are using composer, simply add "symlex/input-validation" to your composer.json file and run `composer update`:
 
 ```
 "require": {
-    "lastzero/php-input-validation": "^3.0"
+    "symlex/input-validation": "^3.0"
 }
 ```
 
