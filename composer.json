@@ -1,5 +1,5 @@
 {
-    "name": "lastzero/php-input-validation",
+    "name": "symlex/input-validation",
     "type": "library",
     "description": "A secure whitelist validation layer for PHP applications and REST services ('accept known good')",
     "keywords": [
@@ -10,7 +10,7 @@
         "symfony",
         "silex"
     ],
-    "homepage": "https://github.com/lastzero/php-input-validation",
+    "homepage": "https://github.com/symlex/input-validation",
     "license": "MIT",
     "authors": [
         {
