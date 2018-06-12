@@ -1,7 +1,4 @@
 services:
-    message_selector:
-        class: Symfony\Component\Translation\MessageSelector
-
     yaml_loader:
         class: Symfony\Component\Translation\Loader\YamlFileLoader
 
@@ -12,7 +9,6 @@ services:
         class: Symfony\Component\Translation\Translator
         arguments:
             - 'de'
-            - "@message_selector"
         calls:
             - [addLoader, ['yaml', "@yaml_loader"]]
             - [addLoader, ['array', "@array_loader"]]
