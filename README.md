@@ -26,7 +26,7 @@ From a theoretical standpoint, any complex system has more internal state than i
 
 Client-side (JavaScript or HTML) form validation is always just a convenience feature and not reliable. However, with this library you can (at least partly) reuse existing server-side form validation rules to perform client-side validation, since they can be easily converted to JSON (for JavaScript) or be passed to template rendering engines such as Twig or Smarty (for HTML). Reusing model layer validation rules in a similar fashion is at least difficult, if not impossible.
 
-See also: https://www.owasp.org/index.php/Data_Validation#Where_to_include_business_rule_validation
+See also [Where to include business rule validation (OWASP)](https://www.owasp.org/index.php/Data_Validation#Where_to_include_business_rule_validation).
 
 ![Differences between client-side, input value (form) and model validation](https://www.lucidchart.com/publicSegments/view/5461f867-ae1c-44a4-b565-6f780a00cf27/image.png)
 
