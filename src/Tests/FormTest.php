@@ -7,7 +7,7 @@ use InputValidation\Form;
 use InputValidation\Form\Factory;
 
 /**
- * @author Michael Mayer <michael@lastzero.net>
+ * @author Michael Mayer <michael@liquidbytes.net>
  * @license MIT
  */
 class FormTest extends UnitTestCase

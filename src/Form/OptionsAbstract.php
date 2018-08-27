@@ -8,7 +8,7 @@ use InputValidation\Exception\OptionsException as Exception;
 /**
  * Form options list class for YAML and JSON data sources
  *
- * @author Michael Mayer <michael@lastzero.net>
+ * @author Michael Mayer <michael@liquidbytes.net>
  * @license MIT
  */
 abstract class OptionsAbstract implements OptionsInterface

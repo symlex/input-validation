@@ -48,7 +48,7 @@ use InputValidation\Exception\FormException as Exception;
  * tags                 List of tags, e.g. ['user', 'profile'] - can be used to get values by tag (optional)
  * =====================================================================================================================
  *
- * @author Michael Mayer <michael@lastzero.net>
+ * @author Michael Mayer <michael@liquidbytes.net>
  * @license MIT
  */
 class Form

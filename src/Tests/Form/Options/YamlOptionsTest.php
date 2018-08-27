@@ -7,7 +7,7 @@ use Symfony\Component\Translation\Translator;
 use TestTools\TestCase\UnitTestCase;
 
 /**
- * @author Michael Mayer <michael@lastzero.net>
+ * @author Michael Mayer <michael@liquidbytes.net>
  * @license MIT
  */
 class YamlOptionsTest extends UnitTestCase

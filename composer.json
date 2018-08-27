@@ -8,15 +8,15 @@
         "rest",
         "input",
         "symfony",
-        "silex"
+        "symlex"
     ],
     "homepage": "https://github.com/symlex/input-validation",
     "license": "MIT",
     "authors": [
         {
             "name": "Michael Mayer",
-            "email": "michael@lastzero.net",
-            "homepage": "https://lastzero.net/",
+            "email": "michael@liquidbytes.net",
+            "homepage": "https://liquidbytes.net/",
             "role": "Developer"
         }
     ],

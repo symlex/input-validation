@@ -7,7 +7,7 @@ use InputValidation\Exception\FactoryException;
 use InputValidation\Form;
 
 /**
- * @author Michael Mayer <michael@lastzero.net>
+ * @author Michael Mayer <michael@liquidbytes.net>
  * @license MIT
  */
 class Factory

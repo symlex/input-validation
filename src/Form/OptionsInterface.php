@@ -5,7 +5,7 @@ namespace InputValidation\Form;
 /**
  * Form options list interface
  *
- * @author Michael Mayer <michael@lastzero.net>
+ * @author Michael Mayer <michael@liquidbytes.net>
  * @license MIT
  */
 interface OptionsInterface

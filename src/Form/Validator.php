@@ -10,7 +10,7 @@ use InputValidation\Exception\ValidatorException as Exception;
 /**
  * Default Validator for InputValidation Forms
  *
- * @author Michael Mayer <michael@lastzero.net>
+ * @author Michael Mayer <michael@liquidbytes.net>
  * @license MIT
  */
 class Validator

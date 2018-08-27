@@ -6,7 +6,7 @@ use TestTools\TestCase\UnitTestCase;
 use InputValidation\Form\Validator;
 
 /**
- * @author Michael Mayer <michael@lastzero.net>
+ * @author Michael Mayer <michael@liquidbytes.net>
  * @license MIT
  */
 class ValidatorTest extends UnitTestCase {
