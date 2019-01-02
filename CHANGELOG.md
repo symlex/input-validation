@@ -4,6 +4,8 @@ Changelog
 Release 4
 ---------
 
+* 4.2.2 Tested with latest Symfony and updated docs
+
 * 4.2.1 Improved documentation; added CHANGELOG.md and TRADEOFFS.md
 
 * 4.2.0 Upgraded Symfony Compontents to Version 4

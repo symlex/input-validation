@@ -1,6 +1,6 @@
 # Tradeoffs
 
-## Potential reasons to use this library
+## Pros
 
 - It is perfectly suited for validating REST requests and building single-page applications
 - Form definition can easily be serialized as JSON for client-side validation and form rendering with JavaScript
@@ -8,7 +8,7 @@
 - Easy to write unit tests for
 - Part of the Symlex framework stack for agile Web development
 
-## Potential reasons not to use this library
+## Cons
 
 - It is not backed by a company and has a small community (you're welcome to join us)
 - Development is mostly driven by a [single developer](https://blog.liquidbytes.net/about/)

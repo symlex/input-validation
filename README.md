@@ -1,10 +1,11 @@
-Easy & secure whitelist validation for PHP
-==========================================
+# Easy & Secure Whitelist Validation for PHP
 
-[![Build Status](https://travis-ci.org/symlex/input-validation.png?branch=master)](https://travis-ci.org/symlex/input-validation)
 [![Latest Stable Version](https://poser.pugx.org/symlex/input-validation/v/stable.svg)](https://packagist.org/packages/symlex/input-validation)
 [![Total Downloads](https://poser.pugx.org/symlex/input-validation/downloads.svg)](https://packagist.org/packages/symlex/input-validation)
 [![License](https://poser.pugx.org/symlex/input-validation/license.svg)](https://packagist.org/packages/symlex/input-validation)
+[![Test Coverage](https://codecov.io/gh/symlex/input-validation/branch/master/graph/badge.svg)](https://codecov.io/gh/symlex/input-validation)
+[![Build Status](https://travis-ci.org/symlex/input-validation.png?branch=master)](https://travis-ci.org/symlex/input-validation)
+[![Documentation](https://readthedocs.org/projects/symlex-docs/badge/?version=latest&style=flat)](https://docs.symlex.org/en/latest/input-validation)
 
 **This library provides whitelist validation ("accept known good") that is perfectly suited for building secure REST services.** It uses programming language independent validation rules (plain array) that can be reused for additional client-side validation (JavaScript) or passed to template rendering engines such as Twig. By design, it is compatible with any framework and input source (HTML, REST, RPC, ...).
 
@@ -14,8 +15,8 @@ Besides basic validation rules such as type or length, more advanced features ar
 
 The usage is simple: Form classes can inherit their definitions from each other. If needed, validation behavior can be changed using standard object-oriented methodologies. You don't need to hold a PhD in design patterns to understand how it works.
 
-Differences between client-side, form and model validation
-----------------------------------------------------------
+## Client-side, Form and Model Validation ##
+
 The following visualization highlights the differences between client-side, form (input value) and model validation. Model validation generally operates on trusted data (internal system state) and should be repeatable at any point in time while input validation explicitly operates once on data that comes from untrusted sources (depending on the use case and user privileges). This separation makes it possible to build reusable models, controllers and forms that can be coupled through dependency injection (see REST controller example).
 
 Think of form validation as whitelist validation ("accept known good") and model validation as blacklist validation ("reject known bad"). Whitelist validation is more secure while blacklist validation prevents your model layer from being overly constrained to very specific use cases.
@@ -30,8 +31,7 @@ See also [Where to include business rule validation (OWASP)](https://www.owasp.o
 
 ![Differences between client-side, input value (form) and model validation](https://www.lucidchart.com/publicSegments/view/5461f867-ae1c-44a4-b565-6f780a00cf27/image.png)
 
-Basic example
--------------
+## Basic Example ##
 
 This example shows how to validate user input in a REST controller context. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
 
@@ -77,8 +77,8 @@ class UserController
 
 See also [Doctrine ActiveRecord - Object-oriented CRUD for Doctrine DBAL](https://github.com/symlex/doctrine-active-record)
 
-Configuration
--------------
+## Configuration ##
+
 A detailed overview of field properties can be found below. `$_('label')` is used for optional translation of field captions or other strings - a number of different translation file formats such as YAML are supported for that (see [Symfony Components](http://symfony.com/doc/current/components/translation.html) documentation)
 
 ```php
@@ -149,8 +149,7 @@ class UserForm extends Form
 }
 ```
 
-Field properties
-----------------
+## Properties ##
 
 Property               | Description
 ---------------------- | ---------------------------------------------------------------------------------------------------
@@ -175,8 +174,8 @@ depends_last_option    | Field is required, if the field defined in "depends" ha
 page                   | Page number for multi-page forms
 tags                   | Optional list of tags (can be used to extract values by tag, see getValuesByTag())
 
-Creating new instances
-----------------------
+## Create a Form Instance ##
+
 You can create new form instances manually...
 
 ```php
@@ -208,8 +207,7 @@ $formFactory->setFactoryPostfix('Form');
 $formFactory->create('User'); // Returns instance of App\Form\UserForm
 ```
 
-API
----
+## API ##
 
 **__construct(Translator $translator, Form\Validator $validator, Form\OptionsInterface $options, array $params = array())**
 
@@ -528,13 +526,24 @@ Resets the validation and clears all errors
 
 Returns hash that uniquely identifies the form (for caching comprehensive forms)
 
-Composer
---------
+## Composer ##
 
-If you are using composer, simply add "symlex/input-validation" to your composer.json file and run `composer update`:
+To use this library in your project, simply run `composer require symlex/input-validation` or
+add "symlex/input-validation" to your [composer.json](https://getcomposer.org/doc/04-schema.md) file and run `composer update`:
 
-```
-"require": {
-    "symlex/input-validation": "^4.0"
+```json
+{
+    "require": {
+        "php": ">=7.1",
+        "symlex/input-validation": "^4.0"
+    }
 }
 ```
+
+## About ##
+
+InputValidation is maintained by [Michael Mayer](https://blog.liquidbytes.net/about/).
+Feel free to send an e-mail to [hello@symlex.org](mailto:hello@symlex.org) if you have any questions, 
+need [commercial support](https://blog.liquidbytes.net/contact/) or just want to say hello. 
+We welcome contributions of any kind. If you have a bug or an idea, read our 
+[guide](CONTRIBUTING.md) before opening an issue.

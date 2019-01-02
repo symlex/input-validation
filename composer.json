@@ -1,7 +1,7 @@
 {
     "name": "symlex/input-validation",
     "type": "library",
-    "description": "A secure whitelist validation layer for PHP applications and REST services ('accept known good')",
+    "description": "Easy & Secure Whitelist Validation for PHP",
     "keywords": [
         "form",
         "validation",
