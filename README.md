@@ -31,11 +31,13 @@ See also [Where to include business rule validation (OWASP)](https://www.owasp.o
 
 ![Differences between client-side, input value (form) and model validation](https://www.lucidchart.com/publicSegments/view/5461f867-ae1c-44a4-b565-6f780a00cf27/image.png)
 
-## Basic Example ##
+## REST Request Validation Example ##
 
 This example shows how to validate user input in a REST controller context. Note, how easy it is to avoid the deeply nested structures you often find in validation code. User model and form are injected as dependencies. 
 
 ```php
+<?php
+
 class UserController
 {
     protected $user;
@@ -47,30 +49,43 @@ class UserController
         $this->form = $form;
     }
     
-    public function putAction(int $id, Request $request): array // Update
+    // Update User
+    public function putAction(int $id, Request $request): array 
     {
-        $this->user->find($id); // Find entity (throws exception, if not found)
+        // Find entity (throws exception, if not found)
+        $this->user->find($id); 
         
-        $this->form->setDefinedValues($this->user->getValues()); // Initialization
-        $this->form->setDefinedWritableValues($request->request->all()); // Input values
-        $this->form->validate(); // Validation
+        // Form initialization with current values
+        $this->form->setDefinedValues($this->user->getValues()); 
+        
+        // Set input values
+        $this->form->setDefinedWritableValues($request->request->all()); 
+        
+        // Validation
+        $this->form->validate(); 
 
         if($this->form->hasErrors()) {
             throw new FormInvalidException($this->form->getFirstError());
         }
         
-        $this->user->update($this->form->getValues()); // Update values
+        // Update values in database
+        $this->user->update($this->form->getValues()); 
 
-        return $this->user->getValues(); // Return updated entity values
+        // Return updated values
+        return $this->user->getValues(); 
     }
     
-    public function optionsAction(int $id): array // Describe form fields for user resource
+    // Return form fields incl current values for User
+    public function optionsAction(int $id): array 
     {
-        $this->user->find($id); // Find entity (throws exception, if not found)
+        // Find entity (throws exception, if not found)
+        $this->user->find($id); 
         
-        $this->form->setDefinedValues($this->user->getValues()); // Initialization
+        // Form initialization with current values
+        $this->form->setDefinedValues($this->user->getValues()); 
         
-        return $this->form->getAsArray(); // Returns form as JSON compatible array incl all values
+        // Returns form as JSON compatible array incl all values
+        return $this->form->getAsArray(); 
     }
 }
 ```

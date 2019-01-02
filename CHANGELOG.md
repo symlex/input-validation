@@ -4,6 +4,8 @@ Changelog
 Release 4
 ---------
 
+* 4.2.3 Documentation and travis config clean-up
+
 * 4.2.2 Tested with latest Symfony and updated docs
 
 * 4.2.1 Improved documentation; added CHANGELOG.md and TRADEOFFS.md
