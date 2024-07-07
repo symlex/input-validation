@@ -338,6 +338,15 @@ class Validator
                         $this->addError($key, 'form.value_type_string');
                     }
                     break;
+                case 'json':
+                    if (!empty($value)) {
+                        try {
+                            json_decode($value, true, 512, JSON_THROW_ON_ERROR);
+                        } catch (\Exception $e) {
+                            $this->addError($key, 'form.value_type_json');
+                        }
+                    }
+                    break;
                 case 'email':
                     if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                         $this->addError($key, 'form.value_type_email');

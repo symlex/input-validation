@@ -27,6 +27,7 @@ form:
   value_type_float: "%field% muss eine Zahl sein"
   value_type_bool: "%field% muss vom Typ boolean sein"
   value_type_string: "%field% muss aus Zeichen bestehen"
+  value_type_json: "%field% muss aus JSON-Daten bestehen"
   value_type_email: "%field% muss eine E-Mail-Adresse sein"
   value_type_ip: "%field% muss eine IP-Adresse sein"
   value_type_url: "%field% muss eine URL sein"

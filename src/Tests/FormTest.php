@@ -17,7 +17,7 @@ class FormTest extends UnitTestCase
      */
     protected $form;
 
-    public function setUp()
+    public function setUp(): void
     {
         /**
          * @var Factory
@@ -67,7 +67,7 @@ class FormTest extends UnitTestCase
 
         $result = $this->form->getAsArray();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
 
         foreach ($result as $field) {
             $this->assertArrayHasKey('name', $field);
@@ -115,13 +115,13 @@ class FormTest extends UnitTestCase
 
         $result = $this->form->getAsGroupedArray();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
 
         foreach ($result as $group) {
             $this->assertArrayHasKey('group_name', $group);
             $this->assertArrayHasKey('group_caption', $group);
             $this->assertArrayHasKey('fields', $group);
-            $this->assertInternalType('array', $group['fields']);
+            $this->assertIsArray($group['fields']);
 
             foreach ($group['fields'] as $field) {
                 $this->assertArrayHasKey('name', $field);
@@ -131,11 +131,9 @@ class FormTest extends UnitTestCase
         }
     }
 
-    /**
-     * @expectedException \InputValidation\Exception\FormException
-     */
     public function testSetAllValues()
     {
+        $this->expectException('\InputValidation\Exception\FormException');
         $values = array('foo' => 'bar', 'x' => 'y');
         $this->form->setAllValues($values);
         $result = $this->form->getValues();
@@ -204,11 +202,31 @@ class FormTest extends UnitTestCase
                     'default' => 'foo',
                     'optional' => true,
                     'type' => 'string'
-                )
+                ),
+                'options' => array(
+                    'type' => 'json'
+                ),
+                'emptyOptions' => array(
+                    'default' => '{"empty":true}',
+                    'type' => 'json'
+                ),
+                'defaultOptions' => array(
+                    'default' => '{"empty":true}',
+                    'type' => 'json',
+                    'optional' => true,
+                ),
+                'names' => array(
+                    'type' => 'json'
+                ),
             )
         );
 
-        $values = array('company' => 'xyz');
+        $values = array(
+            'company' => 'xyz',
+            'options' => ['foo' => 'bar', 'bar' => 2],
+            'emptyOptions' => '{}',
+            'names' => '{"name":"Jens"}',
+        );
 
         $this->form->setDefinedWritableValues($values);
 
@@ -220,6 +238,10 @@ class FormTest extends UnitTestCase
         $this->assertEquals('Trump', $result['lastname']);
         $this->assertEquals($values['company'], $result['company']);
         $this->assertEquals('foo', $result['address']);
+        $this->assertEquals('{"foo":"bar","bar":2}', $result['options']);
+        $this->assertEquals('', $result['emptyOptions']);
+        $this->assertEquals('{"empty":true}', $result['defaultOptions']);
+        $this->assertEquals('{"name":"Jens"}', $result['names']);
     }
 
     public function testMagicIsset()
@@ -350,6 +372,10 @@ class FormTest extends UnitTestCase
                     'page' => 2,
                     'required' => true
                 ),
+                'options' => array(
+                    'type' => 'json',
+                    'page' => 2
+                ),
                 'bar' => array(
                     'type' => 'string',
                     'page' => 3,
@@ -358,27 +384,25 @@ class FormTest extends UnitTestCase
             )
         );
 
-        $values = array('lastname' => 'foo', 'company' => 'bar', 'mustsee' => true);
+        $values = array('lastname' => 'foo', 'company' => 'bar', 'mustsee' => true, 'options' => 'fooo:"}');
 
         $this->form->setWritableValuesOnPage($values, 2);
 
         $errors = $this->form->validate()->getErrorsByPage();
 
         $this->assertArrayNotHasKey(1, $errors);
-        $this->assertArrayNotHasKey(2, $errors);
+        $this->assertArrayHasKey(2, $errors);
         $this->assertArrayHasKey(3, $errors);
-        $this->assertEquals(1, count($errors));
+        $this->assertEquals(2, count($errors));
+        $this->assertEquals(1, count($errors[2]['options']));
         $this->assertEquals(1, count($errors[3]['bar']));
         $this->assertFalse($this->form->isValid());
         $this->assertTrue($this->form->hasErrors());
-
     }
 
-    /**
-     * @expectedException \InputValidation\Exception\FormException
-     */
     public function testSetWritableValuesOnPageError()
     {
+        $this->expectException('\InputValidation\Exception\FormException');
         $this->form->setDefinition(
             array(
                 'firstname' => array(
@@ -754,11 +778,9 @@ class FormTest extends UnitTestCase
         $this->assertEquals(0, count($errors));
     }
 
-    /**
-     * @expectedException \InputValidation\Exception\FormException
-     */
     public function testChangeDefinitionException()
     {
+        $this->expectException('\InputValidation\Exception\FormException');
         $this->form->changeDefinition('foo', array('min' => 3));
     }
 
@@ -929,7 +951,7 @@ class FormTest extends UnitTestCase
 
         $form = $this->form->getAsArray();
 
-        $this->assertInternalType('array', $form);
+        $this->assertIsArray($form);
     }
 
     public function testGetValuesByTag()

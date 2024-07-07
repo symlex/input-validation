@@ -15,14 +15,13 @@ class ValidatorTest extends UnitTestCase {
      */
     protected $validator;
 
-    public function setUp () {
+    public function setUp(): void
+    {
         $this->validator = $this->get('form.validator');
     }
 
-    /**
-     * @expectedException \InputValidation\Exception\ValidatorException
-     */
     public function testGetFormException () {
+        $this->expectException('\InputValidation\Exception\ValidatorException');
         $this->validator->getForm();
     }
 }

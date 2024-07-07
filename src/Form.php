@@ -23,7 +23,8 @@ use InputValidation\Exception\FormException as Exception;
  *
  * =============================| Description of form definition parameters |===========================================
  * caption              Field title (used for form rendering and in validation messages)
- * type                 Data type: int, numeric, scalar, list, bool, string, email, ip, url, date, datetime, time and switch
+ * type                 Data type: int, numeric, scalar, list, bool, string, json,
+ *                      email, ip, url, date, datetime, time, or switch
  * type_params          Optional parameters for data type validation
  * options              Array of possible values for the field (for select lists or radio button groups)
  * min                  Minimum value for numbers/dates, length for strings or number of elements for lists
@@ -834,6 +835,7 @@ class Form
     {
         if (isset($this->_definition[$name])) {
             $type = $this->getFieldProperty($name, 'type');
+
             if ($type == 'list' && $value == array('')) {
                 $value = array();
             }
@@ -848,7 +850,13 @@ class Form
                 }
             }
 
-            if ($type != 'string' && $value === '') {
+            if ($type == 'json') {
+                if (empty($value) || $value === "{}" || $value === "[]") {
+                    $value = "";
+                } else if (is_array($value) || is_object($value)) {
+                    $value = json_encode($value);
+                }
+            } else if ($type != 'string' && $value === '') {
                 $value = null;
             }
 
@@ -912,7 +920,6 @@ class Form
     {
         return $this->getTranslator()->trans($token, $params);
     }
-
 
     /**
      * Alias for translate()

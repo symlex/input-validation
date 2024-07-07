@@ -16,7 +16,7 @@ class FactoryTest extends UnitTestCase
      */
     protected $factory;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->factory = $this->get('form.factory');
     }
@@ -54,11 +54,9 @@ class FactoryTest extends UnitTestCase
         $this->assertEquals('Form', $this->factory->getFactoryPostfix());
     }
 
-    /**
-     * @expectedException \InputValidation\Exception\FactoryException
-     */
     public function testGetFormException()
     {
+        $this->expectException('\InputValidation\Exception\FactoryException');
         $this->factory->create('FooBar');
     }
 }

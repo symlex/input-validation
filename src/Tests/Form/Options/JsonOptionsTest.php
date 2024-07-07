@@ -22,7 +22,7 @@ class JsonOptionsTest extends UnitTestCase
      */
     protected $translator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $container = $this->getContainer();
         $this->translator = $container->get('translator');
@@ -33,7 +33,7 @@ class JsonOptionsTest extends UnitTestCase
     {
         $result = $this->options->get('countries');
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(253, $result);
     }
 
@@ -43,7 +43,7 @@ class JsonOptionsTest extends UnitTestCase
 
         $result = $this->options->get('countries');
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(253, $result);
 
         $this->assertEquals('Germany', $result['DE']);
@@ -55,7 +55,7 @@ class JsonOptionsTest extends UnitTestCase
 
         $result = $this->options->get('countries');
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(253, $result);
 
         $this->assertEquals('Germany', $result['DE']);
@@ -67,7 +67,7 @@ class JsonOptionsTest extends UnitTestCase
 
         $result = $this->options->get('countries');
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(253, $result);
 
         $this->assertEquals('Deutschland', $result['DE']);
@@ -77,7 +77,7 @@ class JsonOptionsTest extends UnitTestCase
     {
         $result = $this->options->get('countries');
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
         $this->assertCount(253, $result);
         $this->assertEquals('Deutschland', $result['DE']);
     }
